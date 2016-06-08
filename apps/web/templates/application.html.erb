@@ -3,8 +3,13 @@
   <head>
     <title>Web</title>
     <%= favicon %>
+
+    <%= stylesheet 'https://api.mapbox.com/mapbox-gl-js/v0.19.1/mapbox-gl.css' %>
   </head>
   <body>
     <%= yield %>
+
+    <%= javascript 'https://api.mapbox.com/mapbox-gl-js/v0.19.1/mapbox-gl.js' %>
+    <%= javascript 'render' %>
   </body>
 </html>
