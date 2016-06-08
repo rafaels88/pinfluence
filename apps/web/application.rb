@@ -200,7 +200,7 @@ module Web
       #  * http://content-security-policy.com/
       #  * https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Using_Content_Security_Policy
       #
-      security.content_security_policy "default-src 'none' ; child-src 'self' blob: ; script-src 'self' blob: 'unsafe-eval' 'unsafe-inline' https://api.mapbox.com; connect-src 'self' https://*.mapbox.com; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline' https://api.mapbox.com; font-src 'self';"
+      security.content_security_policy "default-src 'none' ; child-src 'self' blob: ; script-src 'self' https://cdnjs.cloudflare.com blob: 'unsafe-eval' 'unsafe-inline' https://api.mapbox.com; connect-src 'self' https://*.mapbox.com; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline' https://api.mapbox.com; font-src 'self';"
 
       ##
       # FRAMEWORKS

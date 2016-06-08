@@ -2,3 +2,7 @@
 /db/world_test
 /public/assets*
 /tmp
+
+# IDE
+*.swp
+*.swo
