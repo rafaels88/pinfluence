@@ -1,10 +1,11 @@
 module Admin::Controllers::Influencers
-  class Create
+  class Update
     include Admin::Action
 
     def call(params)
-      influencer = Influencer.new(params[:influencer])
-      repository.create(influencer)
+      influencer = repository.find(params[:id])
+      influencer.update(params[:influencer])
+      repository.persist(influencer)
 
       redirect_to routes.influencers_path
     end

@@ -1,5 +1,13 @@
 <ul>
   <% influencers.each do |influencer| %>
-    <li><%= influencer.name %></li>
+    <li>
+      <%= "#{influencer.name} - #{influencer.location} - #{influencer.begin_at} - #{influencer.end_at} - #{influencer.level}" %> -
+      <a href="<%= routes.edit_influencer_path(id: influencer.id) %>">Editar</a> -
+      <%=
+        form_for :influcencer, routes.influencer_path(id: influencer.id), style: 'display: inline-block', method: :delete do
+          submit 'Excluir', style: 'display: inline-block'
+        end
+      %>
+    </li>
   <% end %>
 </ul>

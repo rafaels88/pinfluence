@@ -5,6 +5,11 @@
     <%= favicon %>
   </head>
   <body>
+    <ul>
+      <li> <a href="<%= routes.new_influencer_path %>">Novo</a> </li>
+      <li> <a href="<%= routes.influencers_path %>">Todos</a> </li>
+    </ul>
+
     <%= yield %>
   </body>
 </html>

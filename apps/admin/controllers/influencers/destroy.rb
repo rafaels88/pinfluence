@@ -1,10 +1,10 @@
 module Admin::Controllers::Influencers
-  class Create
+  class Destroy
     include Admin::Action
 
     def call(params)
-      influencer = Influencer.new(params[:influencer])
-      repository.create(influencer)
+      influencer = repository.find(params[:id])
+      repository.delete(influencer)
 
       redirect_to routes.influencers_path
     end
