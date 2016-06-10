@@ -1,63 +1,114 @@
 $().ready(function(){
   mapboxgl.accessToken = 'pk.eyJ1IjoicmFmYWVsczg4IiwiYSI6ImJpWUZvaHcifQ.Bkjj9moCS4ILf_7tYlBKyg';
-  var map = new mapboxgl.Map({
-      container: 'map',
-      style: 'mapbox://styles/mapbox/streets-v8'
-  });
+  var apiUrl = $("#map-container").data("api-endpoint"), map, currentMapSources = {}, oldMapSources = {};
 
-  var mapFeatures = [];
-  $($("#map-container").data("coordinates")).each(function(i, coords){
-    var feature = {
-        "type": "Feature",
-        "properties": {},
-        "geometry": {
-            "type": "Point",
-            "coordinates": coords
-        }
-    }
-    mapFeatures.push(feature);
-  });
+  function init(){
+    requestYears(function(years){
+      renderSlider(years);
+    })
+  }
 
-  map.on('load', function () {
-
-      // add geojson data as a new source
-      map.addSource("symbols", {
-          "type": "geojson",
-          "data": {
-              "type": "FeatureCollection",
-              "features": mapFeatures
-          }
-      });
-
-      // add source as a layer and apply some styles
-      map.addLayer({
-          "id": "symbols",
-          "type": "symbol",
-          "source": "symbols",
-          "layout": {
-              "icon-image": "marker-15"
-          },
-          "paint": {}
-      });
-  });
-
-  map.on('click', function (e) {
-      // Use queryRenderedFeatures to get features at a click event's point
-      // Use layer option to avoid getting results from other layers
-      var features = map.queryRenderedFeatures(e.point, { layers: ['symbols'] });
-      // if there are features within the given radius of the click event,
-      // fly to the location of the click event
-      if (features.length) {
-          // Get coordinates from the symbol and center the map on those coordinates
-          map.flyTo({center: features[0].geometry.coordinates});
+  function requestYears(cb){
+    $.ajax({
+      url: apiUrl,
+      success: function(response){
+        cb(response.available_years);
       }
-  });
+    });
+  }
 
-  // Use the same approach as above to indicate that the symbols are clickable
-  // by changing the cursor style to 'pointer'.
-  map.on('mousemove', function (e) {
-      var features = map.queryRenderedFeatures(e.point, { layers: ['symbols'] });
-      map.getCanvas().style.cursor = features.length ? 'pointer' : '';
-  });
+  function requestInfluencers(year){
+    var currentApiUrl = apiUrl;
+    if(year){ currentApiUrl += "?year=" + year; }
+
+    $.ajax({
+      url: currentApiUrl,
+      success: function(response){
+        var mapInfluencers = $.map(response.collection, function(influencer){
+          return {
+            influencerId: influencer.id,
+            mapFeature: {
+              "type": "Feature",
+              "properties": {},
+              "geometry": {
+                "type": "Point",
+                "coordinates": influencer.location
+              }
+            }
+          }
+        });
+
+        renderMap(mapInfluencers);
+      }
+    });
+  }
+
+  function renderSlider(range){
+    var bigValueSlider = document.getElementById('slider-huge'),
+        bigValueSpan = document.getElementById('huge-value');
+
+    noUiSlider.create(bigValueSlider, {
+      start: 0,
+      step: 1,
+      format: wNumb({
+        decimals: 0
+      }),
+      range: {
+        min: 0,
+        max: range.length-1
+      }
+    });
+
+    bigValueSlider.noUiSlider.on('update', function ( values, handle ) {
+      var currentValue = range[values[handle]]
+      bigValueSpan.innerHTML = currentValue;
+      requestInfluencers(currentValue);
+    });
+  }
+
+  function renderMap(mapInfluencers){
+    oldMapSources = currentMapSources;
+    currentMapSources = {};
+
+    $(mapInfluencers).each(function(i, influencer){
+      if(oldMapSources[influencer.influencerId] == undefined){
+        influencer.shouldRender = true;
+      }
+      currentMapSources[influencer.influencerId] = influencer;
+      delete oldMapSources[influencer.influencerId];
+    });
+
+    $.each(currentMapSources, function(influencerId, influencer){
+      if(influencer.shouldRender == true){
+        var sourceId = "i-" + influencerId;
+
+        map.addSource(sourceId, {
+            "type": "geojson",
+            "data": {
+              "type": "FeatureCollection",
+              "features": [influencer.mapFeature]
+            }
+        });
+
+        map.addLayer({
+            "id": sourceId,
+            "type": "symbol",
+            "source": sourceId,
+            "layout": {
+              "icon-image": "marker-15"
+            },
+            "paint": {}
+        });
+      }
+    });
+
+    $.each(oldMapSources, function(influencerId, influencer){
+      map.removeLayer("i-" + influencerId);
+      map.removeSource("i-" + influencerId);
+    });
+  }
+
+  map = new mapboxgl.Map({ container: 'map', style: 'mapbox://styles/mapbox/streets-v8' });
+  map.on('load', init);
 });
 

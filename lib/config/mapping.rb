@@ -4,7 +4,7 @@ collection :influencers do
 
   attribute :id,   Integer
   attribute :name, String
-  attribute :location, String
+  attribute :location, LatLng
   attribute :begin_at, Time
   attribute :end_at, Time
   attribute :level, Integer

@@ -1,7 +1,7 @@
 require 'hanami/helpers'
 require 'hanami/assets'
 
-module Web
+module Api
   class Application < Hanami::Application
     configure do
       ##
@@ -74,7 +74,7 @@ module Web
       #
       # See: http://www.rubydoc.info/gems/rack/Rack/Session/Cookie
       #
-      # sessions :cookie, secret: ENV['WEB_SESSIONS_SECRET']
+      # sessions :cookie, secret: ENV['API_SESSIONS_SECRET']
 
       # Configure Rack middleware for this application
       #
@@ -83,19 +83,19 @@ module Web
       # Default format for the requests that don't specify an HTTP_ACCEPT header
       # Argument: A symbol representation of a mime type, default to :html
       #
-      # default_request_format :html
+      default_request_format :json
 
       # Default format for responses that doesn't take into account the request format
       # Argument: A symbol representation of a mime type, default to :html
       #
-      # default_response_format :html
+      default_response_format :json
 
       # HTTP Body parsers
       # Parse non GET responses body for a specific mime type
       # Argument: Symbol, which represent the format of the mime type (only `:json` is supported)
       #           Object, the parser
       #
-      # body_parsers :json
+      body_parsers :json
 
       # When it's true and the router receives a non-encrypted request (http),
       # it redirects to the secure equivalent resource (https). Default disabled.
@@ -108,7 +108,7 @@ module Web
 
       # The layout to be used by all views
       #
-      layout :application # It will load Web::Views::ApplicationLayout
+      layout :application # It will load Api::Views::ApplicationLayout
 
       # The relative path to templates
       #
@@ -200,13 +200,13 @@ module Web
       #  * http://content-security-policy.com/
       #  * https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Using_Content_Security_Policy
       #
-      security.content_security_policy "default-src 'none' ; child-src 'self' blob: ; script-src 'self' https://cdnjs.cloudflare.com blob: 'unsafe-eval' 'unsafe-inline' https://api.mapbox.com; connect-src 'self' https://*.mapbox.com; img-src 'self' data: blob:  https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline'  https://cdnjs.cloudflare.com https://api.mapbox.com; font-src 'self';"
+      security.content_security_policy "default-src 'none'; script-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self'; font-src 'self';"
 
       ##
       # FRAMEWORKS
       #
 
-      # Configure the code that will yield each time Web::Action is included
+      # Configure the code that will yield each time Api::Action is included
       # This is useful for sharing common functionality
       #
       # See: http://www.rubydoc.info/gems/hanami-controller#Configuration
@@ -215,13 +215,13 @@ module Web
         # before :authenticate!    # run an authentication before callback
       end
 
-      # Configure the code that will yield each time Web::View is included
+      # Configure the code that will yield each time Api::View is included
       # This is useful for sharing common functionality
       #
       # See: http://www.rubydoc.info/gems/hanami-view#Configuration
       view.prepare do
         include Hanami::Helpers
-        include Web::Assets::Helpers
+        include Api::Assets::Helpers
       end
     end
 
