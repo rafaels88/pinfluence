@@ -1,6 +1,6 @@
 $().ready(function(){
   mapboxgl.accessToken = 'pk.eyJ1IjoicmFmYWVsczg4IiwiYSI6ImJpWUZvaHcifQ.Bkjj9moCS4ILf_7tYlBKyg';
-  var apiUrl = $("#map-container").data("api-endpoint"), map, currentMapSources = {}, oldMapSources = {};
+  var apiUrl = $("#map-container").data("api-endpoint"), map, currentMapSources = {}, oldMapSources = {}, requestTimeout;
 
   function init(){
     requestYears(function(years){
@@ -18,29 +18,33 @@ $().ready(function(){
   }
 
   function requestInfluencers(year){
-    var currentApiUrl = apiUrl;
-    if(year){ currentApiUrl += "?year=" + year; }
+    clearTimeout(requestTimeout);
 
-    $.ajax({
-      url: currentApiUrl,
-      success: function(response){
-        var mapInfluencers = $.map(response.collection, function(influencer){
-          return {
-            influencerId: influencer.id,
-            mapFeature: {
-              "type": "Feature",
-              "properties": {},
-              "geometry": {
-                "type": "Point",
-                "coordinates": influencer.location
+    requestTimeout = setTimeout(function(){
+      var currentApiUrl = apiUrl;
+      if(year){ currentApiUrl += "?year=" + year; }
+
+      $.ajax({
+        url: currentApiUrl,
+        success: function(response){
+          var mapInfluencers = $.map(response.collection, function(influencer){
+            return {
+              influencerId: influencer.id,
+              mapFeature: {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                  "type": "Point",
+                  "coordinates": influencer.location
+                }
               }
             }
-          }
-        });
+          });
 
-        renderMap(mapInfluencers);
-      }
-    });
+          renderMap(mapInfluencers);
+        }
+      });
+    }, 500);
   }
 
   function renderSlider(range){
