@@ -4,9 +4,10 @@ collection :influencers do
 
   attribute :id,   Integer
   attribute :name, String
-  attribute :location, LatLng
-  attribute :begin_at, Time
-  attribute :end_at, Time
+  attribute :location, String
+  attribute :latlng, LatLng
+  attribute :begin_at, Integer
+  attribute :end_at, Integer
   attribute :level, Integer
   attribute :created_at, Time
   attribute :updated_at, Time

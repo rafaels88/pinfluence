@@ -28,6 +28,7 @@ $().ready(function(){
         url: currentApiUrl,
         success: function(response){
           var mapInfluencers = $.map(response.collection, function(influencer){
+            console.log(influencer.latlng)
             return {
               influencerId: influencer.id,
               mapFeature: {
@@ -35,7 +36,7 @@ $().ready(function(){
                 "properties": {},
                 "geometry": {
                   "type": "Point",
-                  "coordinates": influencer.location
+                  "coordinates": [influencer.latlng[1], influencer.latlng[0]]
                 }
               }
             }

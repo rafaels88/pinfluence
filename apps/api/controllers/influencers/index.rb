@@ -27,8 +27,8 @@ module Api::Controllers::Influencers
           {
             id: influencer.id,
             name: influencer.name,
-            location: influencer.location,
-            begin_at: influencer.begin_at.year
+            latlng: influencer.latlng,
+            begin_at: influencer.begin_at
           }
         end
       else

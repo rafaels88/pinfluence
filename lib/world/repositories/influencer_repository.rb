@@ -3,13 +3,13 @@ class InfluencerRepository
 
   def by_date(opts)
     query do
-      where("begin_at <= '#{opts[:year]}-01-01' AND end_at >= '#{opts[:year]}-12-31'")
+      where("begin_at <= #{opts[:year]}").and("end_at >= #{opts[:year]}")
     end
   end
 
   def all_available_years
-    min_date = query.min(:begin_at)
-    max_date = query.max(:end_at)
-    (min_date.year..max_date.year).to_a
+    min_year = query.min(:begin_at)
+    max_year = query.max(:end_at)
+    (min_year..max_year).to_a
   end
 end

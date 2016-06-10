@@ -1,10 +1,25 @@
 <%=
   form_for form, {} do
-    text_field :name
-    text_field :location
-    text_field :begin_at
-    text_field :end_at
-    text_field :level
+    div do
+      label "Nome"
+      text_field :name
+    end
+    div do
+      label "Local"
+      text_field :location
+    end
+    div do
+      label "Ano de Início"
+      text_field :begin_at
+    end
+    div do
+      label "Ano de Fim"
+      text_field :end_at
+    end
+    div do
+      label "Nível"
+      text_field :level
+    end
 
     submit submit_label
   end

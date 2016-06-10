@@ -5,6 +5,7 @@ gem 'rake'
 gem 'hanami',       '0.7.3'
 gem 'hanami-model', '~> 0.5'
 gem 'pg'
+gem 'httparty'
 
 
 group :development, :test do
