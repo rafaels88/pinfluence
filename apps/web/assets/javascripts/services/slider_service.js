@@ -15,7 +15,7 @@ function renderSlider(range, callbacks){
     }
   });
 
-  bigValueSlider.noUiSlider.on('update', function ( values, handle ) {
+  bigValueSlider.noUiSlider.on('change', function ( values, handle ) {
     var currentValue = range[values[handle]]
     bigValueSpan.innerHTML = currentValue;
     callbacks.onUpdate(currentValue);

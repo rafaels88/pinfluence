@@ -12,7 +12,7 @@ function renderMap(){
 function _createMarker(influencer) {
   var myLatlng = new google.maps.LatLng(influencer.latlng[0], influencer.latlng[1]);
   var infowindow = new google.maps.InfoWindow({
-    content: influencer.name
+    content: _createInfoWindowContent(influencer)
   });
 
   var marker = new google.maps.Marker({
@@ -26,6 +26,12 @@ function _createMarker(influencer) {
   });
   infowindow.open(map, marker);
   return marker;
+}
+
+function _createInfoWindowContent(influencer) {
+  return "<a target='_blank' href='https://en.wikipedia.org/wiki/" +influencer.name+ "'>" +
+            "<img class='wikipedia icon' src='/assets/wikipedia.png'></a> " +
+            influencer.name;
 }
 
 function renderInfluencersInMap(influencers){

@@ -1,10 +1,27 @@
+html,
+body {
+  height: 100%;
+  min-height: 100%;
+}
+#huge-value {
+  left: 10px;
+  top: 30px;
+  position: absolute;
+  z-index: 100;
+}
 #slider-huge {
-  margin-left: 10px;
-  margin-top: 50px;
-  height: 800px;
+  left: 10px;
+  top: 50px;
+  height: 100%;
   position: absolute;
   z-index: 100;
 }
 #map-container {
 
+}
+
+.icon {
+  width: 20px;
+  margin-right: 5px;
+  vertical-align: middle;
 }

@@ -10,17 +10,13 @@ function requestYears(cb){
 }
 
 function requestInfluencers(year, cb){
-  clearTimeout(requestTimeout);
+  var currentApiUrl = apiUrl;
+  if(year){ currentApiUrl += "?year=" + year; }
 
-  requestTimeout = setTimeout(function(){
-    var currentApiUrl = apiUrl;
-    if(year){ currentApiUrl += "?year=" + year; }
-
-    $.ajax({
-      url: currentApiUrl,
-      success: function(response){
-        cb(response.collection);
-      }
-    });
-  }, 300);
+  $.ajax({
+    url: currentApiUrl,
+    success: function(response){
+      cb(response.collection);
+    }
+  });
 }
