@@ -16,8 +16,14 @@ function renderSlider(range, callbacks){
   });
 
   bigValueSlider.noUiSlider.on('change', function ( values, handle ) {
-    var currentValue = range[values[handle]]
-    bigValueSpan.innerHTML = currentValue;
-    callbacks.onUpdate(currentValue);
+    var currentValue = range[values[handle]];
+    callbacks.onChange(currentValue);
   });
+
+  bigValueSlider.noUiSlider.on('update', function ( values, handle ) {
+    var currentValue = range[values[handle]];
+    bigValueSpan.innerHTML = currentValue;
+  });
+
+  callbacks.onInit()
 }

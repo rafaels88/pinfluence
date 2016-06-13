@@ -4,8 +4,13 @@ $().ready(function(){
 
     requestYears(function(years){
       renderSlider(years, {
-        onUpdate: function(currentYear){
+        onChange: function(currentYear){
           requestInfluencers(currentYear, function(influencers){
+            renderInfluencersInMap(influencers);
+          });
+        },
+        onInit: function(){
+          requestInfluencers(years[0], function(influencers){
             renderInfluencersInMap(influencers);
           });
         }
