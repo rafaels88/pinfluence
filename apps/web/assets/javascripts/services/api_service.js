@@ -20,3 +20,15 @@ function requestInfluencers(year, cb){
     }
   });
 }
+
+function requestYearByInfluencerName(name, cb){
+  var currentApiUrl = apiUrl;
+  if(name){ currentApiUrl += "?name=" + name; }
+
+  $.ajax({
+    url: currentApiUrl,
+    success: function(response){
+      cb(response.collection[0].begin_at);
+    }
+  });
+}

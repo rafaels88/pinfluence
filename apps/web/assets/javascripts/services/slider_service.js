@@ -1,6 +1,9 @@
+var bigValueSlider = document.getElementById('slider-huge'),
+    bigValueSpan = document.getElementById('huge-value'),
+    sliderRange;
+
 function renderSlider(range, callbacks){
-  var bigValueSlider = document.getElementById('slider-huge'),
-      bigValueSpan = document.getElementById('huge-value');
+  sliderRange = range;
 
   noUiSlider.create(bigValueSlider, {
     start: 0,
@@ -11,19 +14,24 @@ function renderSlider(range, callbacks){
     }),
     range: {
       min: 0,
-      max: range.length-1
+      max: sliderRange.length-1
     }
   });
 
   bigValueSlider.noUiSlider.on('change', function ( values, handle ) {
-    var currentValue = range[values[handle]];
+    var currentValue = sliderRange[values[handle]];
     callbacks.onChange(currentValue);
   });
 
   bigValueSlider.noUiSlider.on('update', function ( values, handle ) {
-    var currentValue = range[values[handle]];
+    var currentValue = sliderRange[values[handle]];
     bigValueSpan.innerHTML = currentValue;
   });
 
-  callbacks.onInit()
+  callbacks.onInit();
+}
+
+function changeSliderTo(year){
+  var index = sliderRange.indexOf(year);
+  bigValueSlider.noUiSlider.set(index);
 }

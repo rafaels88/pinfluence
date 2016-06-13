@@ -16,8 +16,19 @@ $().ready(function(){
         }
       });
     });
-  }
 
+    listenSearch({
+      onSearch: function(term){
+        requestYearByInfluencerName(term, function(year){
+          changeSliderTo(year);
+
+          requestInfluencers(year, function(influencers){
+            renderInfluencersInMap(influencers);
+          });
+        })
+      }
+    })
+  }
   init();
 });
 

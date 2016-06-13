@@ -13,26 +13,42 @@ module Api::Controllers::Influencers
     end
 
     def call(params)
-      self.body = JSON.generate({
+      body = {
         collection: collection(params),
-        available_years: years
-      })
+      }
+
+      body[:available_years] = years if body[:collection].empty?
+
+      self.body = JSON.generate(body)
     end
 
     private
 
     def collection(params)
       if params[:year]
-        repository.by_date(year: params[:year]).map do |influencer|
-          {
-            id: influencer.id,
-            name: influencer.name,
-            latlng: influencer.latlng,
-            begin_at: influencer.begin_at
-          }
+        repository.by_date(year: params[:year]).map { |i| build_influencer_body(i) }
+
+      elsif params[:name]
+        influencer = repository.by_name(params[:name])
+        if influencer
+          [build_influencer_body(influencer)]
+        else
+          []
         end
+
       else
         []
+      end
+    end
+
+    def build_influencer_body(influencer)
+      if influencer
+        {
+          id: influencer.id,
+          name: influencer.name,
+          latlng: influencer.latlng,
+          begin_at: influencer.begin_at
+        }
       end
     end
 

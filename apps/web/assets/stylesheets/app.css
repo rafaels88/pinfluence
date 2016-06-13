@@ -1,23 +1,33 @@
 html,
 body {
+  background-color: black;
   height: 100%;
   min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+#search {
+  top: 50px;
+  left: 60px;
+  position: absolute;
+  z-index: 100;
 }
 #huge-value {
-  left: 10px;
+  color: white;
+  left: 5px;
   top: 30px;
   position: absolute;
   z-index: 100;
 }
 #slider-huge {
-  left: 10px;
-  top: 50px;
-  height: 100%;
+  left: 15px;
+  top: 70px;
+  height: 90%;
   position: absolute;
   z-index: 100;
 }
 #map-container {
-
+  margin-left: 50px;
 }
 
 .icon {

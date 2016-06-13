@@ -7,6 +7,12 @@ class InfluencerRepository
     end
   end
 
+  def by_name(name)
+    query do
+      where("lower(name) = '#{name.downcase}'")
+    end.first
+  end
+
   def all_available_years
     min_year = query.min(:begin_at)
     max_year = query.max(:end_at)
