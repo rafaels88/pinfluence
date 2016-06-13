@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Web</title>
+    <title>World Influencers</title>
     <%= favicon %>
 
-    <%= stylesheet 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.css' %>
     <%= stylesheet 'nouislider.min' %>
+    <%= stylesheet 'app' %>
   </head>
   <body>
     <%= yield %>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=<%= gmaps_api_key %>"></script>
-    <%= javascript 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-rc1/jquery.min.js' %>
 
-    <%= javascript 'nouislider.min' %>
-    <%= javascript 'wNumb' %>
-    <%= javascript 'render' %>
+    <%= javascript 'jquery.min', 'nouislider.min', 'wNumb' %>
+    <%= javascript 'api_service', 'map_service', 'slider_service' %>
+    <%= javascript 'app' %>
   </body>
 </html>
