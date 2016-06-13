@@ -2,11 +2,10 @@ $().ready(function(){
   var apiUrl = $("#map-container").data("api-endpoint"), map, currentMapSources = {}, oldMapSources = {}, requestTimeout;
 
   function init(){
-    var myLatlng = new google.maps.LatLng(-34.397, 150.644);
+    var myLatlng = new google.maps.LatLng(0, 0) ;
     var mapOptions = {
-      zoom: 4,
+      zoom: 3,
       center: myLatlng,
-      mapTypeId: google.maps.MapTypeId.SATELLITE
     };
     map = new google.maps.Map(document.getElementById("map"),
         mapOptions);
@@ -44,7 +43,7 @@ $().ready(function(){
           cb(response.collection);
         }
       });
-    }, 500);
+    }, 300);
   }
 
   function renderSlider(range, callbacks){
@@ -93,9 +92,10 @@ $().ready(function(){
 
         var marker = new google.maps.Marker({
             position: myLatlng,
+            animation: google.maps.Animation.DROP,
+            map: map,
             title: influencer.name
         });
-        marker.setMap(map);
         influencer.marker = marker;
         currentMapSources[influencerId] = influencer;
       }
