@@ -4,14 +4,13 @@
     <title>Web</title>
     <%= favicon %>
 
-    <%= stylesheet 'https://api.mapbox.com/mapbox-gl-js/v0.19.1/mapbox-gl.css' %>
     <%= stylesheet 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.css' %>
     <%= stylesheet 'nouislider.min' %>
   </head>
   <body>
     <%= yield %>
 
-    <%= javascript 'https://api.mapbox.com/mapbox-gl-js/v0.19.1/mapbox-gl.js' %>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%= gmaps_api_key %>"></script>
     <%= javascript 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-rc1/jquery.min.js' %>
 
     <%= javascript 'nouislider.min' %>

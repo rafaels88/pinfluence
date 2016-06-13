@@ -3,9 +3,11 @@ module Web::Controllers::Home
     include Web::Action
 
     expose :influencers
+    expose :gmaps_api_key
 
     def call(params)
       @influencers = repository.all
+      @gmaps_api_key = ENV['GOOGLE_MAPS_API_KEY']
     end
 
     private

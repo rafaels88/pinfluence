@@ -1,11 +1,25 @@
 $().ready(function(){
-  mapboxgl.accessToken = 'pk.eyJ1IjoicmFmYWVsczg4IiwiYSI6ImJpWUZvaHcifQ.Bkjj9moCS4ILf_7tYlBKyg';
   var apiUrl = $("#map-container").data("api-endpoint"), map, currentMapSources = {}, oldMapSources = {}, requestTimeout;
 
   function init(){
+    var myLatlng = new google.maps.LatLng(-34.397, 150.644);
+    var mapOptions = {
+      zoom: 4,
+      center: myLatlng,
+      mapTypeId: google.maps.MapTypeId.SATELLITE
+    };
+    map = new google.maps.Map(document.getElementById("map"),
+        mapOptions);
+
     requestYears(function(years){
-      renderSlider(years);
-    })
+      renderSlider(years, {
+        onUpdate: function(currentYear){
+          requestInfluencers(currentYear, function(influencers){
+            renderMap(influencers);
+          });
+        }
+      });
+    });
   }
 
   function requestYears(cb){
@@ -17,7 +31,7 @@ $().ready(function(){
     });
   }
 
-  function requestInfluencers(year){
+  function requestInfluencers(year, cb){
     clearTimeout(requestTimeout);
 
     requestTimeout = setTimeout(function(){
@@ -27,28 +41,13 @@ $().ready(function(){
       $.ajax({
         url: currentApiUrl,
         success: function(response){
-          var mapInfluencers = $.map(response.collection, function(influencer){
-            console.log(influencer.latlng)
-            return {
-              influencerId: influencer.id,
-              mapFeature: {
-                "type": "Feature",
-                "properties": {},
-                "geometry": {
-                  "type": "Point",
-                  "coordinates": [influencer.latlng[1], influencer.latlng[0]]
-                }
-              }
-            }
-          });
-
-          renderMap(mapInfluencers);
+          cb(response.collection);
         }
       });
     }, 500);
   }
 
-  function renderSlider(range){
+  function renderSlider(range, callbacks){
     var bigValueSlider = document.getElementById('slider-huge'),
         bigValueSpan = document.getElementById('huge-value');
 
@@ -67,53 +66,47 @@ $().ready(function(){
     bigValueSlider.noUiSlider.on('update', function ( values, handle ) {
       var currentValue = range[values[handle]]
       bigValueSpan.innerHTML = currentValue;
-      requestInfluencers(currentValue);
+      callbacks.onUpdate(currentValue);
     });
   }
 
-  function renderMap(mapInfluencers){
+  function renderMap(influencers){
     oldMapSources = currentMapSources;
     currentMapSources = {};
 
-    $(mapInfluencers).each(function(i, influencer){
-      if(oldMapSources[influencer.influencerId] == undefined){
+    $(influencers).each(function(i, influencer){
+      if(oldMapSources[influencer.id] == undefined){
         influencer.shouldRender = true;
+      } else {
+        // Retrieves marker for this influencer
+        influencer.marker = oldMapSources[influencer.id].marker;
       }
-      currentMapSources[influencer.influencerId] = influencer;
-      delete oldMapSources[influencer.influencerId];
+
+      currentMapSources[influencer.id] = influencer;
+      delete oldMapSources[influencer.id];
     });
 
+    // Add Markers
     $.each(currentMapSources, function(influencerId, influencer){
       if(influencer.shouldRender == true){
-        var sourceId = "i-" + influencerId;
+        var myLatlng = new google.maps.LatLng(influencer.latlng[0], influencer.latlng[1]);
 
-        map.addSource(sourceId, {
-            "type": "geojson",
-            "data": {
-              "type": "FeatureCollection",
-              "features": [influencer.mapFeature]
-            }
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            title: influencer.name
         });
-
-        map.addLayer({
-            "id": sourceId,
-            "type": "symbol",
-            "source": sourceId,
-            "layout": {
-              "icon-image": "marker-15"
-            },
-            "paint": {}
-        });
+        marker.setMap(map);
+        influencer.marker = marker;
+        currentMapSources[influencerId] = influencer;
       }
     });
 
+    // Remove Markers
     $.each(oldMapSources, function(influencerId, influencer){
-      map.removeLayer("i-" + influencerId);
-      map.removeSource("i-" + influencerId);
+      influencer.marker.setMap(null);
     });
   }
 
-  map = new mapboxgl.Map({ container: 'map', style: 'mapbox://styles/mapbox/streets-v8' });
-  map.on('load', init);
+  init();
 });
 
