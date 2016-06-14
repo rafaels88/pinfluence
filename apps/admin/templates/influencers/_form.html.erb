@@ -1,26 +1,26 @@
 <%=
-  form_for form, {} do
-    div do
+  form_for form, { class: 'ui form' } do
+    div class: "field" do
       label "Nome"
       text_field :name
     end
-    div do
+    div class: "field" do
       label "Local"
       text_field :location
     end
-    div do
+    div class: "field" do
       label "Ano de Início"
       text_field :begin_at
     end
-    div do
+    div class: "field" do
       label "Ano de Fim"
       text_field :end_at
     end
-    div do
+    div class: "field" do
       label "Nível"
       text_field :level
     end
 
-    submit submit_label
+    submit submit_label, { class: 'ui button' }
   end
 %>
