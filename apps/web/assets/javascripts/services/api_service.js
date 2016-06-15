@@ -4,7 +4,7 @@ function requestYears(cb){
   $.ajax({
     url: apiUrl,
     success: function(response){
-      cb(response.available_years);
+      cb(response.available_years, response.available_years_formatted);
     }
   });
 }

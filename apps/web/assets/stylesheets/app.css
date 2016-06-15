@@ -8,7 +8,7 @@ body {
 }
 #search {
   top: 50px;
-  left: 60px;
+  left: 85px;
   position: absolute;
   z-index: 100;
 }
@@ -23,14 +23,14 @@ body {
   z-index: 100;
 }
 #slider-huge {
-  left: 15px;
+  left: 28px;
   top: 70px;
   height: 90%;
   position: absolute;
   z-index: 100;
 }
 #map-container {
-  margin-left: 50px;
+  margin-left: 75px;
 }
 #search-field {
   height: 20px;

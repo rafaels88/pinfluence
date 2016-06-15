@@ -17,7 +17,10 @@ module Api::Controllers::Influencers
         collection: collection(params),
       }
 
-      body[:available_years] = years if body[:collection].empty?
+      if body[:collection].empty?
+        body[:available_years] = years
+        body[:available_years_formatted] = formatted_years
+      end
 
       self.body = JSON.generate(body)
     end
@@ -54,6 +57,19 @@ module Api::Controllers::Influencers
 
     def years
       repository.all_available_years
+    end
+
+    def formatted_years
+      years.map do |y|
+        if y < 0
+          y *= -1
+          "#{y} AC"
+        elsif y > 0
+          "#{y} DC"
+        else
+          y
+        end
+      end
     end
   end
 end

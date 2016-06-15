@@ -2,8 +2,8 @@ $().ready(function(){
   function init(){
     renderMap();
 
-    requestYears(function(years){
-      renderSlider(years, {
+    requestYears(function(years, formattedYears){
+      renderSlider(years, formattedYears, {
         onChange: function(currentYear){
           requestInfluencers(currentYear, function(influencers){
             renderInfluencersInMap(influencers);

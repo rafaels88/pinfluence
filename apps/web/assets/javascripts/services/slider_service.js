@@ -2,7 +2,7 @@ var bigValueSlider = document.getElementById('slider-huge'),
     bigValueSpan = document.getElementById('huge-value'),
     sliderRange;
 
-function renderSlider(range, callbacks){
+function renderSlider(range, formattedRange, callbacks){
   sliderRange = range;
 
   noUiSlider.create(bigValueSlider, {
@@ -24,7 +24,7 @@ function renderSlider(range, callbacks){
   });
 
   bigValueSlider.noUiSlider.on('update', function ( values, handle ) {
-    var currentValue = sliderRange[values[handle]];
+    var currentValue = formattedRange[values[handle]];
     bigValueSpan.innerHTML = currentValue;
   });
 
