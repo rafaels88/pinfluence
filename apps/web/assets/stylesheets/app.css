@@ -12,6 +12,9 @@ body {
   position: absolute;
   z-index: 100;
 }
+#search .wrapper {
+  position: relative;
+}
 #huge-value {
   color: white;
   left: 5px;
@@ -28,6 +31,25 @@ body {
 }
 #map-container {
   margin-left: 50px;
+}
+#search-field {
+  height: 20px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #bbb;
+  width: 200px;
+  box-shadow: 2px 2px 9px #999;
+}
+
+#search-button {
+  background: url('/assets/search-icon.png') no-repeat;
+  height: 16px;
+  width: 16px;
+  position: absolute;
+  right: 12px;
+  border: 0;
+  top: 8px;
+  cursor: pointer;
 }
 
 .icon {
