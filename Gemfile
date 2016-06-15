@@ -12,11 +12,15 @@ group :development, :test do
   gem 'byebug'
 end
 
+group :development do
+  gem 'capistrano'
+end
+
 group :test do
   gem 'minitest'
   gem 'capybara'
 end
 
 group :production do
-  # gem 'puma'
+  gem 'puma'
 end
