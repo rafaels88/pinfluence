@@ -13,7 +13,7 @@ collection :influencers do
   attribute :updated_at, Time
 end
 
-collection :influencers do
+collection :users do
   entity     User
   repository UserRepository
 
@@ -21,7 +21,7 @@ collection :influencers do
   attribute :name, String
   attribute :email, String
   attribute :name, String
-  attribute :password, String
+  attribute :password, Password
   attribute :created_at, Time
   attribute :updated_at, Time
 end

@@ -1,15 +1,19 @@
-<%=
-  form_for form, { class: 'ui form' } do
-    div class: "field" do
-      label "Email"
-      text_field :email
-    end
+<div class="ui segment">
+  <h2 class="ui header">Autenticação</h2>
 
-    div class: "field" do
-      label "Senha"
-      password_field :password_plain
-    end
+  <%=
+    form_for form, { class: 'ui form' } do
+      div class: "field" do
+        label "Email"
+        text_field :email
+      end
 
-    submit submit_label, { class: 'ui button' }
-  end
-%>
+      div class: "field" do
+        label "Senha"
+        password_field :password_plain
+      end
+
+      submit submit_label, { class: 'ui button' }
+    end
+  %>
+</div>

@@ -1,6 +1,8 @@
 require 'hanami/model'
 require 'hanami/mailer'
 require_relative './ext/lat_lng'
+require_relative './ext/password'
+
 Dir["#{ __dir__ }/world/**/*.rb"].each { |file| require_relative file }
 
 Hanami::Model.configure do

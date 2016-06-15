@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     addressable (2.4.0)
+    bcrypt (3.1.11)
     byebug (9.0.5)
     capybara (2.7.1)
       addressable
@@ -85,6 +86,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bcrypt
   bundler
   byebug
   capybara
