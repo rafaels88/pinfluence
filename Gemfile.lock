@@ -12,7 +12,16 @@ GEM
       i18n
       rake (>= 10.0.0)
       sshkit (>= 1.9.0)
+    capistrano-bundler (1.1.4)
+      capistrano (~> 3.1)
+      sshkit (~> 1.2)
     capistrano-harrow (0.5.1)
+    capistrano-rbenv (2.0.4)
+      capistrano (~> 3.1)
+      sshkit (~> 1.3)
+    capistrano3-puma (1.2.1)
+      capistrano (~> 3.0)
+      puma (>= 2.6)
     capybara (2.7.1)
       addressable
       mime-types (>= 1.16)
@@ -107,6 +116,9 @@ DEPENDENCIES
   bundler
   byebug
   capistrano
+  capistrano-bundler (~> 1.1.2)
+  capistrano-rbenv
+  capistrano3-puma
   capybara
   hanami (= 0.7.3)
   hanami-model (~> 0.5)

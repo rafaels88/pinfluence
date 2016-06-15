@@ -3,6 +3,8 @@
 /public/assets*
 /tmp
 
+/log
+
 # IDE
 *.swp
 *.swo

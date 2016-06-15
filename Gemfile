@@ -14,6 +14,9 @@ end
 
 group :development do
   gem 'capistrano'
+  gem 'capistrano3-puma'
+  gem 'capistrano-bundler', '~> 1.1.2'
+  gem 'capistrano-rbenv'
 end
 
 group :test do
