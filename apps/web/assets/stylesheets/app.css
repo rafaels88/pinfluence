@@ -15,12 +15,18 @@ body {
 #search .wrapper {
   position: relative;
 }
+
+.slider-wrapper {
+  position: relative;
+  text-align: center;
+}
 #huge-value {
   color: white;
-  left: 5px;
-  top: 30px;
+  top: 20px;
   position: absolute;
   z-index: 100;
+  width: 75px;
+  text-align: center;
 }
 #slider-huge {
   left: 28px;
@@ -31,6 +37,7 @@ body {
 }
 #map-container {
   margin-left: 75px;
+  height: 100%;
 }
 #search-field {
   height: 20px;
