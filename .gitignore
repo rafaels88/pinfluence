@@ -5,6 +5,7 @@
 
 /log
 .bundle/
+.byebug_history
 
 # IDE
 *.swp
