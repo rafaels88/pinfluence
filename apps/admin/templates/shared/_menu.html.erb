@@ -4,11 +4,11 @@
   </div>
   <a class="item" href="<%= routes.new_influencer_path %>">Novo</a>
   <a class="item" href="<%= routes.influencers_path %>">Todos</a>
-  <div class="right">
+  <div class="menu right">
     <div class="item">
       <%=
         form_for :session, routes.session_path, style: 'display: inline-block', method: :delete do
-          submit 'Deslogar', { class: "ui tiny button" }
+          submit 'Deslogar', { class: "ui basic button" }
         end
       %>
     </div>
