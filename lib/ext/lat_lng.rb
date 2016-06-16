@@ -15,7 +15,7 @@ class LatLng < Hanami::Model::Coercer
   def self.normalize_format(value)
     if value.respond_to?(:split)
       lat, lng = value.split(",")
-      value = [lat, lng]
+      value = [lat.strip, lng.strip]
     end
     value
   end

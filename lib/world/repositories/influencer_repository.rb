@@ -13,6 +13,12 @@ class InfluencerRepository
     end.first
   end
 
+  def self.by_latlng(lat:, lng:)
+    query do
+      where(latlng: "#{lat}, #{lng}")
+    end
+  end
+
   def self.all_available_years
     min_year = query.min(:begin_at)
     max_year = query.max(:end_at)
