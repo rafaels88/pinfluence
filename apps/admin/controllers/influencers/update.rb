@@ -25,7 +25,7 @@ module Admin::Controllers::Influencers
     end
 
     def repository
-      InfluencerRepository.new
+      InfluencerRepository
     end
   end
 end

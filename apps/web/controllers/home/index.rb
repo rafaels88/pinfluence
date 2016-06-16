@@ -13,7 +13,7 @@ module Web::Controllers::Home
     private
 
     def repository
-      InfluencerRepository.new
+      InfluencerRepository
     end
   end
 end

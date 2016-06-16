@@ -3,7 +3,7 @@ module Admin::Controllers::Sessions
     include Admin::Action
 
     def call(params)
-      user = UserRepository.new.find_by_email(email: params[:session]["email"])
+      user = UserRepository.find_by_email(email: params[:session]["email"])
 
       if user && user.password == params[:session]["password_plain"]
         session[:user_id] = user.id

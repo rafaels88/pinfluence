@@ -8,7 +8,7 @@ module Api::Controllers::Influencers
     expose :influencers
 
     def initialize(repository: InfluencerRepository)
-      @repository = repository.new
+      @repository = repository
       @years = []
     end
 
