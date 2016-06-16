@@ -10,7 +10,7 @@ module Admin
     private
 
     def authenticate!
-      halt 401 unless authenticated?
+      redirect_to routes.new_session_path unless authenticated?
     end
 
     def authenticated?
