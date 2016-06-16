@@ -53,19 +53,18 @@ set :bundle_flags, "--deployment"
 
 namespace :deploy do
 
-  desc 'Restart application'
-  task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      #invoke 'unicorn:legacy_restart'
-    end
-  end
-
   task :symlink_uploads do
     on roles(:app), in: :sequence, wait: 5 do
       execute "ln -nfs #{shared_path}/uploads/  #{release_path}/public/"
     end
   end
 
+  task :precompile do
+    on roles(:app), in: :sequence, wait: 5 do
+      execute "cd #{current_path} && #{fetch(:rbenv_prefix)} bundle exec hanami assets precompile"
+    end
+  end
+
   after :updating, :symlink_uploads
-  after :publishing, :restart
+  after :publishing, :precompile
 end
