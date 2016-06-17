@@ -24,4 +24,10 @@ class InfluencerRepository
     max_year = query.max(:end_at)
     (min_year..max_year).to_a
   end
+
+  def self.all_ordered_by(field=:name)
+    query do
+      order(field)
+    end
+  end
 end

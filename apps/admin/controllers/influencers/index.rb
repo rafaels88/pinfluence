@@ -5,7 +5,7 @@ module Admin::Controllers::Influencers
     expose :influencers
 
     def call(params)
-      @influencers = InfluencerRepository.all
+      @influencers = InfluencerRepository.all_ordered_by(:name)
     end
   end
 end
