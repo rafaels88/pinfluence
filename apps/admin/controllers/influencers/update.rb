@@ -21,11 +21,25 @@ module Admin::Controllers::Influencers
     def latlng_for(location)
       req = HTTParty.get(URI.escape("http://nominatim.openstreetmap.org/search/#{location}?format=json"))
       response = JSON.parse(req.body).first
-      uniq_latlng = change_for_unique_latlng({
+
+      latlng = {
         lat: response['lat'],
         lng: response['lon']
-      })
-      "#{uniq_latlng[:lat]}, #{uniq_latlng[:lng]}"
+      }
+
+      unless is_latlng_unique?(latlng)
+        latlng = change_for_unique_latlng({
+          lat: response['lat'],
+          lng: response['lon']
+        })
+      end
+
+      "#{latlng[:lat]}, #{latlng[:lng]}"
+    end
+
+    def is_latlng_unique?(latlng)
+      result = repository.by_latlng(lat: latlng[:lat], lng: latlng[:lng])
+      result.count == 0 ? true : false
     end
 
     def change_for_unique_latlng(latlng_to_uniquify)

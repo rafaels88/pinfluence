@@ -65,6 +65,13 @@ namespace :deploy do
     end
   end
 
+  task :db_migrate do
+    on roles(:app), in: :sequence, wait: 5 do
+      execute "cd #{current_path} && HANAMI_ENV=production #{fetch(:rbenv_prefix)} bundle exec hanami db migrate"
+    end
+  end
+
   after :updating, :symlink_uploads
+  after :publishing, :db_migrate
   after :publishing, :precompile
 end
