@@ -3,11 +3,12 @@
 
   <table class="ui celled padded table">
     <thead>
-      <tr><th class="single line">Nome</th>
+      <tr><th class="single line">Name</th>
       <th>Local</th>
-      <th>Ano de Início</th>
-      <th>Ano de Fim</th>
-      <th>Nível</th>
+      <th>Year begin</th>
+      <th>Year end</th>
+      <th>Level</th>
+      <th>Gender</th>
       <th></th>
       <th></th>
     </tr></thead>
@@ -28,6 +29,9 @@
           </td>
           <td>
             <%= influencer.level %>
+          </td>
+          <td>
+            <%= influencer.gender %>
           </td>
           <td class="center aligned">
             <a href="<%= routes.edit_influencer_path(id: influencer.id) %>" class="ui teal tiny button">Editar</a>

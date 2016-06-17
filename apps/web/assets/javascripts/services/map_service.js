@@ -1,5 +1,6 @@
 var map, currentMapSources = {}, oldMapSources = {};
 
+var marker;
 function renderMap(){
   var myLatlng = new google.maps.LatLng(0, 0) ;
   var mapOptions = {
@@ -15,12 +16,14 @@ function _createMarker(influencer) {
     content: _createInfoWindowContent(influencer)
   });
 
-  var marker = new google.maps.Marker({
+  marker = new google.maps.Marker({
     position: myLatlng,
     animation: google.maps.Animation.DROP,
     map: map,
-    title: influencer.name
+    title: influencer.name,
+    icon: '/assets/marker-' + influencer.gender + '-' + influencer.level +'.png'
   });
+
   marker.addListener('click', function() {
     infowindow.open(map, marker);
   });

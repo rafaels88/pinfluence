@@ -1,7 +1,7 @@
 <%=
   form_for form, { class: 'ui form' } do
     div class: "field" do
-      label "Nome"
+      label "Name"
       text_field :name
     end
     div class: "field" do
@@ -9,16 +9,20 @@
       text_field :location
     end
     div class: "field" do
-      label "Ano de Início"
+      label "Year begin"
       text_field :begin_at
     end
     div class: "field" do
-      label "Ano de Fim"
+      label "Year end"
       text_field :end_at
     end
     div class: "field" do
-      label "Nível"
-      text_field :level
+      label "Level"
+      select :level, Hash[1 => "High", 2 => "Medium", 3 => "Low"]
+    end
+    div class: "field" do
+      label "Gênero"
+      select :gender, Hash['male' => "Male", 'female' => "Female"]
     end
 
     submit submit_label, { class: 'ui button' }

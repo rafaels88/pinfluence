@@ -9,6 +9,7 @@ collection :influencers do
   attribute :begin_at, Integer
   attribute :end_at, Integer
   attribute :level, Integer
+  attribute :gender, String
   attribute :created_at, Time
   attribute :updated_at, Time
 end

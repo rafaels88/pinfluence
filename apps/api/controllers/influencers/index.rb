@@ -49,6 +49,8 @@ module Api::Controllers::Influencers
         {
           id: influencer.id,
           name: influencer.name,
+          level: influencer.level,
+          gender: influencer.gender,
           latlng: influencer.latlng,
           begin_at: influencer.begin_at
         }
