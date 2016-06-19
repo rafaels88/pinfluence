@@ -17,23 +17,21 @@ body {
 }
 
 .slider-wrapper {
+  height: 90%;
+  float: left;
   position: relative;
-  text-align: center;
+  width: 75px;
+  z-index: 100;
 }
 #huge-value {
   color: white;
-  top: 20px;
-  position: absolute;
-  z-index: 100;
-  width: 75px;
+  margin-top: 20px;
   text-align: center;
 }
 #slider-huge {
-  left: 28px;
-  top: 70px;
-  height: 90%;
-  position: absolute;
-  z-index: 100;
+  margin-left: 28px;
+  margin-top: 30px;
+  height: 95%;
 }
 #map-container {
   margin-left: 75px;
