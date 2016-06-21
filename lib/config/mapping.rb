@@ -8,6 +8,10 @@ collection :influencers do
   attribute :gender, String
   attribute :created_at, Time
   attribute :updated_at, Time
+  attribute :location, String
+  attribute :latlng, String
+  attribute :begin_at, Integer
+  attribute :end_at, Integer
 end
 
 collection :users do
