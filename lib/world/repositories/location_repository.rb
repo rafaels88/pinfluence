@@ -22,6 +22,6 @@ class LocationRepository
   def self.first_location_of_influencer(influencer)
     query do
       where(influencer_id: influencer.id).order(:begin_in).limit(1)
-    end
+    end.first
   end
 end
