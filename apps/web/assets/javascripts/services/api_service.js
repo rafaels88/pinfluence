@@ -28,7 +28,7 @@ function requestYearByInfluencerName(name, cb){
   $.ajax({
     url: currentApiUrl,
     success: function(response){
-      cb(response.collection[0].begin_at);
+      cb(response.collection[0].begin_in);
     }
   });
 }

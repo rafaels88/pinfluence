@@ -52,7 +52,7 @@ module Api::Controllers::Influencers
           level: influencer.level,
           gender: influencer.gender,
           latlng: influencer.latlng,
-          begin_at: influencer.begin_at
+          begin_in: influencer.begin_in
         }
       end
     end
