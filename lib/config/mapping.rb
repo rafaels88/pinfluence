@@ -29,7 +29,7 @@ collection :locations do
 
   attribute :id,   Integer
   attribute :name, String
-  attribute :latlng, String
+  attribute :latlng, LatLng
   attribute :begin_in, Integer
   attribute :end_in, Integer
   attribute :influencer_id, Integer

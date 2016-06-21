@@ -2,8 +2,11 @@ class InfluencerRepository
   include Hanami::Repository
 
   def self.by_date(opts)
-    query do
-      where("begin_at <= #{opts[:year]}").and("end_at >= #{opts[:year]}")
+    locations = location_repository.by_date(opts)
+    locations.map do |location|
+      influencer = find(location.influencer_id)
+      influencer.current_location = location
+      influencer
     end
   end
 
@@ -14,20 +17,27 @@ class InfluencerRepository
   end
 
   def self.by_latlng(lat:, lng:)
-    query do
-      where(latlng: "#{lat}, #{lng}")
+    locations = location_repository.by_latlng(opts)
+    locations.map do |location|
+      influencer = find(location.influencer_id)
+      influencer.current_location = location
+      influencer
     end
   end
 
   def self.all_available_years
-    min_year = query.min(:begin_at)
-    max_year = query.max(:end_at)
-    (min_year..max_year).to_a
+    location_repository.all_available_years
   end
 
   def self.all_ordered_by(field=:name)
     query do
       order(field)
     end
+  end
+
+  private
+
+  def self.location_repository
+    LocationRepository
   end
 end
