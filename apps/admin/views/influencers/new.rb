@@ -2,8 +2,12 @@ module Admin::Views::Influencers
   class New
     include Admin::View
 
-    def form
-      Form.new(:influencer, routes.influencers_path)
+    def method
+      :post
+    end
+
+    def locations
+      []
     end
 
     def submit_label

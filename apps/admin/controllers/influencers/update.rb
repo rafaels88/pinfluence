@@ -5,21 +5,65 @@ module Admin::Controllers::Influencers
     def call(params)
       influencer = repository.find(params[:id])
       influencer.update(influencer_params)
-      repository.persist(influencer)
+      influencer.update_locations!(locations_params)
+      influencer.add_locations!(new_locations_params)
+      repository.update(influencer)
 
       redirect_to routes.influencers_path
     end
 
     private
 
-    def influencer_params
-      params[:influencer].merge({
-        'latlng' => latlng_for(params[:influencer]['location'])
-      })
+    def new_locations_params
+      if params[:influencer]["new_locations"]
+        params[:influencer]["new_locations"].map do |location_params|
+          if !location_params["name"].empty? && !location_params["begin_in"].empty?
+            {
+              name: location_params['name'],
+              begin_in: location_params['begin_in'],
+              end_in: location_params['end_in'],
+              latlng: latlng_for(location_params['name'])
+            }
+          end
+        end.compact
+      else
+        []
+      end
     end
 
-    def latlng_for(location)
-      req = HTTParty.get(URI.escape("http://nominatim.openstreetmap.org/search/#{location}?format=json"))
+    def locations_params
+      @_locations = {}
+      if params[:influencer]["locations"]
+        params[:influencer]["locations"].each do |location_id, location_params|
+          @_locations[location_id] = {
+            name: location_params['name'],
+            begin_in: location_params['begin_in'],
+            end_in: location_params['end_in'],
+            latlng: latlng_for(location_params['name'], location_id: location_id)
+          }
+        end
+      end
+      @_locations
+    end
+
+    def influencer_params
+      {
+        name: params[:influencer]['name'],
+        gender: params[:influencer]['gender'],
+        level: params[:influencer]['level']
+      }
+    end
+
+    def latlng_for(location_name, location_id: nil)
+      if location_id
+        location = location_repository.find(location_id)
+        if location && location.name == location_name
+          return location.latlng
+        end
+      end
+      require 'byebug'; byebug
+
+      req = HTTParty.get(URI.escape("http://nominatim.openstreetmap.org/search/#{location_name}?format=json"))
       response = JSON.parse(req.body).first
 
       latlng = {
@@ -72,6 +116,10 @@ module Admin::Controllers::Influencers
 
     def repository
       InfluencerRepository
+    end
+
+    def location_repository
+      LocationRepository
     end
   end
 end

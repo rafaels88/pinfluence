@@ -17,7 +17,7 @@ class InfluencerRepository
   end
 
   def self.by_latlng(lat:, lng:)
-    locations = location_repository.by_latlng(opts)
+    locations = location_repository.by_latlng(lat: lat, lng: lng)
     locations.map do |location|
       influencer = find(location.influencer_id)
       influencer.current_location = location

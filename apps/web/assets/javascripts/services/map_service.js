@@ -42,15 +42,16 @@ function renderInfluencersInMap(influencers){
   currentMapSources = {};
 
   $(influencers).each(function(i, influencer){
-    if(oldMapSources[influencer.id] == undefined){
+
+    if(oldMapSources[influencer.location_id] == undefined){
       influencer.shouldRender = true;
     } else {
       // Retrieves marker for this influencer
-      influencer.marker = oldMapSources[influencer.id].marker;
+      influencer.marker = oldMapSources[influencer.location_id].marker;
     }
 
-    currentMapSources[influencer.id] = influencer;
-    delete oldMapSources[influencer.id];
+    currentMapSources[influencer.location_id] = influencer;
+    delete oldMapSources[influencer.location_id];
   });
 
   // Add Markers

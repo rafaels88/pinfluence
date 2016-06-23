@@ -2,9 +2,12 @@ module Admin::Views::Influencers
   class Edit
     include Admin::View
 
-    def form
-      Form.new(:influencer, routes.influencer_path(id: influencer.id),
-        { influencer: influencer }, { method: :patch })
+    def method
+      :patch
+    end
+
+    def locations
+      influencer.locations
     end
 
     def submit_label

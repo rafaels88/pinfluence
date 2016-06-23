@@ -48,6 +48,7 @@ module Api::Controllers::Influencers
       if influencer
         {
           id: influencer.id,
+          location_id: influencer.location_id,
           name: influencer.name,
           level: influencer.level,
           gender: influencer.gender,

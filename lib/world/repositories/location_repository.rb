@@ -24,4 +24,10 @@ class LocationRepository
       where(influencer_id: influencer.id).order(:begin_in).limit(1)
     end.first
   end
+
+  def self.by_influencer(influencer)
+    query do
+      where(influencer_id: influencer.id)
+    end
+  end
 end
