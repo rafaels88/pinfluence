@@ -10,6 +10,8 @@ module Admin::Views::Influencers
       []
     end
 
+    def influencer; end
+
     def submit_label
       'Create'
     end

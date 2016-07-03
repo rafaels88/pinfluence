@@ -43,6 +43,15 @@ class Influencer
     end
   end
 
+  def delete_locations!(locations_params)
+    if !locations_params[:ids].nil?
+      locations_params[:ids].each do |location_id|
+        location = location_repository.find(location_id)
+        location_repository.delete(location)
+      end
+    end
+  end
+
   private
 
   def first_location_associated

@@ -7,6 +7,7 @@ module Admin::Controllers::Influencers
       influencer.update(influencer_params)
       influencer.update_locations!(locations_params)
       influencer.add_locations!(new_locations_params)
+      influencer.delete_locations!(excluded_locations_params)
       repository.update(influencer)
 
       redirect_to routes.influencers_path
@@ -46,6 +47,10 @@ module Admin::Controllers::Influencers
       @_locations
     end
 
+    def excluded_locations_params
+      { ids: params[:influencer]['excluded_locations'] }
+    end
+
     def influencer_params
       {
         name: params[:influencer]['name'],
@@ -61,7 +66,6 @@ module Admin::Controllers::Influencers
           return location.latlng
         end
       end
-      require 'byebug'; byebug
 
       req = HTTParty.get(URI.escape("http://nominatim.openstreetmap.org/search/#{location_name}?format=json"))
       response = JSON.parse(req.body).first

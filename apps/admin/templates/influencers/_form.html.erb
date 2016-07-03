@@ -1,65 +1,84 @@
-<form class="ui form" action="<%= routes.influencer_path(id: influencer.id) %>" method="post" accept-charset="utf-8">
-  <% if method == :patch %>
+<% if method == :patch %>
+<form class="ui form influencer" action="<%= routes.influencer_path(id: influencer.id) %>" method="post" accept-charset="utf-8">
     <input type="hidden" value="PATCH" name="_method">
-  <% end %>
+<% else %>
+<form class="ui form influencer" action="<%= routes.influencers_path %>" method="post" accept-charset="utf-8">
+<% end %>
 
   <input type="hidden" value="<%= csrf_token %>" name="_csrf_token">
 
-  <div class="field">
-    <label>Name</label>
-    <input type="text" value="<%= influencer.name %>" name="influencer[name]" />
+  <div class="three fields">
+    <div class="field">
+      <label>Name</label>
+      <input type="text" value="<%= influencer.name if influencer %>" name="influencer[name]" />
+    </div>
+
+    <div class="field">
+      <label>Level</label>
+      <select name="influencer[level]" id="level">
+        <option value="1">High</option>
+        <option value="2">Medium</option>
+        <option value="3">Low</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Gender</label>
+      <select name="influencer[gender]" id="gender">
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
+    </div>
   </div>
 
-  <div class="field">
-    <label>Level</label>
-    <select name="influencer[level]" id="level">
-      <option value="1">High</option>
-      <option value="2">Medium</option>
-      <option value="3">Low</option>
-    </select>
-  </div>
+  <h4 class="ui dividing header">
+    Locations | <a href="" class="add-location">Add</a>
+  </h4>
 
-  <div class="field">
-    <label>Gender</label>
-    <select name="influencer[gender]" id="gender">
-      <option value="male">Male</option>
-      <option value="female">Female</option>
-    </select>
-  </div>
-
-  <fieldset>
-    <legend>Locations</legend>
-
+  <div class="location container field">
     <% locations.each do |location| %>
-      <div class="field">
-        <label>Name</label>
-        <input type="text" value="<%= location.name %>" name="influencer[locations][<%= location.id %>][name]" />
-      </div>
-      <div class="field">
-        <label>Year begin</label>
-        <input type="text" value="<%= location.begin_in %>" name="influencer[locations][<%= location.id %>][begin_in]" />
-      </div>
-      <div class="field">
-        <label>Year end</label>
-        <input type="text" value="<%= location.end_in %>" name="influencer[locations][<%= location.id %>][end_in]" />
+      <div class="four fields">
+        <div class="field">
+          <label>Name</label>
+          <input type="text" value="<%= location.name %>" name="influencer[locations][<%= location.id %>][name]" />
+        </div>
+        <div class="field">
+          <label>Year begin</label>
+          <input type="text" value="<%= location.begin_in %>" name="influencer[locations][<%= location.id %>][begin_in]" />
+        </div>
+        <div class="field">
+          <label>Year end</label>
+          <input type="text" value="<%= location.end_in %>" name="influencer[locations][<%= location.id %>][end_in]" />
+        </div>
+        <div class="field">
+          <label>&nbsp;</label>
+          <button class="ui icon button remove-location" data-location-id="<%= location.id %>"><i class="icon minus"></i></button>
+        </div>
       </div>
     <% end %>
 
-    <div class="field">
-      <label>Name</label>
-      <input type="text" value="" name="influencer[new_locations][][name]" />
+    <div class="four fields">
+      <div class="field">
+        <label>Name</label>
+        <input type="text" value="" name="influencer[new_locations][][name]" />
+      </div>
+      <div class="field">
+        <label>Year begin</label>
+        <input type="text" value="" name="influencer[new_locations][][begin_in]" />
+      </div>
+      <div class="field">
+        <label>Year end</label>
+        <input type="text" value="" name="influencer[new_locations][][end_in]" />
+      </div>
+      <div class="field">
+        <label>&nbsp;</label>
+        <button class="ui icon button remove-location" data-location-id=""><i class="icon minus"></i></button>
+      </div>
     </div>
-    <div class="field">
-      <label>Year begin</label>
-      <input type="text" value="" name="influencer[new_locations][][begin_in]" />
-    </div>
-    <div class="field">
-      <label>Year end</label>
-      <input type="text" value="" name="influencer[new_locations][][end_in]" />
-    </div>
+  </div>
 
-  </fieldset>
-
-  <button class="ui button" stype="submit"><%= submit_label %></button>
+  <div class="field">
+    <button class="ui teal button" stype="submit"><%= submit_label %></button>
+  </div>
 </form>
 

@@ -4,21 +4,49 @@ module Admin::Controllers::Influencers
 
     def call(params)
       influencer = Influencer.new(influencer_params)
-      repository.create(influencer)
+      influencer = repository.create(influencer)
+      influencer.add_locations!(new_locations_params)
+      repository.update(influencer)
 
       redirect_to routes.influencers_path
     end
 
     private
 
-    def influencer_params
-      params[:influencer].merge({
-        'latlng' => latlng_for(params[:influencer]['location'])
-      })
+    def new_locations_params
+      if params[:influencer]["new_locations"]
+        params[:influencer]["new_locations"].map do |location_params|
+          if !location_params["name"].empty? && !location_params["begin_in"].empty?
+            {
+              name: location_params['name'],
+              begin_in: location_params['begin_in'],
+              end_in: location_params['end_in'],
+              latlng: latlng_for(location_params['name'])
+            }
+          end
+        end.compact
+      else
+        []
+      end
     end
 
-    def latlng_for(location)
-      req = HTTParty.get(URI.escape("http://nominatim.openstreetmap.org/search/#{location}?format=json"))
+    def influencer_params
+      {
+        name: params[:influencer]['name'],
+        gender: params[:influencer]['gender'],
+        level: params[:influencer]['level']
+      }
+    end
+
+    def latlng_for(location_name, location_id: nil)
+      if location_id
+        location = location_repository.find(location_id)
+        if location && location.name == location_name
+          return location.latlng
+        end
+      end
+
+      req = HTTParty.get(URI.escape("http://nominatim.openstreetmap.org/search/#{location_name}?format=json"))
       response = JSON.parse(req.body).first
 
       latlng = {
@@ -61,7 +89,7 @@ module Admin::Controllers::Influencers
       first_to_increase = number_splitted[dot_index + 2].to_i
       second_to_increase = number_splitted[dot_index + 3].to_i
 
-      first_new_number = (first_to_increase + 1) == 10 ? 0 : first_to_increase + 3
+      first_new_number = (first_to_increase + 1) == 10 ? 0 : first_to_increase + 2
       second_new_number = (second_to_increase + 1) == 10 ? 0 : second_to_increase + 2
 
       number_splitted[dot_index + 2] = first_new_number.to_s
@@ -71,6 +99,10 @@ module Admin::Controllers::Influencers
 
     def repository
       InfluencerRepository
+    end
+
+    def location_repository
+      LocationRepository
     end
   end
 end

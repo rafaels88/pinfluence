@@ -201,7 +201,7 @@ module Admin
       #  * http://content-security-policy.com/
       #  * https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Using_Content_Security_Policy
       #
-      security.content_security_policy "default-src 'none'; script-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self' https://*.cloudflare.com  https://*.googleapis.com 'unsafe-inline'; font-src 'self' data: https://*.gstatic.com;"
+      security.content_security_policy "default-src 'none'; script-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self' https://*.cloudflare.com  https://*.googleapis.com 'unsafe-inline'; font-src 'self' data: https://*.gstatic.com https://cdnjs.cloudflare.com;"
 
       ##
       # FRAMEWORKS
