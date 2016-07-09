@@ -200,7 +200,13 @@ module Web
       #  * http://content-security-policy.com/
       #  * https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Using_Content_Security_Policy
       #
-      security.content_security_policy "default-src 'none' ; child-src 'self' blob: ; script-src 'self' https://cdnjs.cloudflare.com blob: 'unsafe-eval' 'unsafe-inline' https://maps.googleapis.com; connect-src 'self'; img-src 'self' https://*.gstatic.com https://*.googleapis.com data: blob:  https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://*.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://*.gstatic.com;"
+      security.content_security_policy "default-src 'none' ;" \
+        "child-src 'self' blob: ;" \
+        "script-src 'self' 'unsafe-eval' 'unsafe-inline' blob: https://cdnjs.cloudflare.com https://www.google-analytics.com https://maps.googleapis.com;" \
+        "connect-src 'self';" \
+        "img-src 'self' data: blob: https://*.gstatic.com https://*.googleapis.com https://www.google-analytics.com https://cdnjs.cloudflare.com;" \
+        "style-src 'self' 'unsafe-inline' https://*.googleapis.com https://cdnjs.cloudflare.com;" \
+        "font-src 'self' https://*.gstatic.com;"
 
       ##
       # FRAMEWORKS
