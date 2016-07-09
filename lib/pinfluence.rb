@@ -3,7 +3,7 @@ require 'hanami/mailer'
 require_relative './ext/lat_lng'
 require_relative './ext/password'
 
-Dir["#{ __dir__ }/world/**/*.rb"].each { |file| require_relative file }
+Dir["#{ __dir__ }/pinfluence/**/*.rb"].each { |file| require_relative file }
 
 Hanami::Model.configure do
   ##
@@ -12,14 +12,14 @@ Hanami::Model.configure do
   # Available options:
   #
   #  * Memory adapter
-  #    adapter type: :memory, uri: 'memory://localhost/world_development'
+  #    adapter type: :memory, uri: 'memory://localhost/pinfluence_development'
   #
   #  * SQL adapter
-  #    adapter type: :sql, uri: 'sqlite://db/world_development.sqlite3'
-  #    adapter type: :sql, uri: 'postgres://localhost/world_development'
-  #    adapter type: :sql, uri: 'mysql://localhost/world_development'
+  #    adapter type: :sql, uri: 'sqlite://db/pinfluence_development.sqlite3'
+  #    adapter type: :sql, uri: 'postgres://localhost/pinfluence_development'
+  #    adapter type: :sql, uri: 'mysql://localhost/pinfluence_development'
   #
-  adapter type: :sql, uri: ENV['WORLD_DATABASE_URL']
+  adapter type: :sql, uri: ENV['PINFLUENCE_DATABASE_URL']
 
   ##
   # Database mapping
@@ -28,7 +28,7 @@ Hanami::Model.configure do
 end.load!
 
 Hanami::Mailer.configure do
-  root "#{ __dir__ }/world/mailers"
+  root "#{ __dir__ }/pinfluence/mailers"
 
   # See http://hanamirb.org/guides/mailers/delivery
   delivery do

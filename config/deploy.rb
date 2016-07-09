@@ -1,8 +1,8 @@
 # config valid only for current version of Capistrano
 lock '3.5.0'
 
-set :application, 'world'
-set :repo_url, 'git@github.com:rafaels88/world-influencers.git'
+set :application, 'pinfluence'
+set :repo_url, 'git@github.com:rafaels88/pinfluence.git'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
@@ -11,13 +11,13 @@ set :linked_files, %w{.env}
 set :linked_dirs, %w{tmp/pids}
 
 set :rbenv_type, :user # or :system, depends on your rbenv setup
-set :rbenv_ruby, '2.2.0'
+set :rbenv_ruby, '2.3.1'
 set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
 set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 set :rbenv_roles, :all # default value
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, '/var/www/world'
+set :deploy_to, '/var/www/pinfluence'
 
 set :ssh_options, {
   forward_agent: true,
@@ -52,13 +52,6 @@ set :bundle_flags, "--deployment"
 # set :keep_releases, 5
 
 namespace :deploy do
-
-  task :symlink_uploads do
-    on roles(:app), in: :sequence, wait: 5 do
-      execute "ln -nfs #{shared_path}/uploads/  #{release_path}/public/"
-    end
-  end
-
   task :precompile do
     on roles(:app), in: :sequence, wait: 5 do
       execute "cd #{current_path} && #{fetch(:rbenv_prefix)} bundle exec hanami assets precompile"
@@ -71,7 +64,6 @@ namespace :deploy do
     end
   end
 
-  after :updating, :symlink_uploads
   after :publishing, :db_migrate
   after :publishing, :precompile
 end

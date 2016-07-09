@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'bundler/setup'
 require 'hanami/setup'
-require_relative '../lib/world'
+require_relative '../lib/pinfluence'
 require_relative '../apps/api/application'
 require_relative '../apps/admin/application'
 require_relative '../apps/web/application'
