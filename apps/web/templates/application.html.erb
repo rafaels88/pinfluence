@@ -11,7 +11,7 @@
   <body>
     <%= yield %>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=<%= gmaps_api_key %>"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%= gmaps_api_key %>&libraries=visualization"></script>
 
     <%= javascript 'jquery.min', 'nouislider.min', 'wNumb' %>
     <%= javascript 'search_service', 'api_service', 'map_service', 'slider_service' %>

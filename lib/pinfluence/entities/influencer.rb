@@ -3,13 +3,26 @@ class Influencer
   include Hanami::Entity
 
   attributes :name, :level, :gender, :created_at, :updated_at
-  def_delegators :current_location, :begin_in, :latlng, :location, :end_in
 
-  attr_accessor :current_location
+  attr_accessor :current_locations
+  attr_reader :locations
 
   def initialize(*args)
     super
-    @current_location = first_location_associated
+    @current_locations = [first_location_associated]
+    @locations = []
+  end
+
+  def begin_in
+    first_location_associated.begin_in
+  end
+
+  def end_in
+    first_location_associated.end_in
+  end
+
+  def kind
+    :influencer
   end
 
   def location_id
@@ -55,7 +68,7 @@ class Influencer
   private
 
   def first_location_associated
-    location_repository.first_location_of_influencer(self)
+    @_first_location ||= location_repository.first_location_of_influencer(self)
   end
 
   def location_repository

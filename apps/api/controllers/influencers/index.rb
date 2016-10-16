@@ -7,15 +7,13 @@ module Api::Controllers::Influencers
 
     expose :influencers
 
-    def initialize(repository: InfluencerRepository)
+    def initialize(repository: InfluenceRepository)
       @repository = repository
       @years = []
     end
 
     def call(params)
-      body = {
-        collection: collection(params),
-      }
+      body = { collection: collection(params) }
 
       if body[:collection].empty?
         body[:available_years] = years
@@ -28,32 +26,38 @@ module Api::Controllers::Influencers
     private
 
     def collection(params)
-      if params[:year]
-        repository.by_date(year: params[:year]).map { |i| build_influencer_body(i) }
+      influences = []
 
-      elsif params[:name]
-        influencer = repository.by_name(params[:name])
-        if influencer
-          [build_influencer_body(influencer)]
-        else
-          []
+      if params[:year]
+        influences = repository.by_date(year: params[:year]).map do |i|
+          build_influence_body(i)
         end
 
-      else
-        []
+      elsif params[:name]
+        influence = repository.by_name(params[:name])
+        influences = [build_influence_body(influence)] if influence
       end
+
+      influences
     end
 
-    def build_influencer_body(influencer)
-      if influencer
+    def build_influence_body(influence)
+      {
+        id: influence.id,
+        name: influence.name,
+        gender: influence.gender,
+        begin_in: influence.begin_in,
+        kind: influence.kind,
+        locations: build_location_bodies(influence.current_locations)
+      }
+    end
+
+    def build_location_bodies(locations)
+      locations.map do |location|
         {
-          id: influencer.id,
-          location_id: influencer.location_id,
-          name: influencer.name,
-          level: influencer.level,
-          gender: influencer.gender,
-          latlng: influencer.latlng,
-          begin_in: influencer.begin_in
+          id: location.id,
+          density: location.density,
+          latlng: location.latlng
         }
       end
     end

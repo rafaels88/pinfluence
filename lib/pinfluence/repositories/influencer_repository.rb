@@ -5,7 +5,7 @@ class InfluencerRepository
     locations = location_repository.by_date(opts)
     locations.map do |location|
       influencer = find(location.influencer_id)
-      influencer.current_location = location
+      influencer.add_location location
       influencer
     end
   end
@@ -20,7 +20,7 @@ class InfluencerRepository
     locations = location_repository.by_latlng(lat: lat, lng: lng)
     locations.map do |location|
       influencer = find(location.influencer_id)
-      influencer.current_location = location
+      influencer.add_location location
       influencer
     end
   end

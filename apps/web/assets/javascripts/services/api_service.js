@@ -9,7 +9,7 @@ function requestYears(cb){
   });
 }
 
-function requestInfluencers(year, cb){
+function requestInfluences(year, cb){
   var currentApiUrl = apiUrl;
   if(year){ currentApiUrl += "?year=" + year; }
 
@@ -21,7 +21,7 @@ function requestInfluencers(year, cb){
   });
 }
 
-function requestYearByInfluencerName(name, cb){
+function requestYearByInfluenceName(name, cb){
   var currentApiUrl = apiUrl;
   if(name){ currentApiUrl += "?name=" + name; }
 

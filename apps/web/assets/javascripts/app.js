@@ -5,13 +5,13 @@ $().ready(function(){
     requestYears(function(years, formattedYears){
       renderSlider(years, formattedYears, {
         onChange: function(currentYear){
-          requestInfluencers(currentYear, function(influencers){
-            renderInfluencersInMap(influencers);
+          requestInfluences(currentYear, function(influences){
+            renderInfluencesInMap(influences);
           });
         },
         onInit: function(){
-          requestInfluencers(years[0], function(influencers){
-            renderInfluencersInMap(influencers);
+          requestInfluences(years[0], function(influences){
+            renderInfluencesInMap(influences);
           });
         }
       });
@@ -19,11 +19,11 @@ $().ready(function(){
 
     listenSearch({
       onSearch: function(term){
-        requestYearByInfluencerName(term, function(year){
+        requestYearByInfluenceName(term, function(year){
           changeSliderTo(year);
 
-          requestInfluencers(year, function(influencers){
-            renderInfluencersInMap(influencers);
+          requestInfluences(year, function(influences){
+            renderInfluencesInMap(influences);
           });
         })
       }
