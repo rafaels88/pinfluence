@@ -1,3 +1,4 @@
+project=pinfluence
 architecture=container
 test=minitest
 template=erb

@@ -1,0 +1,38 @@
+<%=
+  form_for form, class: 'ui form' do
+      div class: 'three fields' do
+        div class: 'field' do
+          label      "Location"
+          text_field :location
+        end
+
+        fields_for :influencer do
+          div class: 'field' do
+            label      "Influencer ID"
+            text_field :id
+          end
+
+          div class: 'field' do
+            label      "Influencer Type"
+            text_field :type
+          end
+        end
+      end
+
+    div class: 'two fields' do
+      div class: 'field' do
+        label      "Begin in"
+        text_field :year_begin
+      end
+
+      div class: 'field' do
+        label      "End in"
+        text_field :year_end
+      end
+    end
+
+    div class: 'field' do
+      submit submit_label, class: 'ui teal button'
+    end
+  end
+%>

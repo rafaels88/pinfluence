@@ -1,0 +1,28 @@
+<%= render partial: 'people/menu' %>
+
+<table class="ui celled padded table">
+  <thead>
+    <tr><th class="single line">Name</th>
+    <th></th>
+    <th></th>
+  </tr></thead>
+  <tbody>
+    <% people.each do |person| %>
+      <tr>
+        <td>
+          <%= person.name %>
+        </td>
+        <td class="center aligned">
+          <a href="<%= routes.edit_person_path(id: person.id) %>" class="ui teal tiny button">Editar</a>
+        </td>
+        <td class="center aligned">
+          <%=
+            form_for :influcencer, routes.person_path(id: person.id), style: 'display: inline-block', method: :delete do
+              submit 'Excluir', { class: "ui red tiny button" }
+            end
+          %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

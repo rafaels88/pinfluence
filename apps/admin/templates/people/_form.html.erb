@@ -1,0 +1,19 @@
+<%=
+  form_for form, class: 'ui form' do
+    div class: 'two fields' do
+      div class: 'field' do
+        label      :name
+        text_field :name
+      end
+
+      div class: 'field' do
+        label      :gender
+        text_field :gender
+      end
+    end
+
+    div class: 'field' do
+      submit submit_label, class: 'ui teal button'
+    end
+  end
+%>

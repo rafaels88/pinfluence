@@ -5,20 +5,21 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>Admin</title>
-    <%= favicon %>
 
-    <%= stylesheet 'https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css' %>
+    <!-- Site Properties -->
+    <title>Pinfluence</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.6/semantic.min.css" type="text/css" charset="utf-8">
   </head>
   <body>
-
-    <div class="ui container">
-      <div class="ui grid">
+    <div class="ui page padded grid">
+      <div class="three wide column">
+        <%= render partial: 'shared/sidebar' %>
+      </div>
+      <div class="thirteen wide column">
         <%= yield %>
       </div>
     </div>
 
-    <%= javascript 'jquery.min', 'semantic.min' %>
-    <%= javascript 'influencer' %>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.6/semantic.min.js" charset="utf-8">
   </body>
 </html>

@@ -1,5 +1,7 @@
 # Configure your routes here
-# See: http://www.rubydoc.info/gems/hanami-router/#Usage
-resources :influencers
-resources :sessions, only: [:new, :create]
-delete 'sessions', to: 'sessions#destroy', as: :session
+# See: http://hanamirb.org/guides/routing/overview/
+#
+# Example:
+# get '/hello', to: ->(env) { [200, {}, ['Hello from Hanami!']] }
+resources :moments
+resources :people

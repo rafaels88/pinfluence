@@ -1,8 +1,10 @@
-var apiUrl = $("#map-container").data("api-endpoint"), requestTimeout;
+var apiUrl = $("#map-container").data("api-endpoint"),
+  apiYearsUrl = $("#map-container").data("api-years-endpoint"),
+  requestTimeout;
 
 function requestYears(cb){
   $.ajax({
-    url: apiUrl,
+    url: apiYearsUrl,
     success: function(response){
       cb(response.available_years, response.available_years_formatted);
     }
