@@ -2,3 +2,7 @@
 /db/pinfluence_test
 /public/assets*
 /tmp
+
+# IDE
+*.swp
+*.swo
