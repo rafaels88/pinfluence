@@ -14,7 +14,7 @@ function renderInfluencesInMap(influences){
   $(influences).each(function(i, influence){
     if(influence.kind == "event"){
       events.push(influence);
-    } else if (influence.kind == "influencer"){
+    } else if (influence.kind == "person"){
       influencers.push(influence);
     }
   });
