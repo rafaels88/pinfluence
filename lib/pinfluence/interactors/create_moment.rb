@@ -3,26 +3,32 @@ class CreateMoment
     self.new(params).call
   end
 
-  attr_reader :location, :influencer, :year_begin, :year_end, :repository
+  attr_reader :influencer, :locations, :year_begin, :year_end,
+    :repository, :location_service
 
-  def initialize(location:, influencer:, year_begin:, year_end:, repository: MomentRepository)
+  def initialize(influencer:, locations:, year_begin:, year_end:,
+                 repository: MomentRepository, location_service: LocationService.new)
     @repository = repository
-    @location = location
+    @location_service = location_service
+    @locations = locations
     @influencer = influencer
     @year_begin = year_begin
     @year_end = year_end
   end
 
   def call
-    repository.create(new_moment)
+    moment = repository.create(new_moment)
+    locations.each do |location_param|
+      location_info = external_location_by(location_param[:address])
+      location_param[:latlng] = location_info.latlng
+      moment.add_location(location_param)
+    end
   end
 
   private
 
   def new_moment
     Moment.new(
-      location: location,
-      latlng: latlng,
       influencer_id: influencer[:id],
       influencer_type: influencer[:type],
       year_begin: year_begin,
@@ -30,7 +36,7 @@ class CreateMoment
     )
   end
 
-  def latlng
-    "0,0"
+  def external_location_by(address)
+    @_location ||= location_service.by_address(address)
   end
 end

@@ -16,11 +16,11 @@ module Api::Views::Moments
           gender: moment.influencer.gender.downcase,
           begin_in: moment.year_begin,
           kind: moment.influencer_type.downcase,
-          locations: moment.spaces.map do |space|
+          locations: moment.locations.map do |location|
             {
-              id: space.id,
-              density: space.density,
-              latlng: space.latlng.split(",")
+              id: location.id,
+              density: location.density,
+              latlng: location.latlng.split(",")
             }
           end
         }

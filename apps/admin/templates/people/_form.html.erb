@@ -7,8 +7,10 @@
       end
 
       div class: 'field' do
-        label      :gender
-        text_field :gender
+        values = Hash["Male" => "male", "Female" => "female"]
+
+        label  :gender
+        select :gender, values
       end
     end
 

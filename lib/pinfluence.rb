@@ -6,6 +6,19 @@ Hanami::Model.configure do
   adapter type: :sql, uri: ENV['DATABASE_URL']
 
   mapping do
+    collection :locations do
+      entity     Location
+      repository LocationRepository
+
+      attribute :id,   Integer
+      attribute :address, String
+      attribute :latlng, String
+      attribute :density, Integer
+      attribute :moment_id, Integer
+      attribute :created_at, Time
+      attribute :updated_at, Time
+    end
+
     collection :people do
       entity     Person
       repository PersonRepository
@@ -33,8 +46,6 @@ Hanami::Model.configure do
       repository MomentRepository
 
       attribute :id, Integer
-      attribute :location, String
-      attribute :latlng, String
       attribute :year_begin, Integer
       attribute :year_end, Integer
       attribute :influencer_id, String

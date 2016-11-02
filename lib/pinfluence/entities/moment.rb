@@ -1,21 +1,26 @@
 class Moment
   include Hanami::Entity
-  attributes :location, :latlng, :influencer_id, :influencer_type,
+  attributes :influencer_id, :influencer_type,
              :year_begin, :year_end, :created_at, :updated_at
 
-  def spaces
-    [
-      OpenStruct.new({
-        location: location,
-        latlng: latlng,
-        density: 1,
-        id: 1
-      })
-    ]
+  def locations
+    location_repository.by_moment(self)
   end
 
   def influencer
     @_influencer ||= Object.const_get("#{influencer_type}Repository")
       .find(influencer_id)
+  end
+
+  def add_location(location_param)
+    location = Location.new(location_param)
+    location.moment_id = self.id
+    location_repository.create(location)
+  end
+
+  private
+
+  def location_repository
+    LocationRepository
   end
 end
