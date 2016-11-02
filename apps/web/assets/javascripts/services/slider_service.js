@@ -9,9 +9,7 @@ function renderSlider(range, formattedRange, callbacks){
     start: 0,
     step: 1,
     orientation: 'vertical',
-    format: wNumb({
-      decimals: 0
-    }),
+    format: wNumb({ decimals: 0 }),
     range: {
       min: 0,
       max: sliderRange.length-1
@@ -25,7 +23,7 @@ function renderSlider(range, formattedRange, callbacks){
 
   bigValueSlider.noUiSlider.on('update', function ( values, handle ) {
     var currentValue = formattedRange[values[handle]];
-    bigValueSpan.innerHTML = currentValue;
+    changeValueLabel(currentValue);
   });
 
   callbacks.onInit();
@@ -34,4 +32,8 @@ function renderSlider(range, formattedRange, callbacks){
 function changeSliderTo(year){
   var index = sliderRange.indexOf(year);
   bigValueSlider.noUiSlider.set(index);
+}
+
+function changeValueLabel(value){
+  bigValueSpan.innerHTML = value;
 }

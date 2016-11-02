@@ -15,9 +15,9 @@ module Api::Views::MomentYears
       years.map do |y|
         if y < 0
           y *= -1
-          "#{y} AC"
+          "#{y} BC"
         elsif y > 0
-          "#{y} DC"
+          "#{y} AD"
         else
           y
         end

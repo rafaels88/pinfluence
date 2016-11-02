@@ -85,7 +85,7 @@ function _createMarker(influencer) {
     animation: google.maps.Animation.DROP,
     map: map,
     title: influencer.name,
-    icon: '/assets/marker-' + influencer.gender + '.png'
+    icon: '/assets/pin-' + influencer.gender + '.png'
   });
 
   marker.addListener('click', function() {
@@ -97,6 +97,6 @@ function _createMarker(influencer) {
 
 function _createInfoWindowContent(influencer) {
   return "<a target='_blank' href='https://en.wikipedia.org/wiki/" +influencer.name+ "'>" +
-            "<img class='wikipedia icon' src='/assets/wikipedia.png'></a> " +
+            "<img class='wikipedia map icon' src='/assets/wikipedia.png'></a> " +
             influencer.name;
 }
