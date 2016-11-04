@@ -19,7 +19,7 @@
         </td>
         <td class="center aligned">
           <%=
-            form_for :influcencer, routes.moment_path(id: moment.id), style: 'display: inline-block', method: :delete do
+            form_for :moment, routes.moment_path(id: moment.id), style: 'display: inline-block', method: :delete do
               submit 'Excluir', { class: "ui red tiny button" }
             end
           %>
