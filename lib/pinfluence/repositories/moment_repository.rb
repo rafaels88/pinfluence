@@ -12,4 +12,11 @@ class MomentRepository
     max_year = query.max(:year_end) || Time.now.year
     (min_year..max_year).to_a
   end
+
+  def self.by_influencer(influencer)
+    query do
+      where(influencer_id: influencer.id.to_s)
+        .and(influencer_type: influencer.class.to_s)
+    end.all
+  end
 end
