@@ -4,14 +4,10 @@ gem 'bundler'
 gem 'rake'
 gem 'hanami',       '~> 0.8'
 gem 'hanami-model', '~> 0.6'
-
-# To use form fields_for for collections
-gem "hanami-controller", github: "TiteiKo/controller", branch: "array-items-access-in-params"
-gem "hanami-helpers", github: "TiteiKo/helpers", branch: "add-form-array-support"
-
 gem 'pg'
 gem 'httparty'
 gem 'sass'
+gem 'bcrypt'
 
 group :development do
   # Code reloading

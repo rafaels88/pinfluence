@@ -1,5 +1,6 @@
 require 'hanami/helpers'
 require 'hanami/assets'
+require_relative 'controllers/authentication'
 
 module Admin
   class Application < Hanami::Application
@@ -74,7 +75,7 @@ module Admin
       #
       # See: http://www.rubydoc.info/gems/rack/Rack/Session/Cookie
       #
-      # sessions :cookie, secret: ENV['ADMIN_SESSIONS_SECRET']
+      sessions :cookie, secret: ENV['ADMIN_SESSIONS_SECRET']
 
       # Configure Rack middleware for this application
       #
@@ -251,6 +252,7 @@ module Admin
       #
       # See: http://www.rubydoc.info/gems/hanami-controller#Configuration
       controller.prepare do
+        include Authentication # included in all the actions
         # include MyAuthentication # included in all the actions
         # before :authenticate!    # run an authentication before callback
       end

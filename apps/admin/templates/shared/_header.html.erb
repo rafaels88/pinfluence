@@ -1,7 +1,14 @@
 <section class="header">
-  <div class="ui one column page padded middle aligned grid">
-    <div class="column center aligned">
+  <div class="ui two columns padded middle aligned grid">
+    <div class="eleven wide column center aligned">
       <h1 class="ui header">Pinfluence's Dashboard</h1>
+    </div>
+    <div class="five wide column right aligned">
+      <%=
+        form_for :session, routes.session_path, style: 'display: inline-block', method: :delete do
+          submit 'Sign out', { class: "ui basic button" }
+        end
+      %>
     </div>
   </div>
 </section>

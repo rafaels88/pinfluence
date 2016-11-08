@@ -1,26 +1,10 @@
-GIT
-  remote: git://github.com/TiteiKo/controller.git
-  revision: 579aa059a732736011eda3914ff702f458c7a30a
-  branch: array-items-access-in-params
-  specs:
-    hanami-controller (0.7.0)
-      hanami-utils (~> 0.8)
-      rack (~> 1.6, >= 1.6.2)
-
-GIT
-  remote: git://github.com/TiteiKo/helpers.git
-  revision: 7220f0ac7b3b5b7efe6acabd79505609f27ca1b1
-  branch: add-form-array-support
-  specs:
-    hanami-helpers (0.4.0)
-      hanami-utils (~> 0.8)
-
 GEM
   remote: https://rubygems.org/
   specs:
     addressable (2.4.0)
     airbrussh (1.1.1)
       sshkit (>= 1.6.1, != 1.7.0)
+    bcrypt (3.1.11)
     byebug (9.0.6)
     capistrano (3.6.1)
       airbrussh (>= 1.0.0)
@@ -90,6 +74,11 @@ GEM
       hanami-helpers (~> 0.4)
       hanami-utils (~> 0.8)
       tilt (~> 2.0, >= 2.0.2)
+    hanami-controller (0.7.1)
+      hanami-utils (~> 0.8)
+      rack (~> 1.6, >= 1.6.2)
+    hanami-helpers (0.4.0)
+      hanami-utils (~> 0.8)
     hanami-mailer (0.3.0)
       hanami-utils (~> 0.8)
       mail (~> 2.5)
@@ -152,6 +141,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bcrypt
   bundler
   byebug
   capistrano
@@ -161,8 +151,6 @@ DEPENDENCIES
   capybara
   dotenv (~> 2.0)
   hanami (~> 0.8)
-  hanami-controller!
-  hanami-helpers!
   hanami-model (~> 0.6)
   httparty
   minitest

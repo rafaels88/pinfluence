@@ -1,6 +1,7 @@
 require 'hanami/model'
 require 'hanami/mailer'
 Dir["#{__dir__}/pinfluence/**/*.rb"].each { |file| require_relative file }
+require_relative './ext/password'
 
 Hanami::Model.configure do
   adapter type: :sql, uri: ENV['DATABASE_URL']
@@ -50,6 +51,19 @@ Hanami::Model.configure do
       attribute :year_end, Integer
       attribute :influencer_id, String
       attribute :influencer_type, String
+      attribute :created_at, Time
+      attribute :updated_at, Time
+    end
+
+    collection :users do
+      entity     User
+      repository UserRepository
+
+      attribute :id,   Integer
+      attribute :name, String
+      attribute :email, String
+      attribute :name, String
+      attribute :password, Password
       attribute :created_at, Time
       attribute :updated_at, Time
     end
