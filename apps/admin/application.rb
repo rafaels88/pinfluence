@@ -234,7 +234,7 @@ module Admin
         connect-src 'self';
         img-src 'self' https: data:;
         style-src 'self' 'unsafe-inline' https:;
-        font-src 'self' https://cdnjs.cloudflare.com;
+        font-src 'self' https:;
         object-src 'none';
         plugin-types application/pdf;
         child-src 'self';

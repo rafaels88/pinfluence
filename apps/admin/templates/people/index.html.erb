@@ -13,12 +13,12 @@
           <%= person.name %>
         </td>
         <td class="center aligned">
-          <a href="<%= routes.edit_person_path(id: person.id) %>" class="ui teal tiny button">Editar</a>
+          <a href="<%= routes.edit_person_path(id: person.id) %>" class="ui teal tiny button">Edit</a>
         </td>
         <td class="center aligned">
           <%=
             form_for :influcencer, routes.person_path(id: person.id), style: 'display: inline-block', method: :delete do
-              submit 'Excluir', { class: "ui red tiny button" }
+              submit 'Delete', { class: "ui red tiny button" }
             end
           %>
         </td>

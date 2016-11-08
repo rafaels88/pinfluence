@@ -29,7 +29,9 @@
     end
 
     div class: 'two fields' do
-      fields_for :locations do |i|
+      hidden_field :id
+
+      fields_for :locations do
         div class: 'field' do
           label      "Location"
           text_field :address

@@ -6,17 +6,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
+    <%= favicon %>
+
     <!-- Site Properties -->
-    <title>Pinfluence</title>
+    <title>Dashboard | Pinfluence</title>
+    <link href="https://fonts.googleapis.com/css?family=Arvo" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.6/semantic.min.css" type="text/css" charset="utf-8">
+    <%= stylesheet 'application' %>
   </head>
   <body>
-    <div class="ui page padded grid">
-      <div class="three wide column">
-        <%= render partial: 'shared/sidebar' %>
+    <div class="ui celled page padded grid">
+      <div class="row">
+        <div class="sixteen wide column">
+          <%= render partial: 'shared/header' %>
+        </div>
       </div>
-      <div class="thirteen wide column">
-        <%= yield %>
+      <div class="row">
+        <div class="three wide column">
+          <%= render partial: 'shared/sidebar' %>
+        </div>
+        <div class="thirteen wide column">
+          <%= yield %>
+        </div>
       </div>
     </div>
 
