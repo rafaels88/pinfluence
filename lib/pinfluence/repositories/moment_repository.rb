@@ -13,7 +13,7 @@ class MomentRepository
     (min_year..max_year).to_a
   end
 
-  def self.by_influencer(influencer)
+  def self.search_by_influencer(influencer)
     query do
       where(influencer_id: influencer.id.to_s)
         .and(influencer_type: influencer.class.to_s)

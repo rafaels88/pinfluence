@@ -3,7 +3,7 @@ class Person
   attributes :name, :gender, :created_at, :updated_at
 
   def moments
-    moment_repository.by_influencer(self)
+    moment_repository.search_by_influencer(self)
   end
 
   private

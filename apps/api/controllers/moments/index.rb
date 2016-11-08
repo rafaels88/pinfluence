@@ -8,7 +8,7 @@ module Api::Controllers::Moments
 
     def call(params)
       if params.valid?
-        @moments = SearchMoments.call(year: params[:year])
+        @moments = SearchMoments.call(params)
       else
         status 400, "You should especify at least one search param"
       end
