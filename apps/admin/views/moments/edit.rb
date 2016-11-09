@@ -3,7 +3,7 @@ module Admin::Views::Moments
     include Admin::View
 
     def form
-      Form.new(:moment, routes.moments_path(id: moment.id),
+      Form.new(:moment, routes.moment_path(id: moment.id),
                { moment: moment, locations: locations }, { method: :patch })
     end
 

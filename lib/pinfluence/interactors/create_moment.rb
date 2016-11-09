@@ -21,7 +21,7 @@ class CreateMoment
     locations.each do |location_param|
       location_info = external_location_by(location_param[:address])
       location_param[:latlng] = location_info.latlng
-      moment.add_location(location_param)
+      moment.add_location(Location.new(location_param))
     end
   end
 

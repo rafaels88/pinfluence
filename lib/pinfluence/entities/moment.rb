@@ -12,8 +12,7 @@ class Moment
       .find(influencer_id)
   end
 
-  def add_location(location_param)
-    location = Location.new(location_param)
+  def add_location(location)
     location.moment_id = self.id
     location_repository.create(location)
   end
