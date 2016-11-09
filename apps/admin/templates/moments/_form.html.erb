@@ -1,5 +1,7 @@
 <%=
   form_for form, class: 'ui form' do
+    hidden_field :id
+
     div class: 'two fields' do
       fields_for :influencer do
         div class: 'field' do
@@ -29,18 +31,18 @@
     end
 
     div class: 'two fields' do
-      hidden_field :id
-
       fields_for :locations do
+        hidden_field :id, value: first_location_id
+
         div class: 'field' do
           label      "Location"
-          text_field :address
+          text_field :address, value: first_location_address
         end
 
         div class: 'field' do
           label      "Density"
           values = Hash[(1..10).to_a.collect { |d| [d, d] }]
-          select :density, values
+          select :density, values, options: { selected: first_location_density }
         end
       end
     end

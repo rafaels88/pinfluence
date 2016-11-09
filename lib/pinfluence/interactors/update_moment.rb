@@ -27,7 +27,8 @@ class UpdateMoment
       location.address = location_param[:address]
       location.latlng = location_info.latlng
       location.density = location_param[:density]
-      moment.add_location(location)
+      require 'byebug'; byebug
+      create_or_save_location(location)
     end
   end
 
@@ -51,5 +52,13 @@ class UpdateMoment
 
   def find_or_new_location(id)
     LocationRepository.find(id) || Location.new(moment_id: moment.id)
+  end
+
+  def create_or_save_location(location)
+    if location.id.nil?
+      moment.add_location(location)
+    else
+      LocationRepository.update(location)
+    end
   end
 end
