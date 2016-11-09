@@ -3,6 +3,7 @@
 /public/assets*
 /tmp
 .byebug_history
+/log
 
 # IDE
 *.swp

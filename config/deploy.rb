@@ -1,5 +1,5 @@
 # config valid only for current version of Capistrano
-lock '3.5.0'
+lock '3.6.1'
 
 set :application, 'pinfluence'
 set :repo_url, 'git@github.com:rafaels88/pinfluence.git'
@@ -7,7 +7,7 @@ set :repo_url, 'git@github.com:rafaels88/pinfluence.git'
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
-set :linked_files, %w{.env}
+set :linked_files, %w{.env.production}
 set :linked_dirs, %w{tmp/pids}
 
 set :rbenv_type, :user # or :system, depends on your rbenv setup
