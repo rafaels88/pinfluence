@@ -4,7 +4,7 @@ module Admin::Controllers::People
     expose :people
 
     def call(params)
-      @people = AvailablePeople.call
+      @people = ListAvailableInfluencers.call(repository: PersonRepository)
     end
   end
 end

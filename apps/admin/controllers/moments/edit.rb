@@ -5,14 +5,8 @@ module Admin::Controllers::Moments
     expose :moment
 
     def call(params)
-      @influencers = influencers
+      @influencers = ListAvailableInfluencers.call(repository: PersonRepository)
       @moment = MomentRepository.find(params[:id])
-    end
-
-    private
-
-    def influencers
-      PersonRepository.all
     end
   end
 end

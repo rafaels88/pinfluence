@@ -4,13 +4,7 @@ module Admin::Controllers::Moments
     expose :influencers
 
     def call(params)
-      @influencers = influencers
-    end
-
-    private
-
-    def influencers
-      PersonRepository.all
+      @influencers = ListAvailableInfluencers.call(repository: PersonRepository)
     end
   end
 end

@@ -1,6 +1,6 @@
-class AvailablePeople
-  def self.call
-    self.new.call
+class ListAvailableInfluencers
+  def self.call(params)
+    self.new(params).call
   end
 
   attr_reader :repository
@@ -10,6 +10,6 @@ class AvailablePeople
   end
 
   def call
-    repository.all
+    repository.all_ordered_by(:name)
   end
 end
