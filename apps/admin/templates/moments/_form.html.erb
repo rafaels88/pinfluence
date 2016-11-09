@@ -6,14 +6,14 @@
       fields_for :influencer do
         div class: 'field' do
           label  "Influencer Type"
-          select :type, Hash['Person', 'Person']
+          select :type, Hash['Person', 'Person'], class: "ui search dropdown"
         end
 
         div class: 'field' do
           label      "Name"
 
           values = Hash[influencers.collect { |i| [i.name, i.id] }]
-          select :id, values
+          select :id, values, class: "ui search dropdown"
         end
       end
     end
@@ -42,7 +42,7 @@
         div class: 'field' do
           label      "Density"
           values = Hash[(1..10).to_a.collect { |d| [d, d] }]
-          select :density, values, options: { selected: first_location_density }
+          select :density, values, options: { selected: first_location_density }, class: "ui search dropdown"
         end
       end
     end

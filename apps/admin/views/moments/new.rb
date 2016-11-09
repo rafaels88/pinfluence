@@ -9,5 +9,11 @@ module Admin::Views::Moments
     def submit_label
       'Create'
     end
+
+    def first_location_density; end
+
+    def first_location_address; end
+
+    def first_location_id; end
   end
 end

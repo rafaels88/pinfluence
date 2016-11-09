@@ -4,7 +4,7 @@ module Admin::Views::Moments
 
     def form
       Form.new(:moment, routes.moment_path(id: moment.id),
-               { moment: moment, locations: locations }, { method: :patch })
+               { moment: moment }, { method: :patch })
     end
 
     def submit_label

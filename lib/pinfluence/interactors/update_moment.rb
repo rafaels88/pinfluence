@@ -27,7 +27,6 @@ class UpdateMoment
       location.address = location_param[:address]
       location.latlng = location_info.latlng
       location.density = location_param[:density]
-      require 'byebug'; byebug
       create_or_save_location(location)
     end
   end
