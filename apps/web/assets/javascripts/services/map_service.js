@@ -1,6 +1,5 @@
 var map, currentMapSources = {}, oldMapSources = {};
 
-var marker;
 function renderMap(){
   var mapOptions = {
     zoom: 3,
@@ -80,7 +79,7 @@ function _createMarker(influencer) {
     content: _createInfoWindowContent(influencer)
   });
 
-  marker = new google.maps.Marker({
+  var marker = new google.maps.Marker({
     position: myLatlng,
     animation: google.maps.Animation.DROP,
     map: map,
