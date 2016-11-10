@@ -19,6 +19,7 @@ class CreateMoment
   def call
     moment = repository.create(new_moment)
     locations.each do |location_param|
+      location_param.delete(:id)
       location_info = external_location_by(location_param[:address])
       location_param[:latlng] = location_info.latlng
       moment.add_location(Location.new(location_param))
