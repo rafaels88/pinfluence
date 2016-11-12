@@ -6,6 +6,12 @@ module Web
       def production?
         Hanami.env == 'production'
       end
+
+      def gmaps_tag; end
+
+      def moments_api_url; end
+
+      def years_api_url; end
     end
   end
 end
