@@ -4,6 +4,7 @@
 /tmp
 .byebug_history
 /log
+.env.development
 
 # IDE
 *.swp
