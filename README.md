@@ -25,7 +25,7 @@ $ bundle exec hanami db migrate
 
 To run server:
 
-```
+```bash
 $ bundle exec hanami server
 ```
 
