@@ -57,6 +57,8 @@ And done. You now have access to local admin area.
 
 ## Contributing
 
+Before it, see the [code of conduct](https://github.com/prosi-org/pinfluence/blob/master/code-of-conduct.md).
+
 1. Fork it!
 2. Create your feature branch: `git checkout -b my-new-feature`
 3. Commit your changes: `git commit -am 'Add some feature'`
