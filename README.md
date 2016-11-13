@@ -2,6 +2,9 @@
 
 ## Installation
 
+Make a copy of `.env.development.example` to `.env.development`, and configure the
+database informations.
+
 This is a Ruby project, so it is nice to have [RVM](https://rvm.io/) or [Rbenv](https://github.com/rbenv/rbenv) installed.
 
 ```bash
