@@ -1,3 +1,6 @@
+require 'dotenv'
+Dotenv.load!(".env.development")
+
 # Load DSL and set up stages
 require 'capistrano/setup'
 

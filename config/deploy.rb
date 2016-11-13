@@ -1,23 +1,23 @@
 # config valid only for current version of Capistrano
-lock '3.6.1'
+lock ENV["DEPLOY_CAPISTRANO_VERSION"]
 
 set :application, 'pinfluence'
-set :repo_url, 'git@github.com:rafaels88/pinfluence.git'
+set :repo_url, 'git@github.com:prosi-org/pinfluence.git'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
-set :linked_files, %w{.env.production}
-set :linked_dirs, %w{tmp/pids}
+set :linked_files, [ENV["DEPLOY_LINKED_FILE_01"]]
+set :linked_dirs, [ENV["DEPLOY_LINKED_DIR_01"]]
 
 set :rbenv_type, :user # or :system, depends on your rbenv setup
-set :rbenv_ruby, '2.3.1'
+set :rbenv_ruby, ENV["DEPLOY_RBENV_RUBY"]
 set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
 set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 set :rbenv_roles, :all # default value
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, '/var/www/pinfluence'
+set :deploy_to, ENV["DEPLOY_PROJECT_PATH"]
 
 set :ssh_options, {
   forward_agent: true,
@@ -60,7 +60,7 @@ namespace :deploy do
 
   task :db_migrate do
     on roles(:app), in: :sequence, wait: 5 do
-      execute "cd #{current_path} && HANAMI_ENV=production #{fetch(:rbenv_prefix)} bundle exec hanami db migrate"
+      execute "cd #{current_path} && HANAMI_ENV=#{ENV['DEPLOY_ENV']} #{fetch(:rbenv_prefix)} bundle exec hanami db migrate"
     end
   end
 
