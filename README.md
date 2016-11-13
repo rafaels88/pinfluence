@@ -1,5 +1,9 @@
 # Pinfluence
 
+All world's influence in a map. Ruby and Hanami non-profit open source project.
+
+Url: [http://pinfluence.org](http://pinfluence.org)
+
 ## Installation
 
 Make a copy of `.env.development.example` to `.env.development`, and configure the
