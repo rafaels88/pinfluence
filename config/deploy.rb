@@ -54,7 +54,7 @@ set :bundle_flags, "--deployment"
 namespace :deploy do
   task :precompile do
     on roles(:app), in: :sequence, wait: 5 do
-      execute "cd #{current_path} && #{fetch(:rbenv_prefix)} bundle exec hanami assets precompile"
+      execute "cd #{current_path} && HANAMI_ENV=#{ENV['DEPLOY_ENV']} #{fetch(:rbenv_prefix)} bundle exec hanami assets precompile"
     end
   end
 
