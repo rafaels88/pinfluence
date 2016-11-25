@@ -5,7 +5,7 @@ class DestroyPerson
 
   attr_reader :person_id, :repository
 
-  def initialize(person_id, repository: PersonRepository)
+  def initialize(person_id, repository: PersonRepository.new)
     @person_id = person_id
     @repository = repository
   end

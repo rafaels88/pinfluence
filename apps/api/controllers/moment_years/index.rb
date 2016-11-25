@@ -4,7 +4,7 @@ module Api::Controllers::MomentYears
     expose :years
 
     def call(params)
-      @years = MomentRepository.all_available_years
+      @years = MomentRepository.new.all_available_years
     end
   end
 end

@@ -7,7 +7,7 @@ class CreateMoment
     :repository, :location_service
 
   def initialize(influencer:, locations:, year_begin:, year_end:,
-                 repository: MomentRepository, location_service: LocationService.new, **)
+                 repository: MomentRepository.new, location_service: LocationService.new, **)
     @repository = repository
     @location_service = location_service
     @locations = locations

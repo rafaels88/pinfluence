@@ -5,7 +5,7 @@ class DestroyMoment
 
   attr_reader :moment_id, :repository
 
-  def initialize(moment_id, repository: MomentRepository)
+  def initialize(moment_id, repository: MomentRepository.new)
     @moment_id = moment_id
     @repository = repository
   end

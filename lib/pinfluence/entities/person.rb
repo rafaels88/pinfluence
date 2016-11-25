@@ -1,7 +1,4 @@
-class Person
-  include Hanami::Entity
-  attributes :name, :gender, :created_at, :updated_at
-
+class Person < Hanami::Entity
   def moments
     moment_repository.search_by_influencer(self)
   end
@@ -9,6 +6,6 @@ class Person
   private
 
   def moment_repository
-    MomentRepository
+    MomentRepository.new
   end
 end

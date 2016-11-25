@@ -328,7 +328,7 @@ module Api
         # Use digest file name for asset paths
         #
         # See: http://hanamirb.org/guides/assets/overview
-        digest  true
+        fingerprint  true
 
         # Content Delivery Network (CDN)
         #

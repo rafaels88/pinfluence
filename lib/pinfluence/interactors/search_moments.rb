@@ -5,7 +5,7 @@ class SearchMoments
 
   attr_reader :year, :name, :repository
 
-  def initialize(year: nil, name: nil, repository: MomentRepository)
+  def initialize(year: nil, name: nil, repository: MomentRepository.new)
     @repository = repository
     @year = year
     @name = name
@@ -13,7 +13,7 @@ class SearchMoments
 
   def call
     if name
-      person = PersonRepository.search_by_name(name).first
+      person = PersonRepository.new.search_by_name(name).first
       if person
         repository.search_by_influencer(person)
       else

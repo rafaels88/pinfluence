@@ -4,7 +4,7 @@ module Admin::Controllers::Moments
     expose :moments
 
     def call(params)
-      @moments = MomentRepository.all
+      @moments = MomentRepository.new.all
     end
   end
 end

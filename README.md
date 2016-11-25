@@ -1,8 +1,6 @@
 # Pinfluence
 
-All world's influence in a map. Ruby and Hanami non-profit open source project.
-
-Url: [http://pinfluence.org](http://pinfluence.org)
+[http://pinfluence.org](http://pinfluence.org) - All world's influence in a map. Ruby and Hanami non-profit open source project.
 
 ## Installation
 
@@ -28,6 +26,12 @@ Or, if you want to create database manually, just run:
 
 ```bash
 $ bundle exec hanami db migrate
+```
+
+Now, run the tests. If everything is configured, all tests are going to pass.
+
+```bash
+$ bundle exec rake test
 ```
 
 To run server:

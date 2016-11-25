@@ -18,7 +18,7 @@ module Admin
     end
 
     def current_user
-      @current_user ||= UserRepository.find(session[:user_id])
+      @current_user ||= UserRepository.new.find(session[:user_id])
     end
   end
 end

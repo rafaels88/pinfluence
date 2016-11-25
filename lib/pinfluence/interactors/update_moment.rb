@@ -50,14 +50,14 @@ class UpdateMoment
   end
 
   def find_or_new_location(id)
-    LocationRepository.find(id) || Location.new(moment_id: moment.id)
+    LocationRepository.new.find(id) || Location.new(moment_id: moment.id)
   end
 
   def create_or_save_location(location)
     if location.id.nil?
       moment.add_location(location)
     else
-      LocationRepository.update(location)
+      LocationRepository.new.update(location)
     end
   end
 end
