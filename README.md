@@ -18,14 +18,8 @@ After creating database user with database creation privilege, and
 configuring `.env.development`:
 
 ```bash
-$ bundle exec hanami db create
-$ bundle exec hanami db migrate
-```
-
-Or, if you want to create database manually, just run:
-
-```bash
-$ bundle exec hanami db migrate
+$ bundle exec hanami db prepare
+$ HANAMI_ENV=test bundle exec hanami db prepare
 ```
 
 Now, run the tests. If everything is configured, all tests are going to pass.
