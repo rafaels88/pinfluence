@@ -1,4 +1,4 @@
-Dir[Hanami.root.join('spec/factories/*.rb')].each { |f| require f }
+Dir[Hanami.root.join('spec/support/factories/*.rb')].each { |f| require f }
 
 class Minitest::Spec
   include FactoryGirl::Syntax::Methods
