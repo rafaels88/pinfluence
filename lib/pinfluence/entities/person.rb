@@ -1,4 +1,8 @@
 class Person < Hanami::Entity
+  def type
+    self.class.to_s
+  end
+
   def moments
     moment_repository.search_by_influencer(self)
   end

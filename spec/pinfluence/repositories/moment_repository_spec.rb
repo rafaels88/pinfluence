@@ -5,9 +5,16 @@ describe MomentRepository do
 
   after { database_clean }
 
-  let(:moment_01)  { build :moment, year_begin: 100, year_end: 310 }
-  let(:moment_02)  { build :moment, year_begin: 300, year_end: 320 }
-  let(:moment_03)  { build :moment, year_begin: 700, year_end: 750 }
+  let(:influencer) { create :person }
+  let(:moment_01) do
+    build :moment, year_begin: 100, year_end: 310,
+      influencer_id: influencer.id, influencer_type: influencer.type
+  end
+  let(:moment_02) do
+    build :moment, year_begin: 300, year_end: 320,
+      influencer_id: influencer.id, influencer_type: influencer.type
+  end
+  let(:moment_03) { build :moment, year_begin: 700, year_end: 750 }
 
   before do
     subject.create moment_01
@@ -52,6 +59,19 @@ describe MomentRepository do
 
       it "returns an empty list" do
         assert_empty subject.all_available_years
+      end
+    end
+  end
+
+  describe "#search_by_influencer" do
+    it "returns all moments by given influencer" do
+      expected = [moment_01.year_begin, moment_02.year_begin]
+      assert_equal expected, subject.search_by_influencer(influencer).map(&:year_begin)
+    end
+
+    describe "when no moment has been found" do
+      it "returns an empty list" do
+        assert_empty subject.search_by_influencer(Person.new)
       end
     end
   end
