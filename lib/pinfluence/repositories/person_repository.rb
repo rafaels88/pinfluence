@@ -7,8 +7,9 @@ class PersonRepository < Hanami::Repository
   end
 
   def all_ordered_by(field)
-    query do
-      order(field)
-    end.all
+    people
+      .order(field)
+      .call
+      .collection
   end
 end
