@@ -1,9 +1,9 @@
 class PersonRepository < Hanami::Repository
-
   def search_by_name(name)
-    query do
-      where("lower(name) = '#{name.downcase}'")
-    end.all
+    people
+      .where("lower(name) = '#{name.downcase}'")
+      .call
+      .collection
   end
 
   def all_ordered_by(field)
