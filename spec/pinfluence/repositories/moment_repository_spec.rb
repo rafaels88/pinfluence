@@ -5,18 +5,33 @@ describe MomentRepository do
 
   after { database_clean }
 
-  describe "#all_available_years" do
-    let(:first_year) { 100 }
-    let(:last_year) { 750 }
+  let(:moment_01)  { build :moment, year_begin: 100, year_end: 310 }
+  let(:moment_02)  { build :moment, year_begin: 300, year_end: 320 }
+  let(:moment_03)  { build :moment, year_begin: 700, year_end: 750 }
 
-    before do
-      create :moment, year_begin: first_year, year_end: 150
-      create :moment, year_begin: 300, year_end: 320
-      create :moment, year_begin: 700, year_end: last_year
+  before do
+    subject.create moment_01
+    subject.create moment_02
+    subject.create moment_03
+  end
+
+  describe "#search_by_date" do
+    it "returns all moments ocurred in a given year" do
+      expected = [moment_01.year_begin, moment_02.year_begin]
+      result = subject.search_by_date(year: 305)
+      assert_equal expected, result.map(&:year_begin)
     end
 
+    describe "when no moment has been found" do
+      it "returns an empty list" do
+        assert_empty subject.search_by_date(year: -90)
+      end
+    end
+  end
+
+  describe "#all_available_years" do
     it "returns a list with all years since first moment until last moment" do
-      assert_equal (first_year..last_year).to_a, subject.all_available_years
+      assert_equal (moment_01.year_begin..moment_03.year_end).to_a, subject.all_available_years
     end
 
     describe "when there is a moment with no year_end" do
@@ -28,14 +43,12 @@ describe MomentRepository do
       end
 
       it "returns a list with all years since first moment until current year" do
-        assert_equal (first_year..current_year).to_a, subject.all_available_years
+        assert_equal (moment_01.year_begin..current_year).to_a, subject.all_available_years
       end
     end
 
     describe "when there are no moments" do
-      before do
-        subject.clear
-      end
+      before { subject.clear }
 
       it "returns an empty list" do
         assert_empty subject.all_available_years

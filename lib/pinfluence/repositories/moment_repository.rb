@@ -3,7 +3,9 @@ class MomentRepository < Hanami::Repository
   def search_by_date(params)
     moments
       .where("year_begin <= #{params[:year]}")
-        .where("year_end >= #{params[:year]}")
+      .where("year_end >= #{params[:year]}")
+      .call
+      .collection
   end
 
   def all_available_years
