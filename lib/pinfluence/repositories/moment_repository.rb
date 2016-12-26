@@ -1,4 +1,11 @@
 class MomentRepository < Hanami::Repository
+  associations do
+    has_many :locations
+  end
+
+  def add_location(moment, data)
+    assoc(:locations, moment).add(data)
+  end
 
   def search_by_date(params)
     moments

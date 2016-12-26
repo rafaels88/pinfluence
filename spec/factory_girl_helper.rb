@@ -1,7 +1,11 @@
 Dir[Hanami.root.join('spec/support/factories/*.rb')].each { |f| require f }
 
-class Minitest::Spec
-  include FactoryGirl::Syntax::Methods
+RSpec.configure do |config|
+  config.include FactoryGirl::Syntax::Methods
+
+  config.before(:suite) do
+    FactoryGirl.find_definitions
+  end
 end
 
 FactoryGirl.define do
