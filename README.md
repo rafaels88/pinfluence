@@ -25,7 +25,7 @@ $ HANAMI_ENV=test bundle exec hanami db prepare
 Now, run the tests. If everything is configured, all tests are going to pass.
 
 ```bash
-$ bundle exec rake test
+$ bundle exec rspec
 ```
 
 To run server:
