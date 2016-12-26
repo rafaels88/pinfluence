@@ -21,13 +21,13 @@ end
 
 group :test, :development do
   gem 'dotenv', '~> 2.0'
-  gem 'byebug'
 end
 
 group :test do
-  gem 'minitest'
+  gem 'rspec'
   gem 'capybara'
   gem 'factory_girl'
+  gem 'byebug'
 end
 
 group :production do
