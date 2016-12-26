@@ -11,12 +11,6 @@ class DestroyMoment
   end
 
   def call
-    repository.delete(moment)
-  end
-
-  private
-
-  def moment
-    repository.find(moment_id)
+    repository.delete(moment_id)
   end
 end

@@ -2,10 +2,6 @@ require 'spec_helper'
 
 describe CreateMoment do
   describe "#call" do
-    let(:influencer) { create :person }
-    let(:influencer_params) do
-      { id: influencer.id, type: influencer.class.to_s, }
-    end
     let(:year_begin) { 1000 }
     let(:year_end) { 1100}
     let(:latlng) { "100,-100" }
@@ -25,29 +21,30 @@ describe CreateMoment do
         location_service: location_service
       )
     end
+    before { subject.call }
 
-    before do
-      subject.call
-    end
+    context "when associated influencer is a person" do
+      let(:influencer) { create :person }
+      let(:influencer_params) { { id: influencer.id, type: "Person" } }
 
-    it "creates new moment" do
-      found_moment = moment_repository.search_by_influencer(influencer)
-                                      .first
+      it "creates new moment" do
+        found_moment = moment_repository.search_by_influencer(influencer)
+                                        .first
 
-      expect(found_moment.influencer_id).to eq influencer.id.to_s
-      expect(found_moment.influencer_type).to eq influencer.class.to_s
-      expect(found_moment.year_begin).to eq year_begin
-      expect(found_moment.year_end).to eq year_end
-      expect(found_moment.updated_at).to_not be_nil
-      expect(found_moment.created_at).to_not be_nil
-    end
+        expect(found_moment.person_id).to eq influencer.id
+        expect(found_moment.year_begin).to eq year_begin
+        expect(found_moment.year_end).to eq year_end
+        expect(found_moment.updated_at).to_not be_nil
+        expect(found_moment.created_at).to_not be_nil
+      end
 
-    it "creates new locations associated to the new moment" do
-      found_moment = moment_repository.search_by_influencer(influencer)
-                                      .first
-      found_location = location_repository.by_moment(found_moment).first
-      expect(found_location.latlng).to eq latlng
-      expect(found_location.address).to eq address
+      it "creates new locations associated to the new moment" do
+        found_moment = moment_repository.search_by_influencer(influencer)
+                                        .first
+        found_location = location_repository.by_moment(found_moment).first
+        expect(found_location.latlng).to eq latlng
+        expect(found_location.address).to eq address
+      end
     end
   end
 end

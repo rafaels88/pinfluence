@@ -29,12 +29,13 @@ class CreateMoment
   private
 
   def new_moment
-    Moment.new(
-      influencer_id: influencer[:id],
-      influencer_type: influencer[:type],
-      year_begin: year_begin,
-      year_end: year_end
-    )
+    if influencer[:type].downcase == "person"
+      Moment.new(
+        person_id: influencer[:id],
+        year_begin: year_begin,
+        year_end: year_end
+      )
+    end
   end
 
   def external_location_by(address)

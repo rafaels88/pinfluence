@@ -29,8 +29,7 @@ class MomentRepository < Hanami::Repository
 
   def search_by_influencer(influencer)
     moments
-      .where(influencer_id: influencer.id.to_s)
-      .where(influencer_type: influencer.class.to_s)
+      .where("#{influencer.type}_id": influencer.id)
       .call
       .collection
   end
