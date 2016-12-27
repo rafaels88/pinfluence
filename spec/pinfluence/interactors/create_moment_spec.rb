@@ -25,7 +25,7 @@ describe CreateMoment do
 
     context "when associated influencer is a person" do
       let(:influencer) { create :person }
-      let(:influencer_params) { { id: influencer.id, type: "Person" } }
+      let(:influencer_params) { { id: influencer.id, type: influencer.type } }
 
       it "creates new moment" do
         found_moment = moment_repository.search_by_influencer(influencer)

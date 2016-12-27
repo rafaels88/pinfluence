@@ -29,7 +29,7 @@ class CreateMoment
   private
 
   def new_moment
-    if influencer[:type].downcase == "person"
+    if influencer[:type] == :person
       Moment.new(
         person_id: influencer[:id],
         year_begin: year_begin,

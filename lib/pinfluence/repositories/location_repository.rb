@@ -4,5 +4,6 @@ class LocationRepository < Hanami::Repository
     locations
       .where(moment_id: moment.id)
       .call
+      .collection
   end
 end

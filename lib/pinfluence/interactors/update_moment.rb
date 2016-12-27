@@ -4,11 +4,13 @@ class UpdateMoment
   end
 
   attr_reader :id, :influencer, :locations, :year_begin, :year_end,
-    :repository, :location_service
+    :repository, :location_repository, :location_service
 
   def initialize(id:, influencer:, locations:, year_begin:, year_end:,
-                 repository: MomentRepository, location_service: LocationService.new)
+                 repository: MomentRepository.new, location_service: LocationService.new,
+                 location_repository: LocationRepository.new)
     @repository = repository
+    @location_repository = location_repository
     @location_service = location_service
     @locations = locations
     @influencer = influencer
@@ -18,27 +20,31 @@ class UpdateMoment
   end
 
   def call
-    repository.update(changed_moment)
+    repository.update(id, changed_moment)
 
-    locations.each do |location_param|
-      location = find_or_new_location(location_param[:id])
-      location_info = external_location_by(location_param[:address])
+    locations.each do |location_params|
+      location_info = external_location_by(location_params[:address])
+      location_persist_params = location_persist_params(location_params, location_info)
 
-      location.address = location_param[:address]
-      location.latlng = location_info.latlng
-      location.density = location_param[:density]
-      create_or_save_location(location)
+      if location_persist_params[:id]
+        location_repository.update(location_persist_params[:id], location_persist_params)
+      else
+        location_persist_params.delete(:id)
+        location_repository.create(location_persist_params)
+      end
     end
   end
 
   private
 
   def changed_moment
-    moment.year_begin = year_begin
-    moment.year_end = year_end
-    moment.influencer_type = influencer[:type]
-    moment.influencer_id = influencer[:id]
-    moment
+    if influencer[:type] == :person
+      {
+        year_begin: year_begin,
+        year_end: year_end,
+        person_id: influencer[:id]
+      }
+    end
   end
 
   def moment
@@ -49,15 +55,7 @@ class UpdateMoment
     @_location ||= location_service.by_address(address)
   end
 
-  def find_or_new_location(id)
-    LocationRepository.new.find(id) || Location.new(moment_id: moment.id)
-  end
-
-  def create_or_save_location(location)
-    if location.id.nil?
-      moment.add_location(location)
-    else
-      LocationRepository.new.update(location)
-    end
+  def location_persist_params(params, info)
+    params.merge(moment_id: moment.id, latlng: info.latlng)
   end
 end
