@@ -11,6 +11,7 @@ class MomentRepository < Hanami::Repository
     moments
       .where("year_begin <= #{params[:year]}")
       .where("year_end >= #{params[:year]}")
+      .as(Moment)
       .call
       .collection
   end
@@ -30,8 +31,8 @@ class MomentRepository < Hanami::Repository
   def search_by_influencer(influencer)
     moments
       .where("#{influencer.type}_id": influencer.id)
-      .call
-      .collection
+      .as(Moment)
+      .call.collection
   end
 
   private

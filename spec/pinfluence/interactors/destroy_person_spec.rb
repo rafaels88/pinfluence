@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe DestroyPerson do
+  after { database_clean }
+
   describe "#call" do
     let(:person) { create :person }
     let!(:moment) { create :moment, person_id: person.id }

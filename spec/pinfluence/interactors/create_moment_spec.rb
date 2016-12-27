@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe CreateMoment do
+  after { database_clean }
+
   describe "#call" do
     let(:year_begin) { 1000 }
     let(:year_end) { 1100}

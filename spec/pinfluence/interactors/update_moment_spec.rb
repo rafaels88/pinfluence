@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe UpdateMoment do
+  after { database_clean }
+
   describe "#call" do
     let(:new_year_begin) { 1000 }
     let(:new_year_end) { 1100}

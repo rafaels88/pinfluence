@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe DestroyMoment do
+  after { database_clean }
+
   describe "#call" do
     let(:moment) { create :moment }
     let(:moment_repository) { MomentRepository.new }
