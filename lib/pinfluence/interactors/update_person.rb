@@ -13,18 +13,12 @@ class UpdatePerson
   end
 
   def call
-    repository.update(changed_person)
+    repository.update(id, **changed_person)
   end
 
   private
 
   def changed_person
-    person.name = name
-    person.gender = gender
-    person
-  end
-
-  def person
-    @_person ||= repository.find(id)
+    { name: name, gender: gender }
   end
 end
