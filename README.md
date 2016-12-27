@@ -1,5 +1,7 @@
 # Pinfluence
 
+[![Build Status](https://travis-ci.org/prosi-org/pinfluence.svg?branch=master)](https://travis-ci.org/prosi-org/pinfluence)
+
 [http://pinfluence.org](http://pinfluence.org) - All world's influence in a map. Ruby and Hanami non-profit open source project.
 
 ## Installation
