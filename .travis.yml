@@ -6,3 +6,5 @@ services:
 before_script:
   - psql -c 'create database pinfluence_test;' -U postgres
   - bundle exec hanami db prepare
+script:
+  - bundle exec rspec
