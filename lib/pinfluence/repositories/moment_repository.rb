@@ -47,7 +47,7 @@ class MomentRepository < Hanami::Repository
 
   def search_by_influencer(influencer)
     moments
-      .aggregate(:person)
+      .combine(:person, :locations)
       .where("#{influencer.type}_id": influencer.id)
       .as(Moment)
       .call.collection
