@@ -1,9 +1,9 @@
-class UserRepository
-  include Hanami::Repository
+class UserRepository < Hanami::Repository
 
-  def self.find_by_email(email:)
-    query do
-      where(email: email)
-    end.first
+  def find_by_email(email)
+    users
+      .where(email: email)
+      .as(User)
+      .one
   end
 end

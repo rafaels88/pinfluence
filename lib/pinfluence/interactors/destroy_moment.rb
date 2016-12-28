@@ -5,18 +5,12 @@ class DestroyMoment
 
   attr_reader :moment_id, :repository
 
-  def initialize(moment_id, repository: MomentRepository)
+  def initialize(moment_id, repository: MomentRepository.new)
     @moment_id = moment_id
     @repository = repository
   end
 
   def call
-    repository.delete(moment)
-  end
-
-  private
-
-  def moment
-    repository.find(moment_id)
+    repository.delete(moment_id)
   end
 end

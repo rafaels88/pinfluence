@@ -2,8 +2,8 @@ source 'https://rubygems.org'
 
 gem 'bundler'
 gem 'rake'
-gem 'hanami',       '~> 0.8'
-gem 'hanami-model', '~> 0.6'
+gem 'hanami',       '~> 0.9'
+gem 'hanami-model', '~> 0.7'
 gem 'pg'
 gem 'httparty'
 gem 'sass'
@@ -21,12 +21,13 @@ end
 
 group :test, :development do
   gem 'dotenv', '~> 2.0'
-  gem 'byebug'
 end
 
 group :test do
-  gem 'minitest'
+  gem 'rspec'
   gem 'capybara'
+  gem 'factory_girl'
+  gem 'byebug'
 end
 
 group :production do

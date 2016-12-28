@@ -5,7 +5,7 @@ class CreatePerson
 
   attr_reader :name, :gender, :repository
 
-  def initialize(name:, gender:, repository: PersonRepository)
+  def initialize(name:, gender:, repository: PersonRepository.new)
     @name = name
     @gender = gender
     @repository = repository

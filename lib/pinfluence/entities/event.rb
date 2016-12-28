@@ -1,4 +1,5 @@
-class Event
-  include Hanami::Entity
-  attributes :name, :kind, :created_at, :updated_at
+require_relative './influencer'
+
+class Event < Hanami::Entity
+  include Influencer
 end

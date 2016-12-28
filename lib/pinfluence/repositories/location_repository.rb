@@ -1,9 +1,9 @@
-class LocationRepository
-  include Hanami::Repository
+class LocationRepository < Hanami::Repository
 
-  def self.by_moment(moment)
-    query do
-      where(moment_id: moment.id)
-    end
+  def by_moment(moment)
+    locations
+      .where(moment_id: moment.id)
+      .call
+      .collection
   end
 end

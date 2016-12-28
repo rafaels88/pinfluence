@@ -1,8 +1,8 @@
 # Pinfluence
 
-All world's influence in a map. Ruby and Hanami non-profit open source project.
+[![Build Status](https://travis-ci.org/prosi-org/pinfluence.svg?branch=master)](https://travis-ci.org/prosi-org/pinfluence)
 
-Url: [http://pinfluence.org](http://pinfluence.org)
+[http://pinfluence.org](http://pinfluence.org) - All world's influence in a map. Ruby and Hanami non-profit open source project.
 
 ## Installation
 
@@ -20,14 +20,14 @@ After creating database user with database creation privilege, and
 configuring `.env.development`:
 
 ```bash
-$ bundle exec hanami db create
-$ bundle exec hanami db migrate
+$ bundle exec hanami db prepare
+$ HANAMI_ENV=test bundle exec hanami db prepare
 ```
 
-Or, if you want to create database manually, just run:
+Now, run the tests. If everything is configured, all tests are going to pass.
 
 ```bash
-$ bundle exec hanami db migrate
+$ bundle exec rspec
 ```
 
 To run server:

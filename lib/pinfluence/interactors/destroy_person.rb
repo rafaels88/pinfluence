@@ -5,14 +5,14 @@ class DestroyPerson
 
   attr_reader :person_id, :repository
 
-  def initialize(person_id, repository: PersonRepository)
+  def initialize(person_id, repository: PersonRepository.new)
     @person_id = person_id
     @repository = repository
   end
 
   def call
     delete_person_moments!
-    repository.delete(person)
+    repository.delete(person_id)
   end
 
   private
@@ -24,6 +24,6 @@ class DestroyPerson
   end
 
   def person
-    @_person ||= repository.find(person_id)
+    @_person ||= repository.find_with_moments(person_id)
   end
 end

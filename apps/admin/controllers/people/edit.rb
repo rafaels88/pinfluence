@@ -4,7 +4,7 @@ module Admin::Controllers::People
     expose :person
 
     def call(params)
-      @person = PersonRepository.find(params[:id])
+      @person = PersonRepository.new.find(params[:id])
     end
   end
 end

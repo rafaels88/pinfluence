@@ -1,15 +1,26 @@
-class PersonRepository
-  include Hanami::Repository
-
-  def self.search_by_name(name)
-    query do
-      where("lower(name) = '#{name.downcase}'")
-    end.all
+class PersonRepository < Hanami::Repository
+  associations do
+    has_many :moments
   end
 
-  def self.all_ordered_by(field)
-    query do
-      order(field)
-    end.all
+  def find_with_moments(id)
+    aggregate(:moments)
+      .where(people__id: id)
+      .as(Person)
+      .one
+  end
+
+  def search_by_name(name)
+    people
+      .where("lower(name) = '#{name.downcase}'")
+      .as(Person)
+      .call.collection
+  end
+
+  def all_ordered_by(field)
+    people
+      .order(field)
+      .as(Person)
+      .call.collection
   end
 end

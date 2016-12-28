@@ -1,5 +1,6 @@
+Style/FrozenStringLiteralComment:
+  Enabled: false
 Documentation:
   Enabled: false
-
 AllCops:
-  TargetRubyVersion: 2.3.0
+  TargetRubyVersion: 2.3

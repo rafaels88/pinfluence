@@ -5,7 +5,7 @@ class ListAvailableInfluencers
 
   attr_reader :repository
 
-  def initialize(repository: PersonRepository)
+  def initialize(repository: PersonRepository.new)
     @repository = repository
   end
 

@@ -7,7 +7,7 @@ class CreateMoment
     :repository, :location_service
 
   def initialize(influencer:, locations:, year_begin:, year_end:,
-                 repository: MomentRepository, location_service: LocationService.new, **)
+                 repository: MomentRepository.new, location_service: LocationService.new, **)
     @repository = repository
     @location_service = location_service
     @locations = locations
@@ -22,19 +22,20 @@ class CreateMoment
       location_param.delete(:id)
       location_info = external_location_by(location_param[:address])
       location_param[:latlng] = location_info.latlng
-      moment.add_location(Location.new(location_param))
+      repository.add_location(moment, location_param)
     end
   end
 
   private
 
   def new_moment
-    Moment.new(
-      influencer_id: influencer[:id],
-      influencer_type: influencer[:type],
-      year_begin: year_begin,
-      year_end: year_end
-    )
+    if influencer[:type].to_sym == :person
+      Moment.new(
+        person_id: influencer[:id],
+        year_begin: year_begin,
+        year_end: year_end
+      )
+    end
   end
 
   def external_location_by(address)

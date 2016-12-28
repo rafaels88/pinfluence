@@ -5,7 +5,7 @@ class UpdatePerson
 
   attr_reader :id, :name, :gender, :repository
 
-  def initialize(id:, name:, gender:, repository: PersonRepository)
+  def initialize(id:, name:, gender:, repository: PersonRepository.new)
     @id = id
     @name = name
     @gender = gender
@@ -13,18 +13,12 @@ class UpdatePerson
   end
 
   def call
-    repository.update(changed_person)
+    repository.update(id, **changed_person)
   end
 
   private
 
   def changed_person
-    person.name = name
-    person.gender = gender
-    person
-  end
-
-  def person
-    @_person ||= repository.find(id)
+    { name: name, gender: gender }
   end
 end

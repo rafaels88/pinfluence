@@ -1,3 +1,2 @@
-class EventRepository
-  include Hanami::Repository
+class EventRepository <  Hanami::Repository
 end
