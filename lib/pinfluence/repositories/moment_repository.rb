@@ -37,11 +37,11 @@ class MomentRepository < Hanami::Repository
     return [] if moments.count == 0
 
     min_year = moments.min(:year_begin)
-    if all_still_ocurring.count > 0
-      max_year = Time.now.year
-    else
-      max_year = moments.max(:year_end)
-    end
+    max_year = if all_still_ocurring.count > 0
+                 Time.now.year
+               else
+                 moments.max(:year_end)
+               end
     (min_year..max_year).to_a
   end
 
