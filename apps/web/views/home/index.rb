@@ -8,11 +8,11 @@ module Web::Views::Home
     end
 
     def moments_api_url
-      Api::Routes.moments_path
+      Api::routes.moments_path
     end
 
     def years_api_url
-      Api::Routes.moment_years_path
+      Api::routes.moment_years_path
     end
   end
 end

@@ -1,6 +1,22 @@
 class MomentRepository < Hanami::Repository
+  relations :people
+
   associations do
+    belongs_to :person
     has_many :locations
+  end
+
+  def all_with_influencers
+    aggregate(:person)
+      .as(Moment)
+      .call.collection
+  end
+
+  def find_with_locations(id)
+    aggregate(:locations)
+      .where(moments__id: id)
+      .as(Moment)
+      .one
   end
 
   def add_location(moment, data)
@@ -9,6 +25,7 @@ class MomentRepository < Hanami::Repository
 
   def search_by_date(params)
     moments
+      .combine(:person, :locations)
       .where("year_begin <= #{params[:year]}")
       .where("year_end >= #{params[:year]}")
       .as(Moment)
@@ -30,6 +47,7 @@ class MomentRepository < Hanami::Repository
 
   def search_by_influencer(influencer)
     moments
+      .aggregate(:person)
       .where("#{influencer.type}_id": influencer.id)
       .as(Moment)
       .call.collection

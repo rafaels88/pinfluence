@@ -15,7 +15,7 @@ module Api::Views::Moments
           name: moment.influencer.name,
           gender: moment.influencer.gender.downcase,
           begin_in: moment.year_begin,
-          kind: moment.influencer_type.downcase,
+          kind: moment.influencer.type,
           locations: moment.locations.map do |location|
             {
               id: location.id,

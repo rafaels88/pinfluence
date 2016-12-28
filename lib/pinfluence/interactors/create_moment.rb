@@ -29,7 +29,7 @@ class CreateMoment
   private
 
   def new_moment
-    if influencer[:type] == :person
+    if influencer[:type].to_sym == :person
       Moment.new(
         person_id: influencer[:id],
         year_begin: year_begin,

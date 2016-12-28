@@ -27,7 +27,8 @@ class UpdateMoment
       location_persist_params = location_persist_params(location_params, location_info)
 
       if location_persist_params[:id]
-        location_repository.update(location_persist_params[:id], location_persist_params)
+        location_id = location_persist_params.delete(:id)
+        location_repository.update(location_id, location_persist_params)
       else
         location_persist_params.delete(:id)
         location_repository.create(location_persist_params)
@@ -38,7 +39,7 @@ class UpdateMoment
   private
 
   def changed_moment
-    if influencer[:type] == :person
+    if influencer[:type].to_sym == :person
       {
         year_begin: year_begin,
         year_end: year_end,
