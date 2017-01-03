@@ -3,6 +3,7 @@ module Admin::Controllers::People
     include Admin::Action
 
     def call(params)
+      require 'byebug'; byebug
       CreatePerson.call(params[:person])
       redirect_to routes.people_path
     end
