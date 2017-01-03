@@ -27,8 +27,17 @@ $().ready(function(){
           });
         })
       }
-    })
+    });
+
+    listenRequestYear({
+      onSearch: function(year){
+        changeSliderTo(year);
+
+        requestInfluences(year, function(influences){
+          renderInfluencesInMap(influences);
+        });
+      }
+    });
   }
   init();
 });
-

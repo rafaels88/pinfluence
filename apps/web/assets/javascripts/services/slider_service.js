@@ -2,10 +2,12 @@ var bigValueSlider = document.getElementById('slider-huge'),
     bigValueSpan = document.getElementById('huge-value'),
     increaseBtn = document.getElementById('slider-increase'),
     decreaseBtn = document.getElementById('slider-decrease'),
-    sliderRange;
+    changeCurrentYearBtn = document.getElementsByClassName('change-current-year')[0],
+    sliderRange, currentYear, yearFormActive = false;
 
 function renderSlider(range, formattedRange, callbacks){
   sliderRange = range;
+  currentYear = sliderRange[0];
   var maxSliderValue = sliderRange.length-1;
 
   noUiSlider.create(bigValueSlider, {
@@ -20,21 +22,23 @@ function renderSlider(range, formattedRange, callbacks){
   });
 
   bigValueSlider.noUiSlider.on('change', function ( values, handle ) {
-    var currentValue = sliderRange[values[handle]];
-    callbacks.onChange(currentValue);
+    currentYear = sliderRange[values[handle]];
+    callbacks.onChange(currentYear);
   });
 
   bigValueSlider.noUiSlider.on('update', function ( values, handle ) {
-    var currentValue = formattedRange[values[handle]];
-    changeValueLabel(currentValue);
+    var currentYearLabel = formattedRange[values[handle]];
+    changeValueLabel(currentYearLabel);
   });
 
   increaseBtn.addEventListener('click', function(){
     var currentSliderValue = bigValueSlider.noUiSlider.get();
 
     if(currentSliderValue < maxSliderValue){
-      bigValueSlider.noUiSlider.set(parseInt(currentSliderValue, 10)+1);
-      callbacks.onChange(parseInt(sliderRange[currentSliderValue], 10)+1)
+      currentYear = parseInt(sliderRange[currentSliderValue], 10) + 1;
+
+      bigValueSlider.noUiSlider.set(parseInt(currentSliderValue, 10) + 1);
+      callbacks.onChange(currentYear);
     }
   });
 
@@ -42,16 +46,58 @@ function renderSlider(range, formattedRange, callbacks){
     var currentSliderValue = bigValueSlider.noUiSlider.get();
 
     if(currentSliderValue > 0){
+      currentYear = parseInt(sliderRange[currentSliderValue], 10) - 1;
+
       bigValueSlider.noUiSlider.set(parseInt(currentSliderValue, 10)-1);
-      callbacks.onChange(parseInt(sliderRange[currentSliderValue], 10)-1)
+      callbacks.onChange(currentYear);
+    }
+  });
+
+  changeCurrentYearBtn.addEventListener('click', function(){
+    if(yearFormActive == false){
+      yearFormActive = true;
+
+      $(this).find("input").val(Math.abs(currentYear))
+
+      if(currentYear < 0){
+        $(this).find(".option-time-label").text("BC")
+      } else {
+        $(this).find(".option-time-label").text("AD")
+      }
+
+      $(this).find("span, label").addClass('hide');
+      $(this).find(".input").removeClass('hide');
     }
   });
 
   callbacks.onInit();
 }
 
+function listenRequestYear(callback){
+  $(changeCurrentYearBtn).find("form").submit(function(e){
+    e.preventDefault();
+    var requestedYear = parseInt($(this).find("input").val(), 10),
+        requestedTimeLabel = $(this).find(".option-time-label").text();
+
+    if(!isNaN(requestedYear)){
+      if(requestedTimeLabel.toUpperCase().trim() == "BC"){
+        requestedYear = -Math.abs(requestedYear)
+      } else {
+        requestedYear = Math.abs(requestedYear)
+      }
+
+      yearFormActive = false;
+      $(changeCurrentYearBtn).find(".input").addClass('hide');
+      $(changeCurrentYearBtn).find("span, label").removeClass('hide');
+
+      callback.onSearch(requestedYear);
+    }
+  });
+}
+
 function changeSliderTo(year){
   var index = sliderRange.indexOf(year);
+  currentYear = year;
   bigValueSlider.noUiSlider.set(index);
 }
 
