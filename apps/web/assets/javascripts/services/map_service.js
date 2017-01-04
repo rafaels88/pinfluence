@@ -38,11 +38,14 @@ function _renderInfluencers(influencers){
     delete oldMapSources[influencer.id];
   });
 
-  // Add Markers
   $.each(currentMapSources, function(influencerId, influencer){
+    // Add new Markers
     if(influencer.shouldRender == true){
       influencer.marker = _createMarker(influencer);
       currentMapSources[influencerId] = influencer;
+    } else {
+      // Update existent marker
+      influencer.marker.infowindow.setContent(_createInfoWindowContent(influencer));
     }
   });
 
@@ -91,9 +94,11 @@ function _createMarker(influencer) {
     infowindow.open(map, marker);
   });
   infowindow.open(map, marker);
+
+  marker.infowindow = infowindow;
   return marker;
 }
 
 function _createInfoWindowContent(influencer) {
-  return influencer.name;
+  return influencer.name + " (" + influencer.age + "y)";
 }
