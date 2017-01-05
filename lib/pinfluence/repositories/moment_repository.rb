@@ -26,8 +26,8 @@ class MomentRepository < Hanami::Repository
   def search_by_date(params)
     moments
       .combine(:person, :locations)
-      .where("year_begin <= #{params[:year]}")
-      .where("year_end >= #{params[:year]}")
+      .where('year_begin <= ? AND (year_end >= ? OR year_end IS NULL)',
+             params[:year], params[:year])
       .as(Moment)
       .call
       .collection
