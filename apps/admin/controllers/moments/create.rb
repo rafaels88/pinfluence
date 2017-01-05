@@ -1,8 +1,10 @@
 module Admin::Controllers::Moments
   class Create
     include Admin::Action
+    attr_reader :params
 
     def call(params)
+      @params = params
       CreateMoment.call(moment_params)
       redirect_to routes.moments_path
     end

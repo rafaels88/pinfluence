@@ -1,19 +1,20 @@
 class CreateMoment
   def self.call(params)
-    self.new(params).call
+    new(params).call
   end
 
   attr_reader :influencer, :locations, :year_begin, :year_end,
-    :repository, :location_service
+              :repository, :location_service
 
   def initialize(influencer:, locations:, year_begin:, year_end:,
-                 repository: MomentRepository.new, location_service: LocationService.new, **)
+                 repository: MomentRepository.new,
+                 location_service: LocationService.new, **)
     @repository = repository
     @location_service = location_service
     @locations = locations
     @influencer = influencer
     @year_begin = year_begin
-    @year_end = year_end
+    @year_end = year_end.to_s.empty? ? nil : year_end
   end
 
   def call

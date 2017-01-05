@@ -1,13 +1,14 @@
 class UpdateMoment
   def self.call(params)
-    self.new(params).call
+    new(params).call
   end
 
   attr_reader :id, :influencer, :locations, :year_begin, :year_end,
-    :repository, :location_repository, :location_service
+              :repository, :location_repository, :location_service
 
   def initialize(id:, influencer:, locations:, year_begin:, year_end:,
-                 repository: MomentRepository.new, location_service: LocationService.new,
+                 repository: MomentRepository.new,
+                 location_service: LocationService.new,
                  location_repository: LocationRepository.new)
     @repository = repository
     @location_repository = location_repository
@@ -15,7 +16,7 @@ class UpdateMoment
     @locations = locations
     @influencer = influencer
     @year_begin = year_begin
-    @year_end = year_end
+    @year_end = year_end.to_s.empty? ? nil : year_end
     @id = id
   end
 
@@ -24,7 +25,8 @@ class UpdateMoment
 
     locations.each do |location_params|
       location_info = external_location_by(location_params[:address])
-      location_persist_params = location_persist_params(location_params, location_info)
+      location_persist_params = location_persist_params(location_params,
+                                                        location_info)
 
       if location_persist_params[:id]
         location_id = location_persist_params.delete(:id)

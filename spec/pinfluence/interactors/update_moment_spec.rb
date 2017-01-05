@@ -3,15 +3,17 @@ require 'spec_helper'
 describe UpdateMoment do
   after { database_clean }
 
-  describe "#call" do
+  describe '#call' do
     let(:new_year_begin) { 1000 }
-    let(:new_year_end) { 1100}
-    let(:latlng) { "100,-100" }
-    let(:address) { "Updated address" }
-    let(:locations_params) { [ { address: address, id: location.id } ] }
+    let(:new_year_end) { 1100 }
+    let(:latlng) { '100,-100' }
+    let(:address) { 'Updated address' }
+    let(:locations_params) { [{ address: address, id: location.id }] }
 
-    let(:location_info) { double "LocationInfo", latlng: latlng }
-    let(:location_service) { double "LocationService", by_address: location_info }
+    let(:location_info) { double 'LocationInfo', latlng: latlng }
+    let(:location_service) do
+      double 'LocationService', by_address: location_info
+    end
     let(:moment_repository) { MomentRepository.new }
     let(:location_repository) { LocationRepository.new }
 
@@ -27,12 +29,12 @@ describe UpdateMoment do
     end
     before { subject.call }
 
-    context "when associated influencer is a person" do
+    context 'when associated influencer is a person' do
       let(:moment) do
         create :moment, year_begin: 1000, year_end: 1100,
-          person_id: influencer.id
+                        person_id: influencer.id
       end
-      let(:location) { create :location, address: "Old", moment_id: moment.id }
+      let(:location) { create :location, address: 'Old', moment_id: moment.id }
       let(:influencer) { create :person }
       let(:influencer_params) { { id: influencer.id, type: influencer.type } }
 
@@ -41,37 +43,59 @@ describe UpdateMoment do
                          .first
       end
 
-      it "updates given moment" do
+      it 'updates given moment' do
         expect(found_moment.year_begin).to eq new_year_begin
         expect(found_moment.year_end).to eq new_year_end
         expect(found_moment.updated_at).to_not be_nil
         expect(found_moment.created_at).to_not be_nil
       end
 
-      it "updates given locations" do
+      it 'updates given locations' do
         found_location = location_repository.by_moment(found_moment).first
         expect(found_location.address).to eq address
         expect(found_location.latlng).to eq latlng
       end
 
-      context "when it has new location" do
+      context 'when it has new location' do
         let(:locations_params) do
           [
             { address: address, id: location.id },
-            { address: "Another one", id: nil }
+            { address: 'Another one', id: nil }
           ]
         end
 
-        it "updates associated location" do
+        it 'updates associated location' do
           found_location = location_repository.by_moment(found_moment).first
           expect(found_location.address).to eq address
           expect(found_location.latlng).to eq latlng
         end
 
-        it "creates new location associated to the moment" do
+        it 'creates new location associated to the moment' do
           found_location = location_repository.by_moment(found_moment).last
-          expect(found_location.address).to eq "Another one"
+          expect(found_location.address).to eq 'Another one'
           expect(found_location.latlng).to eq latlng
+        end
+      end
+
+      context 'when end year is nil' do
+        let(:new_year_end) { nil }
+
+        it 'updates given moment' do
+          expect(found_moment.year_begin).to eq new_year_begin
+          expect(found_moment.year_end).to be_nil
+          expect(found_moment.updated_at).to_not be_nil
+          expect(found_moment.created_at).to_not be_nil
+        end
+      end
+
+      context 'when end year is blank' do
+        let(:new_year_end) { '' }
+
+        it 'updates given moment' do
+          expect(found_moment.year_begin).to eq new_year_begin
+          expect(found_moment.year_end).to be_nil
+          expect(found_moment.updated_at).to_not be_nil
+          expect(found_moment.created_at).to_not be_nil
         end
       end
     end
