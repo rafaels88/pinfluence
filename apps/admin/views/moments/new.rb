@@ -10,6 +10,8 @@ module Admin::Views::Moments
       'Create'
     end
 
+    def person_id; end
+
     InfluencerOption = Struct.new(:name, :id)
     def influencers_options
       nil_option = InfluencerOption.new('Click here to choose', nil)
