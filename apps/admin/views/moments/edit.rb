@@ -4,7 +4,7 @@ module Admin::Views::Moments
 
     def form
       Form.new(:moment, routes.moment_path(id: moment.id),
-               { moment: moment }, { method: :patch })
+               { moment: moment }, method: :patch)
     end
 
     def submit_label
@@ -13,6 +13,12 @@ module Admin::Views::Moments
 
     def first_location_density
       moment_first_location.density.to_i
+    end
+
+    InfluencerOption = Struct.new(:name, :id)
+    def influencers_options
+      nil_option = InfluencerOption.new('Click here to choose', nil)
+      influencers.unshift(nil_option)
     end
 
     def first_location_address

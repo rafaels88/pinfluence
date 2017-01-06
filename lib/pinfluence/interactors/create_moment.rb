@@ -3,12 +3,12 @@ class CreateMoment
     new(params).call
   end
 
-  attr_reader :influencer, :locations, :year_begin, :year_end,
+  attr_reader :locations, :year_begin, :year_end,
               :repository, :location_service
 
   def initialize(influencer:, locations:, year_begin:, year_end:,
                  repository: MomentRepository.new,
-                 location_service: LocationService.new, **)
+                 location_service: LocationService.new)
     @repository = repository
     @location_service = location_service
     @locations = locations
@@ -18,6 +18,7 @@ class CreateMoment
   end
 
   def call
+    create_influencer_if_new!
     moment = repository.create(new_moment)
     locations.each do |location_param|
       location_param.delete(:id)
@@ -30,7 +31,7 @@ class CreateMoment
   private
 
   def new_moment
-    if influencer[:type].to_sym == :person
+    if person?
       Moment.new(
         person_id: influencer[:id],
         year_begin: year_begin,
@@ -41,5 +42,27 @@ class CreateMoment
 
   def external_location_by(address)
     @_location ||= location_service.by_address(address)
+  end
+
+  def create_influencer_if_new!
+    if new_influencer? && person?
+      person = CreatePerson.call(name: influencer[:name],
+                                 gender: influencer[:gender])
+      @influencer[:id] = person.id.to_s
+    end
+  end
+
+  def new_influencer?
+    influencer[:id].empty?
+  end
+
+  def person?
+    influencer[:type] == :person
+  end
+
+  def influencer
+    @influencer[:type] = @influencer[:type].to_sym
+    @influencer[:id] = @influencer[:id].to_s
+    @influencer
   end
 end

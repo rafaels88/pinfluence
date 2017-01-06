@@ -1,3 +1,5 @@
 $().ready(function(){
-  $("select.dropdown").dropdown();
+  $("select.dropdown").dropdown({
+    placeholder: false
+  });
 })

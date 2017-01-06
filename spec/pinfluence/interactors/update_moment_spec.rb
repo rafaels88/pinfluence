@@ -43,6 +43,38 @@ describe UpdateMoment do
                          .first
       end
 
+      context 'when associated influencer is a new person' do
+        let(:influencer_params) do
+          { name: 'New Person', type: 'person', gender: 'female' }
+        end
+        let(:new_influencer) do
+          PersonRepository.new.search_by_name('New Person')[0]
+        end
+        let(:found_moment) do
+          moment_repository.search_by_influencer(new_influencer)
+                           .first
+        end
+
+        it 'creates new person' do
+          expect(new_influencer).to_not be_nil
+          expect(new_influencer.gender).to eq 'female'
+        end
+
+        it 'updates given moment' do
+          expect(found_moment.person_id).to eq new_influencer.id
+          expect(found_moment.year_begin).to eq new_year_begin
+          expect(found_moment.year_end).to eq new_year_end
+          expect(found_moment.updated_at).to_not be_nil
+          expect(found_moment.created_at).to_not be_nil
+        end
+
+        it 'updates given locations' do
+          found_location = location_repository.by_moment(found_moment).first
+          expect(found_location.address).to eq address
+          expect(found_location.latlng).to eq latlng
+        end
+      end
+
       it 'updates given moment' do
         expect(found_moment.year_begin).to eq new_year_begin
         expect(found_moment.year_end).to eq new_year_end

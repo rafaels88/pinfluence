@@ -17,6 +17,7 @@ module Admin::Controllers::Moments
 
       @_moment_params = params[:moment]
       @_moment_params[:locations] = [params[:moment][:locations]]
+      @_moment_params.delete(:id)
       @_moment_params
     end
   end
