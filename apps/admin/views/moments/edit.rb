@@ -11,6 +11,10 @@ module Admin::Views::Moments
       'Update'
     end
 
+    def person_id
+      moment.person_id.to_s
+    end
+
     def first_location_density
       moment_first_location.density.to_i
     end

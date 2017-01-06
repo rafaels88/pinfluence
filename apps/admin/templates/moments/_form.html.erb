@@ -15,8 +15,8 @@
           div class: 'field' do
             label      "Name"
 
-            values = Hash[influencers_options.collect { |i| [i.name, i.id] }]
-            select :id, values, class: "ui search dropdown"
+            values = Hash[influencers_options.collect { |i| [i.name, i.id.to_s] }]
+            select :id, values, options: { selected: person_id }, class: "ui search dropdown"
           end
         end
       end
