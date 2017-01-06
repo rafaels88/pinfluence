@@ -10,6 +10,12 @@ module Admin::Views::Moments
       'Create'
     end
 
+    InfluencerOption = Struct.new(:name, :id)
+    def influencers_options
+      nil_option = InfluencerOption.new('Click here to choose', nil)
+      influencers.unshift(nil_option)
+    end
+
     def first_location_density; end
 
     def first_location_address; end

@@ -3,7 +3,7 @@ class UpdateMoment
     new(params).call
   end
 
-  attr_reader :id, :influencer, :locations, :year_begin, :year_end,
+  attr_reader :id, :locations, :year_begin, :year_end,
               :repository, :location_repository, :location_service
 
   def initialize(id:, influencer:, locations:, year_begin:, year_end:,
@@ -21,6 +21,7 @@ class UpdateMoment
   end
 
   def call
+    create_influencer_if_new!
     repository.update(id, changed_moment)
 
     locations.each do |location_params|
@@ -41,13 +42,29 @@ class UpdateMoment
   private
 
   def changed_moment
-    if influencer[:type].to_sym == :person
+    if person?
       {
         year_begin: year_begin,
         year_end: year_end,
         person_id: influencer[:id]
       }
     end
+  end
+
+  def create_influencer_if_new!
+    if new_influencer? && person?
+      person = CreatePerson.call(name: influencer[:name],
+                                 gender: influencer[:gender])
+      @influencer[:id] = person.id.to_s
+    end
+  end
+
+  def new_influencer?
+    influencer[:id].empty?
+  end
+
+  def person?
+    influencer[:type] == :person
   end
 
   def moment
@@ -60,5 +77,11 @@ class UpdateMoment
 
   def location_persist_params(params, info)
     params.merge(moment_id: moment.id, latlng: info.latlng)
+  end
+
+  def influencer
+    @influencer[:type] = @influencer[:type].to_sym
+    @influencer[:id] = @influencer[:id].to_s
+    @influencer
   end
 end
