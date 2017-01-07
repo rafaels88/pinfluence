@@ -11,6 +11,7 @@ $().ready(function(){
           });
         },
         onInit: function(){
+          changeSliderTo(initialYear);
           requestInfluences(initialYear, function(influences){
             renderInfluencesInMap(influences);
           });
