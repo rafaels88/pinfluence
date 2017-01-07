@@ -1,5 +1,6 @@
 $().ready(function(){
   function init(){
+    var initialYear = new Date().getFullYear() - 100;
     renderMap();
 
     requestYears(function(years, formattedYears){
@@ -10,7 +11,7 @@ $().ready(function(){
           });
         },
         onInit: function(){
-          requestInfluences(years[0], function(influences){
+          requestInfluences(initialYear, function(influences){
             renderInfluencesInMap(influences);
           });
         }
