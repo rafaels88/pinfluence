@@ -1,7 +1,7 @@
+require_relative './interactor'
+
 class DestroyMoment
-  def self.call(params)
-    self.new(params).call
-  end
+  extend Interactor
 
   attr_reader :moment_id, :repository
 

@@ -54,8 +54,7 @@ To create an access to admin, just create an user using `hanami console`:
 ```bash
 $ bundle exec hanami console
 
-new_admin = User.new(name: "Admin name", email: "login@email.com", password: "admin_password")
-UserRepository.create new_admin
+CreateUser.call name: "Your Name", email: "your_email@domain.com", password: "your-plain-password"
 ```
 
 And done. You now have access to local admin area.
