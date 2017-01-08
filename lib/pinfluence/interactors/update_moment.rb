@@ -1,7 +1,7 @@
+require_relative './interactor'
+
 class UpdateMoment
-  def self.call(params)
-    new(params).call
-  end
+  extend Interactor
 
   attr_reader :id, :locations, :year_begin, :year_end,
               :repository, :location_repository, :location_service

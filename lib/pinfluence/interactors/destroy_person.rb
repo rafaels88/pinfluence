@@ -1,7 +1,7 @@
+require_relative './interactor'
+
 class DestroyPerson
-  def self.call(params)
-    self.new(params).call
-  end
+  extend Interactor
 
   attr_reader :person_id, :repository
 

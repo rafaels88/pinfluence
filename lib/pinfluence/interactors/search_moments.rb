@@ -1,7 +1,7 @@
+require_relative './interactor'
+
 class SearchMoments
-  def self.call(params)
-    self.new(params).call
-  end
+  extend Interactor
 
   attr_reader :year, :name, :repository
 
