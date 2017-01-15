@@ -1,7 +1,7 @@
 require_relative './interactor'
 
 class DestroyPerson
-  extend Interactor
+  include Interactor
 
   attr_reader :person_id, :repository
 

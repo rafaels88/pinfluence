@@ -1,7 +1,7 @@
 require_relative './interactor'
 
 class FindUserByAuthCredentials
-  extend Interactor
+  include Interactor
 
   attr_reader :email, :password
 

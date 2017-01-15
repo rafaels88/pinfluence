@@ -1,7 +1,7 @@
 require_relative './interactor'
 
 class SearchMoments
-  extend Interactor
+  include Interactor
 
   attr_reader :year, :name, :repository
 
