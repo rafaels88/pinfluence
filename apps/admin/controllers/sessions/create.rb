@@ -10,6 +10,7 @@ module Admin::Controllers::Sessions
         session[:user_id] = user.id
         redirect_to routes.home_path
       else
+        flash[:error] = 'Invalid email and/or password'
         redirect_to routes.new_session_path
       end
     end
