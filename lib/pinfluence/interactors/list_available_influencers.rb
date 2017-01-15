@@ -1,7 +1,7 @@
 require_relative './interactor'
 
 class ListAvailableInfluencers
-  extend Interactor
+  include Interactor
 
   attr_reader :repository
 

@@ -1,7 +1,7 @@
 require_relative './interactor'
 
 class CreateUser
-  extend Interactor
+  include Interactor
 
   attr_reader :name, :email, :repository
 

@@ -26,9 +26,32 @@ describe CreateMoment do
       )
     end
 
-    before { subject.call }
+    context 'when latlng is not found by given address' do
+      let(:latlng) { nil }
+      let(:influencer) { create :person }
+      let(:influencer_params) { { id: influencer.id, type: influencer.type } }
+
+      it 'returns #failure? == true' do
+        result = subject.call
+        expect(result.failure?).to eq true
+      end
+
+      it 'returns an error description' do
+        result = subject.call
+        expect(result.errors).to_not be_empty
+      end
+
+      it 'does not create a new moment' do
+        subject.call
+        found_moment = moment_repository.search_by_influencer(influencer)
+                                        .first
+        expect(found_moment).to be_nil
+      end
+    end
 
     context 'when associated influencer is a new person' do
+      before { subject.call }
+
       let(:influencer_params) do
         { name: 'New Person', type: 'person', gender: 'female' }
       end
@@ -61,7 +84,9 @@ describe CreateMoment do
       end
     end
 
-    context 'when associated influencer is a person' do
+    context 'when associated influencer is an existent person' do
+      before { subject.call }
+
       let(:influencer) { create :person }
       let(:influencer_params) { { id: influencer.id, type: influencer.type } }
 

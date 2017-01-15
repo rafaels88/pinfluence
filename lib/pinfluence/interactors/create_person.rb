@@ -1,7 +1,7 @@
 require_relative './interactor'
 
 class CreatePerson
-  extend Interactor
+  include Interactor
 
   attr_reader :name, :gender, :repository
 
@@ -12,7 +12,7 @@ class CreatePerson
   end
 
   def call
-    repository.create(new_person)
+    @person = repository.create(new_person)
   end
 
   private

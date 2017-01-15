@@ -35,8 +35,15 @@ module Admin::Views::Moments
 
     private
 
+    NilLocation = Struct.new(:id, :density, :address)
     def moment_first_location
-      @_first ||= moment.locations.first
+      return @_first if @_first
+
+      @_first ||= if moment.locations.count > 0
+                    moment.locations.first
+                  else
+                    NilLocation.new(nil, '1', '')
+                  end
     end
 
     def locations

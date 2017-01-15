@@ -1,7 +1,7 @@
 require_relative './interactor'
 
 class UpdatePerson
-  extend Interactor
+  include Interactor
 
   attr_reader :id, :name, :gender, :repository
 

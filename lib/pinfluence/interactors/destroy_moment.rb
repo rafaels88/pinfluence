@@ -1,7 +1,7 @@
 require_relative './interactor'
 
 class DestroyMoment
-  extend Interactor
+  include Interactor
 
   attr_reader :moment_id, :repository
 
