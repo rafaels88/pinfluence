@@ -1,5 +1,7 @@
 <div class="ui segment">
-  <h2 class="ui header">Autenticação</h2>
+  <h2 class="ui header">Authentication</h2>
+
+  <%= render partial: 'shared/flashes' %>
 
   <%=
     form_for form, { class: 'ui form' } do
@@ -9,7 +11,7 @@
       end
 
       div class: "field" do
-        label "Senha"
+        label "Password"
         password_field :password_plain
       end
 
