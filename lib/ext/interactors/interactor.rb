@@ -1,3 +1,5 @@
+require_relative './result'
+
 module Interactors
   module Interactor
     def self.included(base)

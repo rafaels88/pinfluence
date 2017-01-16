@@ -1,8 +1,20 @@
 require_relative '../../../lib/ext/interactors/interactor'
-require_relative '../../../lib/ext/interactors/result'
 require_relative '../../support/interactor'
 
 RSpec.describe Interactors::Interactor do
+  describe '.call' do
+    let(:params) { { param1: 'value', params2: 'value2' } }
+    let(:expected) { double }
+
+    before do
+      allow(subject).to receive(:call).with(params).and_return expected
+    end
+
+    it 'calls #call for a new instance of the interactor with given params' do
+      expect(described_class.call(params)).to eq expected
+    end
+  end
+
   describe '#call' do
     context 'with no raises' do
       let(:result) { double 'Result' }
