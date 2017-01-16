@@ -26,6 +26,10 @@ module Interactors
   end
 
   module Interface
+    def error?
+      !@errors.nil? && @errors.count > 0
+    end
+
     def add_error(params)
       @errors = [] unless @errors
       @errors.push(params)
@@ -45,7 +49,7 @@ module Interactors
     def exposed
       if self.class.exposed_attrs
         self.class.exposed_attrs.map do |attr|
-          { attr.to_s => instance_variable_get("@#{attr}").dup }
+          { attr.to_s => instance_variable_get("@#{attr}") }
         end
       end
     end
