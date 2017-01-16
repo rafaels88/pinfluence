@@ -15,6 +15,16 @@ RSpec.describe Interactors::Interactor do
     end
   end
 
+  describe '#error?' do
+    subject { ErroredInteractor.new }
+
+    context 'when an error is added' do
+      it 'returns true' do
+        expect(subject.error?).to be true
+      end
+    end
+  end
+
   describe '#call' do
     context 'with no raises' do
       let(:result) { double 'Result' }

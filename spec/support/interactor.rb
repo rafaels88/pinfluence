@@ -15,6 +15,10 @@ end
 
 class ErroredInteractor
   include Interactors::Interactor
+  def initialize
+    add_error('Simple Error message')
+  end
+
   def call
     add_error(field: 'Error message')
   end
