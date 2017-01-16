@@ -1,11 +1,7 @@
+require_relative '../../ext/interactors/interactor'
+
 module Interactor
   def self.included(base)
-    base.extend(ClassMethods)
-  end
-
-  module ClassMethods
-    def call(params)
-      new(params).call
-    end
+    base.include(Interactors::Interactor)
   end
 end

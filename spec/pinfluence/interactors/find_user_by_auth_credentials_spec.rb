@@ -18,8 +18,8 @@ describe FindUserByAuthCredentials do
 
     context 'when credentials are correct' do
       it 'returns found user' do
-        expect(subject.call).to_not be_nil
-        expect(subject.call.id).to eq user.id
+        expect(subject.call.user).to_not be_nil
+        expect(subject.call.user.id).to eq user.id
       end
     end
 
@@ -27,8 +27,8 @@ describe FindUserByAuthCredentials do
       let(:password) { 'wrong' }
       subject { described_class.new(credentials) }
 
-      it 'returns nil' do
-        expect(subject.call).to be_nil
+      it 'returns error' do
+        expect(subject.call.errors).to_not be_empty
       end
     end
 
@@ -36,8 +36,8 @@ describe FindUserByAuthCredentials do
       let(:email) { 'wrong' }
       subject { described_class.new(credentials) }
 
-      it 'returns nil' do
-        expect(subject.call).to be_nil
+      it 'returns error' do
+        expect(subject.call.errors).to_not be_empty
       end
     end
   end

@@ -5,6 +5,7 @@ class CreateMoment
 
   attr_reader :locations, :year_begin, :year_end,
               :repository, :location_service
+  expose :moment
 
   def initialize(influencer:, locations:, year_begin:, year_end:,
                  repository: MomentRepository.new,
@@ -22,19 +23,15 @@ class CreateMoment
 
   def call
     check_locations!
-    if success?
-      create_influencer_if_new!
-      moment = repository.create(new_moment)
+    return @moment = nil_moment if error?
 
-      locations.each do |location_param|
-        location_param.delete(:id)
-        repository.add_location(moment, location_param)
-      end
-    else
-      moment = nil_moment
+    create_influencer_if_new!
+    @moment = repository.create(new_moment)
+
+    locations.each do |location_param|
+      location_param.delete(:id)
+      repository.add_location(@moment, location_param)
     end
-
-    Result.new(moment, failure?, success?, @errors)
   end
 
   private
@@ -45,17 +42,9 @@ class CreateMoment
       if location_info.latlng
         location_param[:latlng] = location_info.latlng
       else
-        @errors.push("'#{location_param[:address]}' address not found")
+        add_error("'#{location_param[:address]}' address not found")
       end
     end
-  end
-
-  def failure?
-    @errors.count > 0
-  end
-
-  def success?
-    !failure?
   end
 
   def nil_moment
@@ -82,9 +71,9 @@ class CreateMoment
 
   def create_influencer_if_new!
     if new_influencer? && person?
-      person = CreatePerson.call(name: influencer[:name],
+      result = CreatePerson.call(name: influencer[:name],
                                  gender: influencer[:gender])
-      influencer[:id] = person.id.to_s
+      influencer[:id] = result.person.id.to_s
     end
   end
 

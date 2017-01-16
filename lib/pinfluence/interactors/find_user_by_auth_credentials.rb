@@ -4,6 +4,7 @@ class FindUserByAuthCredentials
   include Interactor
 
   attr_reader :email, :password
+  expose :user
 
   def initialize(email:, password:)
     @email = email
@@ -11,13 +12,17 @@ class FindUserByAuthCredentials
   end
 
   def call
-    found_user if found? && right_password?
+    if found? && right_password?
+      @user = found_user
+    else
+      add_error('User and/or email not found')
+    end
   end
 
   private
 
   def found_user
-    @found_user ||= repository.find_by_email(email)
+    @_found_user ||= repository.find_by_email(email)
   end
 
   def found?

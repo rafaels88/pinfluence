@@ -4,6 +4,7 @@ class CreatePerson
   include Interactor
 
   attr_reader :name, :gender, :repository
+  expose :person
 
   def initialize(name:, gender:, repository: PersonRepository.new)
     @name = name

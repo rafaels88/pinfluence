@@ -16,7 +16,7 @@ describe SearchMoments do
       subject { described_class.new(name: person.name) }
 
       it 'returns a list of found moments related to the found person' do
-        results = subject.call
+        results = subject.call.moments
         expect(results.count).to eq 2
         expect(results.first.id).to eq moment_01.id
         expect(results.last.id).to eq moment_02.id
@@ -27,7 +27,7 @@ describe SearchMoments do
       subject { described_class.new(year: '170') }
 
       it 'returns a list of found moments happend in given year' do
-        results = subject.call
+        results = subject.call.moments
         expect(results.count).to eq 1
         expect(results.first.id).to eq moment_02.id
       end
@@ -41,7 +41,7 @@ describe SearchMoments do
           subject { described_class.new(year: Time.new.year) }
 
           it 'returns a list with this moment included' do
-            results = subject.call
+            results = subject.call.moments
             expect(results.count).to eq 1
             expect(results.first.id).to eq moment_03.id
           end
