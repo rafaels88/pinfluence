@@ -6,21 +6,21 @@ class PersonRepository < Hanami::Repository
   def find_with_moments(id)
     aggregate(:moments)
       .where(people__id: id)
-      .as(Person)
+      .map_to(Person)
       .one
   end
 
   def search_by_name(name)
     people
       .where("lower(name) = '#{name.downcase}'")
-      .as(Person)
+      .map_to(Person)
       .call.collection
   end
 
   def all_ordered_by(field)
     people
       .order(field)
-      .as(Person)
+      .map_to(Person)
       .call.collection
   end
 end

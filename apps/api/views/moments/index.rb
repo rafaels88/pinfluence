@@ -16,7 +16,7 @@ module Api::Views::Moments
       {
         id: moment.influencer.id,
         name: moment.influencer.name,
-        gender: moment.influencer.gender.downcase,
+        gender: moment.influencer.gender.to_s.downcase,
         begin_in: moment.year_begin,
         kind: moment.influencer.type,
         age: moment_age(moment),

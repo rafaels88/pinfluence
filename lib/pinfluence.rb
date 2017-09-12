@@ -1,1 +1,2 @@
-Hanami::Utils.require!("lib/pinfluence")
+module Pinfluence
+end

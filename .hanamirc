@@ -1,4 +1,4 @@
 project=pinfluence
 architecture=container
-test=minitest
+test=rspec
 template=erb

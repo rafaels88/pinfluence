@@ -8,14 +8,14 @@ class MomentRepository < Hanami::Repository
 
   def all_with_influencers
     aggregate(:person)
-      .as(Moment)
+      .map_to(Moment)
       .call.collection
   end
 
   def find_with_locations(id)
     aggregate(:locations)
       .where(moments__id: id)
-      .as(Moment)
+      .map_to(Moment)
       .one
   end
 
@@ -24,13 +24,13 @@ class MomentRepository < Hanami::Repository
   end
 
   def search_by_date(params)
-    moments
-      .combine(:person, :locations)
-      .where('year_begin <= ? AND (year_end >= ? OR year_end IS NULL)',
-             params[:year], params[:year])
-      .as(Moment)
-      .call
-      .collection
+    conditional = Sequel.lit('year_begin <= ? AND (year_end >= ? OR year_end IS NULL)',
+                             params[:year], params[:year])
+
+    aggregate(:locations, :person)
+      .where(conditional)
+      .map_to(Moment)
+      .call.collection
   end
 
   def all_available_years
@@ -46,10 +46,9 @@ class MomentRepository < Hanami::Repository
   end
 
   def search_by_influencer(influencer)
-    moments
-      .combine(:person, :locations)
+    aggregate(:person, :locations)
       .where("#{influencer.type}_id": influencer.id)
-      .as(Moment)
+      .map_to(Moment)
       .call.collection
   end
 

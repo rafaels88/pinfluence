@@ -19,10 +19,19 @@ Hanami.configure do
 
   mailer do
     root Hanami.root.join("lib", "pinfluence", "mailers")
-    delivery do
-      development :test
-      test        :test
-      # production :smtp, address: ENV['SMTP_PORT'], port: 1025
+
+    delivery :test
+  end
+
+  environment :development do
+    logger level: :debug
+  end
+
+  environment :production do
+    logger level: :info, formatter: :json
+
+    mailer do
+      delivery :smtp, address: ENV['SMTP_HOST'], port: ENV['SMTP_PORT']
     end
   end
 end

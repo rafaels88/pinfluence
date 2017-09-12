@@ -1,9 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'bundler'
 gem 'rake'
-gem 'hanami',       '~> 0.9'
-gem 'hanami-model', '~> 0.7'
+gem 'hanami',       '~> 1.0'
+gem 'hanami-model', '~> 1.0'
 gem 'pg'
 gem 'httparty'
 gem 'sass'
@@ -12,6 +11,7 @@ gem 'bcrypt'
 group :development do
   # Code reloading
   # See: http://hanamirb.org/guides/applications/code-reloading
+  gem 'byebug'
   gem 'shotgun'
   gem 'capistrano'
   gem 'capistrano3-puma'
@@ -27,7 +27,6 @@ group :test do
   gem 'rspec'
   gem 'capybara'
   gem 'factory_girl'
-  gem 'byebug'
 end
 
 group :production do
