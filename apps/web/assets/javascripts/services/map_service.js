@@ -1,25 +1,16 @@
 var map, currentMapSources = {}, oldMapSources = {};
 
 function renderMap(){
-  var mapOptions = {
-    zoom: 3,
-    center: new google.maps.LatLng(0, 0),
-  };
-  map = new google.maps.Map(document.getElementById("map"), mapOptions);
+  map = new google.maps.Map(document.getElementById("map"),
+                            { zoom: 3, center: new google.maps.LatLng(0, 0) });
 }
 
 function renderInfluencesInMap(influences){
-  var influencers = [], events = [];
-  $(influences).each(function(i, influence){
-    if(influence.kind == "event"){
-      events.push(influence);
-    } else if (influence.kind == "person"){
-      influencers.push(influence);
-    }
-  });
+  var influencers = [];
+
+  $(influences).each(function(i, inf){ influencers.push(inf) });
 
   _renderInfluencers(influencers);
-  _renderEvents(events);
 }
 
 function _renderInfluencers(influencers){
@@ -27,60 +18,35 @@ function _renderInfluencers(influencers){
   currentMapSources = {};
 
   $(influencers).each(function(i, influencer){
+
     if(oldMapSources[influencer.id] == undefined){
-      influencer.shouldRender = true;
+      influencer.marker = _createMarker(influencer);
     } else {
-      // Retrieves marker for this influencer
       influencer.marker = oldMapSources[influencer.id].marker;
+      _moveMarker(influencer.marker, influencer.locations[0]);
     }
+
+    influencer.marker.infowindow.setContent(_createInfoWindowContent(influencer));
 
     currentMapSources[influencer.id] = influencer;
     delete oldMapSources[influencer.id];
   });
 
-  $.each(currentMapSources, function(influencerId, influencer){
-    // Add new Markers
-    if(influencer.shouldRender == true){
-      influencer.marker = _createMarker(influencer);
-      currentMapSources[influencerId] = influencer;
-    } else {
-      // Update existent marker
-      influencer.marker.infowindow.setContent(_createInfoWindowContent(influencer));
-    }
-  });
-
   // Remove Markers
-  $.each(oldMapSources, function(influencerId, influencer){
-    influencer.marker.setMap(null);
-  });
+  $.each(oldMapSources, function(id, influencer){ influencer.marker.setMap(null) });
 }
 
-function _renderEvents(mapEvents){
-  var locations = [];
-  $(mapEvents).each(function(i, mapEvent){
-    var location = new google.maps.LatLng(mapEvent.latlng[0], mapEvent.latlng[1]);
-    locations.push({
-      location: location, weight: mapEvent.density
-    });
-  });
-  _createHeatmap(locations);
-}
-
-function _createHeatmap(locations) {
-  var heatmap = new google.maps.visualization.HeatmapLayer({
-    data: locations,
-    map: map
-  });
-  heatmap.set('radius', 20);
+function _moveMarker(marker, newLocation){
+  var newLatLng = new google.maps.LatLng(newLocation.latlng[0],
+                                         newLocation.latlng[1]);
+  marker.setPosition(newLatLng)
 }
 
 function _createMarker(influencer) {
   var influencerLocation = influencer.locations[0];
   var myLatlng = new google.maps.LatLng(influencerLocation.latlng[0],
                                         influencerLocation.latlng[1]);
-  var infowindow = new google.maps.InfoWindow({
-    content: _createInfoWindowContent(influencer)
-  });
+  var infowindow = new google.maps.InfoWindow();
 
   var marker = new google.maps.Marker({
     position: myLatlng,
@@ -90,9 +56,7 @@ function _createMarker(influencer) {
     icon: '/assets/pin-' + influencer.gender + '2.png'
   });
 
-  marker.addListener('click', function() {
-    infowindow.open(map, marker);
-  });
+  marker.addListener('click', function() { infowindow.open(map, marker) });
   infowindow.open(map, marker);
 
   marker.infowindow = infowindow;
