@@ -74,6 +74,7 @@ GEM
       dry-types (~> 0.11.0)
     factory_girl (4.8.0)
       activesupport (>= 3.0.0)
+    graphql (1.6.8)
     hanami (1.0.0)
       bundler (~> 1.13)
       concurrent-ruby (~> 1.0)
@@ -211,6 +212,7 @@ DEPENDENCIES
   capybara
   dotenv (~> 2.0)
   factory_girl
+  graphql
   hanami (~> 1.0)
   hanami-model (~> 1.0)
   httparty
@@ -222,4 +224,4 @@ DEPENDENCIES
   shotgun
 
 BUNDLED WITH
-   1.15.4
+   1.16.0.pre.2

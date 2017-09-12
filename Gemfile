@@ -7,6 +7,7 @@ gem 'pg'
 gem 'httparty'
 gem 'sass'
 gem 'bcrypt'
+gem 'graphql'
 
 group :development do
   # Code reloading
