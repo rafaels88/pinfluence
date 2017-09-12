@@ -32,7 +32,11 @@
 
     <%= gmaps_tag %>
 
-    <%= javascript 'jquery.min', 'nouislider.min', 'wNumb' %>
+    <%= javascript 'jquery.min' %>
+    <!-- Years slider -->
+    <%= javascript 'nouislider.min', 'wNumb' %>
+    <!-- Marker smooth sliding -->
+    <%= javascript 'jquery.easing.1.3.min', 'markerAnimate', 'SlidingMarker.min' %>
     <%= javascript 'search_service', 'api_service', 'map_service', 'slider_service' %>
     <script type="text/javascript" charset="utf-8" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.6/semantic.min.js"></script>
     <%= javascript 'form', 'app' %>

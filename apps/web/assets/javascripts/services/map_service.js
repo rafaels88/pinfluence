@@ -48,7 +48,7 @@ function _createMarker(influencer) {
                                         influencerLocation.latlng[1]);
   var infowindow = new google.maps.InfoWindow();
 
-  var marker = new google.maps.Marker({
+  var marker = new SlidingMarker({
     position: myLatlng,
     animation: google.maps.Animation.DROP,
     map: map,
