@@ -3,12 +3,13 @@
 [![Build Status](https://travis-ci.org/prosi-org/pinfluence.svg?branch=master)](https://travis-ci.org/prosi-org/pinfluence)
 [![Code Climate](https://codeclimate.com/github/prosi-org/pinfluence.png)](https://codeclimate.com/github/prosi-org/pinfluence)
 
-[http://pinfluence.org](http://pinfluence.org) - All world's influence in a map. Ruby and Hanami non-profit open source project.
+[http://pinfluence.org ](http://pinfluence.org) - All world's influence in a map. Ruby and Hanami non-profit open source project.
 
-## Installation
+## Setup
 
-Make a copy of `.env.development.example` to `.env.development`, and configure the
-database informations.
+1. Make a copy of `.env.development.example` to `.env.development`;
+1. Make a copy of `.env.test.example` to `.env.test`;
+1. Open each one of the files and configure the `DATABASE_URL` with your local database informations
 
 This is a Ruby project, so it is nice to have [RVM](https://rvm.io/) or [Rbenv](https://github.com/rbenv/rbenv) installed.
 
@@ -17,15 +18,14 @@ $ gem install bundler
 $ bundle
 ```
 
-After creating database user with database creation privilege, and
-configuring `.env.development`:
+After, you need to prepare your database for development and testing.
 
 ```bash
 $ bundle exec hanami db prepare
 $ HANAMI_ENV=test bundle exec hanami db prepare
 ```
 
-Now, run the tests. If everything is configured, all tests are going to pass.
+Now, run the tests. If everything is fine, all tests are going to pass.
 
 ```bash
 $ bundle exec rspec
@@ -71,4 +71,4 @@ Before it, see the [code of conduct](https://github.com/prosi-org/pinfluence/blo
 
 ## License
 
-Copyright © 2016 Rafael Soares – Released under MIT License
+Copyright © 2017 Rafael Soares – Released under MIT License

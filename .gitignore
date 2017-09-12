@@ -5,6 +5,7 @@
 .byebug_history
 /log
 .env.development
+.env.test
 
 # IDE
 *.swp
