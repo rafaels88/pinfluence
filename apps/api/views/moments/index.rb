@@ -3,7 +3,7 @@ module Api::Views::Moments
     include Api::View
 
     def render
-      raw JSON.generate(collection: collection)
+      raw JSON.generate(data: collection)
     end
 
     private
@@ -14,18 +14,15 @@ module Api::Views::Moments
 
     def moment_hash(moment)
       {
-        id: moment.influencer.id,
-        name: moment.influencer.name,
-        gender: moment.influencer.gender.to_s.downcase,
+        id: moment.id,
         begin_in: moment.year_begin,
-        kind: moment.influencer.type,
-        age: moment_age(moment),
-        locations: locations_hash_by_moment(moment)
+        locations: locations_hash(moment.locations),
+        influencer: influencer_hash(moment.influencer)
       }
     end
 
-    def locations_hash_by_moment(moment)
-      moment.locations.map do |location|
+    def locations_hash(locations)
+      locations.map do |location|
         {
           id: location.id,
           density: location.density,
@@ -34,8 +31,13 @@ module Api::Views::Moments
       end
     end
 
-    def moment_age(moment)
-      searched_year - moment.year_begin if searched_year
+    def influencer_hash(influencer)
+      {
+        id: influencer.id,
+        name: influencer.name,
+        gender: influencer.gender.downcase,
+        kind: influencer.type
+      }
     end
   end
 end

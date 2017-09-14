@@ -8,6 +8,8 @@ module Api::Controllers::Moments
     expose :searched_year
 
     def call(params)
+      self.format = :json
+
       if params.valid?
         @searched_year = params[:year].to_i if params[:year]
         @moments = SearchMoments.call(params)

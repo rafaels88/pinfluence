@@ -4,6 +4,8 @@ module Api::Controllers::MomentYears
     expose :years
 
     def call(params)
+      self.format = :json
+
       @years = MomentRepository.new.all_available_years
     end
   end

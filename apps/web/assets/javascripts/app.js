@@ -6,14 +6,14 @@ $().ready(function(){
     requestYears(function(years, formattedYears){
       renderSlider(years, formattedYears, {
         onChange: function(currentYear){
-          requestInfluences(currentYear, function(influences){
-            renderInfluencesInMap(influences);
+          requestMoments(currentYear, function(moments){
+            renderMomentsInMap(moments);
           });
         },
         onInit: function(){
           changeSliderTo(initialYear);
-          requestInfluences(initialYear, function(influences){
-            renderInfluencesInMap(influences);
+          requestMoments(initialYear, function(moments){
+            renderMomentsInMap(moments);
           });
         }
       });
@@ -24,8 +24,8 @@ $().ready(function(){
         requestYearByInfluenceName(term, function(year){
           changeSliderTo(year);
 
-          requestInfluences(year, function(influences){
-            renderInfluencesInMap(influences);
+          requestMoments(year, function(moments){
+            renderMomentsInMap(moments);
           });
         })
       }
@@ -35,8 +35,8 @@ $().ready(function(){
       onSearch: function(year){
         changeSliderTo(year);
 
-        requestInfluences(year, function(influences){
-          renderInfluencesInMap(influences);
+        requestMoments(year, function(moments){
+          renderMomentsInMap(moments);
         });
       }
     });

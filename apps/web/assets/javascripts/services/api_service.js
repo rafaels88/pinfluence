@@ -6,19 +6,19 @@ function requestYears(cb){
   $.ajax({
     url: apiYearsUrl,
     success: function(response){
-      cb(response.available_years, response.available_years_formatted);
+      cb(response.data.available_years, response.data.available_years_formatted);
     }
   });
 }
 
-function requestInfluences(year, cb){
+function requestMoments(year, cb){
   var currentApiUrl = apiUrl;
   if(year){ currentApiUrl += "?year=" + year; }
 
   $.ajax({
     url: currentApiUrl,
     success: function(response){
-      cb(response.collection);
+      cb(response.data);
     }
   });
 }
@@ -30,7 +30,7 @@ function requestYearByInfluenceName(name, cb){
   $.ajax({
     url: currentApiUrl,
     success: function(response){
-      cb(response.collection[0].begin_in);
+      cb(response.data[0].begin_in);
     }
   });
 }

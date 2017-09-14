@@ -3,10 +3,12 @@ module Api::Views::MomentYears
     include Api::View
 
     def render
-      raw JSON.generate({
-        available_years: years,
-        available_years_formatted: formatted_years(years)
-      })
+      raw JSON.generate(
+        data: {
+          available_years: years,
+          available_years_formatted: formatted_years(years)
+        }
+      )
     end
 
     private
