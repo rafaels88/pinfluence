@@ -20,7 +20,8 @@ module ApiGraphql
       #
       load_paths << [
         'controllers',
-        'views'
+        'types',
+        'schemas'
       ]
 
       # Handle exceptions with HTTP statuses (true) or don't catch them (false).
@@ -95,7 +96,7 @@ module ApiGraphql
       # Default format for responses that don't consider the request format
       # Argument: A symbol representation of a mime type, defaults to :html
       #
-      # default_response_format :html
+      default_response_format :json
 
       # HTTP Body parsers
       # Parse non GET responses body for a specific mime type
@@ -103,7 +104,7 @@ module ApiGraphql
       #             (only `:json` is supported)
       #           Object, the parser
       #
-      # body_parsers :json
+      body_parsers :json
 
       # When it's true and the router receives a non-encrypted request (http),
       # it redirects to the secure equivalent (https). Disabled by default.
@@ -120,12 +121,12 @@ module ApiGraphql
 
       # The relative path to templates
       #
-      templates 'templates'
+      # templates 'templates'
 
       ##
       # ASSETS
       #
-      assets do
+      # assets do
         # JavaScript compressor
         #
         # Supported engines:
@@ -138,7 +139,7 @@ module ApiGraphql
         # See: http://hanamirb.org/guides/assets/compressors
         #
         # In order to skip JavaScript compression comment the following line
-        javascript_compressor :builtin
+        # javascript_compressor :builtin
 
         # Stylesheet compressor
         #
@@ -151,14 +152,14 @@ module ApiGraphql
         # See: http://hanamirb.org/guides/assets/compressors
         #
         # In order to skip stylesheet compression comment the following line
-        stylesheet_compressor :builtin
+        # stylesheet_compressor :builtin
 
         # Specify sources for assets
         #
-        sources << [
-          'assets'
-        ]
-      end
+        # sources << [
+        #   'assets'
+        # ]
+      # end
 
       ##
       # SECURITY
@@ -267,10 +268,10 @@ module ApiGraphql
       # This is useful for sharing common functionality
       #
       # See: http://www.rubydoc.info/gems/hanami-view#Configuration
-      view.prepare do
-        include Hanami::Helpers
-        include ApiGraphql::Assets::Helpers
-      end
+      # view.prepare do
+      #   include Hanami::Helpers
+      #  include ApiGraphql::Assets::Helpers
+      # end
     end
 
     ##
@@ -297,16 +298,16 @@ module ApiGraphql
       # host   'example.org'
       # port   443
 
-      assets do
+      # assets do
         # Don't compile static assets in production mode (eg. Sass, ES6)
         #
         # See: http://www.rubydoc.info/gems/hanami-assets#Configuration
-        compile false
+        # compile false
 
         # Use fingerprint file name for asset paths
         #
         # See: http://hanamirb.org/guides/assets/overview
-        fingerprint true
+        # fingerprint true
 
         # Content Delivery Network (CDN)
         #
@@ -319,8 +320,8 @@ module ApiGraphql
         # Subresource Integrity
         #
         # See: http://hanamirb.org/guides/assets/content-delivery-network/#subresource-integrity
-        subresource_integrity :sha256
-      end
+        # subresource_integrity :sha256
+      # end
     end
   end
 end
