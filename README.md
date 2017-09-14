@@ -39,7 +39,7 @@ $ bundle exec hanami server
 
 Website will be available in [http://localhost:2300](http://localhost:2300)
 
-## Usage
+## Development
 
 The project has three apps:
 
@@ -58,6 +58,8 @@ CreateUser.call name: "Your Name", email: "your_email@domain.com", password: "yo
 ```
 
 And done. You now have access to local admin area.
+
+A `Guardfile` is also available if you want to `bundle exec guard`.
 
 ## Contributing
 

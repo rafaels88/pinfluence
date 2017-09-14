@@ -18,6 +18,8 @@ group :development do
   gem 'capistrano3-puma'
   gem 'capistrano-bundler', '~> 1.1.2'
   gem 'capistrano-rbenv'
+  gem 'guard'
+  gem 'guard-rspec', require: false
 end
 
 group :test, :development do
