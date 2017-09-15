@@ -1,11 +1,11 @@
 require 'spec_helper'
 require 'hanami_request_test'
 
-RSpec.describe 'GRAPHQL API available_years', :type => :request do
+RSpec.describe 'API available_years', :type => :request do
   include HanamiRequestTest
 
   subject { last_json_response[:data] }
-  let(:endpoint) { '/api_graphql' }
+  let(:endpoint) { '/api' }
 
   it 'returns HTTP 200' do
     post endpoint

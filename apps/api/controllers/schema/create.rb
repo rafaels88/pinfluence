@@ -1,6 +1,6 @@
-module ApiGraphql::Controllers::Api
+module Api::Controllers::Schema
   class Create
-    include ApiGraphql::Action
+    include Api::Action
 
     def call(params)
       self.format = :json

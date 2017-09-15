@@ -1,5 +1,5 @@
-var apiGraphqlUrl = $("#map-container").data("api_graphql-endpoint"),
-    graph = graphql(apiGraphqlUrl, {
+var apiUrl = $("#map-container").data("api-endpoint"),
+    graph = graphql(apiUrl, {
       method: "POST",
       headers: {},
       fragments: {

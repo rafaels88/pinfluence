@@ -44,7 +44,7 @@ Website will be available in [http://localhost:2300](http://localhost:2300)
 The project has three apps:
 
 - WEB (`/`), which has all code to show public information, like Map;
-- API (`/api`), is a public API which `web` app make use;
+- API (`/api`), is a public GraphQL API which `web` app make use;
 - ADMIN (`/admin`), where all informations are registered. This is a restrict area.
 
 When you run the server, you run the entire project.

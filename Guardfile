@@ -16,6 +16,6 @@ guard :rspec, cmd: "bundle exec rspec" do
   watch(%r{^apps/(.+)/controllers/(.+)/(.+)\.rb$}) { |m| "spec/requests/#{m[1]}/" }
   watch(%r{^apps/(.+)/views/(.+)/(.+)\.rb$}) { |m| "spec/requests/#{m[1]}/" }
 
-  # API GRAPHQL
-  watch(%r{^apps/api_graphql/(schemas|types)/(.+)\.rb$}) { |m| "spec/requests/api_graphql/" }
+  # APIL
+  watch(%r{^apps/api/(schemas|types)/(.+)\.rb$}) { |m| "spec/requests/api/" }
 end
