@@ -1,11 +1,8 @@
 require 'spec_helper'
+require 'hanami_request_test'
 
-RSpec.describe 'API moments years', :type => :request do
-  include Rack::Test::Methods
-
-  def app
-    Hanami.app
-  end
+RSpec.describe 'GRAPHQL API available_years', :type => :request do
+  include HanamiRequestTest
 
   subject { last_json_response[:data] }
   let(:endpoint) { '/api_graphql' }

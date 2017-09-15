@@ -1,11 +1,8 @@
 require 'spec_helper'
+require 'hanami_request_test'
 
 RSpec.describe 'API moments years', :type => :request do
-  include Rack::Test::Methods
-
-  def app
-    Hanami.app
-  end
+  include HanamiRequestTest
 
   subject { last_json_response }
   let(:endpoint) { '/api/moments' }
