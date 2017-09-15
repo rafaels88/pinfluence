@@ -3,6 +3,9 @@ module Types
     name 'Moment'
     description 'A moment in history'
 
-    field :year_begin, !types.String
+    field :id, types.Int
+    field :year_begin, types.Int
+    field :locations, types[Types::LocationType]
+    field :influencer, Types::InfluencerType
   end
 end

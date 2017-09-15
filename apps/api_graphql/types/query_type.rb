@@ -1,13 +1,21 @@
 module Queries
-  MomentsQuery = GraphQL::ObjectType.define do
+  Query = GraphQL::ObjectType.define do
     name 'Moments Query'
     description 'Query root of the schema'
 
     field :moments do
-      type Types::MomentType
-      argument :id, !types.ID
-      description 'Find a person by ID'
-      resolve ->(obj, args, context) { MomentRepository.new.find(args['id']) }
+      type !types[Types::MomentType]
+      argument :influencer_name, types.String
+      argument :year, types.Int
+      description "Search moments by Influencer's Name"
+      resolve ->(obj, args, context) {
+        if args['influencer_name']
+          params = { name: args['influencer_name'] }
+        elsif args['year']
+          params = { year: args['year'] }
+        end
+        SearchMoments.new(params).call
+      }
     end
 
     field :available_years do

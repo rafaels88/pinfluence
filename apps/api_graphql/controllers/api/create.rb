@@ -10,7 +10,7 @@ module ApiGraphql::Controllers::Api
     private
 
     def schema_body(query)
-      Schemas::MomentSchema.execute(query)
+      Schemas::Schema.execute(query)
     end
   end
 end

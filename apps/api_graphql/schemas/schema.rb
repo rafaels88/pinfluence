@@ -1,5 +1,5 @@
 module Schemas
-  MomentSchema = GraphQL::Schema.define do
-    query Queries::MomentsQuery
+  Schema = GraphQL::Schema.define do
+    query Queries::Query
   end
 end
