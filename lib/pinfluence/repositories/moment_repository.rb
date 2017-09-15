@@ -42,7 +42,9 @@ class MomentRepository < Hanami::Repository
                else
                  moments.max(:year_end)
                end
-    (min_year..max_year).to_a
+    (min_year..max_year).to_a.map do |year|
+      Values::Year.new year
+    end
   end
 
   def search_by_influencer(influencer)

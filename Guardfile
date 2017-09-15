@@ -15,4 +15,7 @@ guard :rspec, cmd: "bundle exec rspec" do
   watch(%r{^lib/pinfluence/(.+)\.rb$}) { |m| "spec/pinfluence/#{m[1]}_spec.rb" }
   watch(%r{^apps/(.+)/controllers/(.+)/(.+)\.rb$}) { |m| "spec/requests/#{m[1]}/" }
   watch(%r{^apps/(.+)/views/(.+)/(.+)\.rb$}) { |m| "spec/requests/#{m[1]}/" }
+
+  # API GRAPHQL
+  watch(%r{^apps/api_graphql/(schemas|types)/(.+)\.rb$}) { |m| "spec/requests/api_graphql/" }
 end

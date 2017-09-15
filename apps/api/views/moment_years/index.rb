@@ -5,25 +5,10 @@ module Api::Views::MomentYears
     def render
       raw JSON.generate(
         data: {
-          available_years: years,
-          available_years_formatted: formatted_years(years)
+          available_years: years.map(&:year),
+          available_years_formatted: years.map(&:formatted)
         }
       )
-    end
-
-    private
-
-    def formatted_years(years)
-      years.map do |y|
-        if y < 0
-          y *= -1
-          "#{y} BC"
-        elsif y > 0
-          "#{y} AD"
-        else
-          y
-        end
-      end
     end
   end
 end
