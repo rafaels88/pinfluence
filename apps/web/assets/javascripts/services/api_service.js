@@ -1,36 +1,29 @@
-var apiUrl = $("#map-container").data("api-endpoint"),
-  apiYearsUrl = $("#map-container").data("api-years-endpoint"),
-  requestTimeout;
+var apiGraphqlUrl = $("#map-container").data("api_graphql-endpoint"),
+    graph = graphql(apiGraphqlUrl, {
+      method: "POST",
+      headers: {},
+      fragments: {
+        error: "on Error { messages }"
+      }
+    });
 
 function requestYears(cb){
-  $.ajax({
-    url: apiYearsUrl,
-    success: function(response){
-      cb(response.data.available_years, response.data.available_years_formatted);
-    }
-  });
+  graph.query(`query { available_years { year, formatted } }`)()
+    .then(function(response){
+      cb(response.available_years)
+    });
 }
 
 function requestMoments(year, cb){
-  var currentApiUrl = apiUrl;
-  if(year){ currentApiUrl += "?year=" + year; }
-
-  $.ajax({
-    url: currentApiUrl,
-    success: function(response){
-      cb(response.data);
-    }
-  });
+  graph.query(`query { moments(year: `+year+`) { influencer { id name gender } locations { latlng } year_begin } }`)()
+    .then(function(response){
+      cb(response.moments)
+    });
 }
 
 function requestYearByInfluenceName(name, cb){
-  var currentApiUrl = apiUrl;
-  if(name){ currentApiUrl += "?name=" + name; }
-
-  $.ajax({
-    url: currentApiUrl,
-    success: function(response){
-      cb(response.data[0].begin_in);
-    }
-  });
+  graph.query(`query { moments(name: `+name+`) { influencer { id name gender } locations { latlng } year_begin } }`)()
+    .then(function(response){
+      cb(response.moments)
+    });
 }

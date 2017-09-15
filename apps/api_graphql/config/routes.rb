@@ -3,4 +3,4 @@
 #
 # Example:
 # get '/hello', to: ->(env) { [200, {}, ['Hello from Hanami!']] }
-post '/', to: 'api#create'
+post '/', to: 'api#create', as: :root

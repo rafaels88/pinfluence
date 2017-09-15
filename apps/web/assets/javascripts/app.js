@@ -3,8 +3,8 @@ $().ready(function(){
     var initialYear = new Date().getFullYear() - 100;
     renderMap();
 
-    requestYears(function(years, formattedYears){
-      renderSlider(years, formattedYears, {
+    requestYears(function(years){
+      renderSlider(years, {
         onChange: function(currentYear){
           requestMoments(currentYear, function(moments){
             renderMomentsInMap(moments);

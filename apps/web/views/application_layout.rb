@@ -11,6 +11,8 @@ module Web
 
       def moments_api_url; end
 
+      def api_graphql_url; end
+
       def years_api_url; end
     end
   end

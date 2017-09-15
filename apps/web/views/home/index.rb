@@ -14,5 +14,9 @@ module Web::Views::Home
     def years_api_url
       Api::routes.moment_years_path
     end
+
+    def api_graphql_url
+      ApiGraphql::routes.root_path
+    end
   end
 end
