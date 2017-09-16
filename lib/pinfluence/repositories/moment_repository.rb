@@ -23,14 +23,13 @@ class MomentRepository < Hanami::Repository
     assoc(:locations, moment).add(data)
   end
 
-  def search_by_date(params)
+  def search_by_date(params, limit: 100)
     conditional = Sequel.lit('year_begin <= ? AND (year_end >= ? OR year_end IS NULL)',
                              params[:year], params[:year])
 
-    aggregate(:locations, :person)
-      .where(conditional)
-      .map_to(Moment)
-      .call.collection
+    q = aggregate(:locations, :person).where(conditional)
+    q = q.limit(limit) if limit
+    q.map_to(Moment).call.collection
   end
 
   def all_available_years
@@ -47,11 +46,11 @@ class MomentRepository < Hanami::Repository
     end
   end
 
-  def search_by_influencer(influencer)
-    aggregate(:person, :locations)
-      .where("#{influencer.type}_id": influencer.id)
-      .map_to(Moment)
-      .call.collection
+  def search_by_influencer(influencer, limit: 100)
+    q = aggregate(:person, :locations)
+          .where("#{influencer.type}_id": influencer.id)
+    q = q.limit(limit) if limit
+    q.map_to(Moment).call.collection
   end
 
   private

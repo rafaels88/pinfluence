@@ -21,12 +21,9 @@ $().ready(function(){
 
     listenSearch({
       onSearch: function(term){
-        requestYearByInfluenceName(term, function(year){
-          changeSliderTo(year);
-
-          requestMoments(year, function(moments){
-            renderMomentsInMap(moments);
-          });
+        requestYearByInfluenceName(term, function(moments){
+          changeSliderTo(moments[0].year_begin);
+          renderMomentsInMap(moments);
         })
       }
     });

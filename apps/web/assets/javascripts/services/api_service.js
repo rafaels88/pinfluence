@@ -22,7 +22,7 @@ function requestMoments(year, cb){
 }
 
 function requestYearByInfluenceName(name, cb){
-  graph.query(`query { moments(name: `+name+`) { influencer { id name gender } locations { latlng } year_begin } }`)()
+  graph.query(`query { moments(influencer_name: "`+name+`", limit: 1) { influencer { id name gender } locations { latlng } year_begin } }`)()
     .then(function(response){
       cb(response.moments)
     });

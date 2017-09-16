@@ -7,13 +7,17 @@ module Queries
       type !types[Types::MomentType]
       argument :influencer_name, types.String
       argument :year, types.Int
+      argument :limit, types.Int, default_value: 100
       description "Search moments by Influencer's Name"
       resolve ->(obj, args, context) {
-        if args['influencer_name']
-          params = { name: args['influencer_name'] }
+        params = { limit: args[:limit] }
+
+        if args[:influencer_name]
+          params.merge!({ name: args[:influencer_name] })
         elsif args['year']
-          params = { year: args['year'] }
+          params.merge!({ year: args[:year] })
         end
+
         SearchMoments.new(params).call
       }
     end

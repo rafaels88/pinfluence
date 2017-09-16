@@ -43,6 +43,15 @@ RSpec.describe 'API moments', :type => :request do
                         gender: influencer.gender, kind: influencer.type.to_s.downcase }
         )
       end
+
+      context 'when :limit param is given' do
+        let(:limit) { 1 }
+        before { post endpoint, query: "{ moments(influencer_name: \"Socrates\", limit: #{limit}) { id influencer { id name gender kind } locations { id density latlng } year_begin } }" }
+
+        it 'returns a limited number of resources' do
+          expect(last_json_response[:data][:moments].count).to eq limit
+        end
+      end
     end
   end
 
@@ -71,6 +80,15 @@ RSpec.describe 'API moments', :type => :request do
           influencer: { id: influencer.id, name: influencer.name,
                         gender: influencer.gender, kind: influencer.type.to_s.downcase }
         )
+      end
+
+      context 'when :limit param is given' do
+        let(:limit) { 1 }
+        before { post endpoint, query: "{ moments(year: -110, limit: #{limit}) { id influencer { id name gender kind } locations { id density latlng } year_begin } }" }
+
+        it 'returns a limited number of resources' do
+          expect(last_json_response[:data][:moments].count).to eq limit
+        end
       end
     end
   end
