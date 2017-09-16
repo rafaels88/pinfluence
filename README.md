@@ -1,15 +1,28 @@
 # Pinfluence
 
-[![Build Status](https://travis-ci.org/prosi-org/pinfluence.svg?branch=master)](https://travis-ci.org/prosi-org/pinfluence)
-[![Code Climate](https://codeclimate.com/github/prosi-org/pinfluence.png)](https://codeclimate.com/github/prosi-org/pinfluence)
+[![Build Status](https://travis-ci.org/rafaels88/pinfluence.svg?branch=master)](https://travis-ci.org/rafaels88/pinfluence)
+[![Code Climate](https://codeclimate.com/github/rafaels88/pinfluence.png)](https://codeclimate.com/github/rafaels88/pinfluence)
 
-[http://pinfluence.org ](http://pinfluence.org) - All world's influence in a map. Ruby and Hanami non-profit open source project.
+[http://pinfluence.org ](http://pinfluence.org) - All world's influence in a map. Non-profit open source project.
+
+This is an open source project for a study purpose in order to develop a real application
+using mainly Ruby and Hanami, and other technologies which could fit well, like GraphQL.
+
+You can use it as a reference for building your own project, and of course, you are welcome
+to contribute on this one as well.
+
+## Used stack and technologies
+
+- Ruby (>= 2.4.1)
+- Hanami (1.0)
+- GraphQL
+- Rspec (>= 3.5)
+- Postgresql (>= 9.3)
 
 ## Setup
 
 1. Make a copy of `.env.development.example` to `.env.development`;
-1. Make a copy of `.env.test.example` to `.env.test`;
-1. Open each one of the files and configure the `DATABASE_URL` with your local database informations
+1. Open `.env.development` and `.env.test` files and configure the `DATABASE_URL` with your local database informations
 
 This is a Ruby project, so it is nice to have [RVM](https://rvm.io/) or [Rbenv](https://github.com/rbenv/rbenv) installed.
 
@@ -39,15 +52,15 @@ $ bundle exec hanami server
 
 Website will be available in [http://localhost:2300](http://localhost:2300)
 
-## Usage
+## Development
 
 The project has three apps:
 
 - WEB (`/`), which has all code to show public information, like Map;
-- API (`/api`), is a public API which `web` app make use;
-- ADMIN (`/admin`), where all informations are registered. This is a restrict area.
+- API (`/api`), is a public GraphQL API which `web` app makes use;
+- ADMIN (`/admin`), is the dashboard. This is a restrict area.
 
-When you run the server, you run the entire project.
+When you run the server you run all these apps.
 
 To create an access to admin, just create an user using `hanami console`:
 
@@ -59,9 +72,11 @@ CreateUser.call name: "Your Name", email: "your_email@domain.com", password: "yo
 
 And done. You now have access to local admin area.
 
+A `Guardfile` is also available if you want to `bundle exec guard`.
+
 ## Contributing
 
-Before it, see the [code of conduct](https://github.com/prosi-org/pinfluence/blob/master/code-of-conduct.md).
+Before it, see the [code of conduct](https://github.com/rafaels88/pinfluence/blob/master/code-of-conduct.md).
 
 1. Fork it!
 2. Create your feature branch: `git checkout -b my-new-feature`

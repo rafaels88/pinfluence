@@ -9,9 +9,7 @@ module Web
 
       def gmaps_tag; end
 
-      def moments_api_url; end
-
-      def years_api_url; end
+      def api_url; end
     end
   end
 end

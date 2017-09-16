@@ -5,8 +5,8 @@ var bigValueSlider = document.getElementById('slider-huge'),
     changeCurrentYearBtn = document.getElementsByClassName('change-current-year')[0],
     sliderRange, currentYear, yearFormActive = false;
 
-function renderSlider(range, formattedRange, callbacks){
-  sliderRange = range;
+function renderSlider(years, callbacks){
+  sliderRange = years.map(function(year){ return year.year });
   currentYear = sliderRange[0];
   var maxSliderValue = sliderRange.length-1;
 
@@ -27,7 +27,7 @@ function renderSlider(range, formattedRange, callbacks){
   });
 
   bigValueSlider.noUiSlider.on('update', function ( values, handle ) {
-    var currentYearLabel = formattedRange[values[handle]];
+    var currentYearLabel = years[values[handle]].formatted;
     changeValueLabel(currentYearLabel);
   });
 

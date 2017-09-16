@@ -3,5 +3,4 @@
 #
 # Example:
 # get '/hello', to: ->(env) { [200, {}, ['Hello from Hanami!']] }
-get '/moments/years', to: 'moment_years#index', as: :moment_years
-resources :moments, only: [:index]
+post '/', to: 'schema#create', as: :root

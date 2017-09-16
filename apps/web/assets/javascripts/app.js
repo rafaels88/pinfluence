@@ -3,17 +3,17 @@ $().ready(function(){
     var initialYear = new Date().getFullYear() - 100;
     renderMap();
 
-    requestYears(function(years, formattedYears){
-      renderSlider(years, formattedYears, {
+    requestYears(function(years){
+      renderSlider(years, {
         onChange: function(currentYear){
-          requestInfluences(currentYear, function(influences){
-            renderInfluencesInMap(influences);
+          requestMoments(currentYear, function(moments){
+            renderMomentsInMap(moments);
           });
         },
         onInit: function(){
           changeSliderTo(initialYear);
-          requestInfluences(initialYear, function(influences){
-            renderInfluencesInMap(influences);
+          requestMoments(initialYear, function(moments){
+            renderMomentsInMap(moments);
           });
         }
       });
@@ -21,12 +21,9 @@ $().ready(function(){
 
     listenSearch({
       onSearch: function(term){
-        requestYearByInfluenceName(term, function(year){
-          changeSliderTo(year);
-
-          requestInfluences(year, function(influences){
-            renderInfluencesInMap(influences);
-          });
+        requestYearByInfluenceName(term, function(moments){
+          changeSliderTo(moments[0].year_begin);
+          renderMomentsInMap(moments);
         })
       }
     });
@@ -35,8 +32,8 @@ $().ready(function(){
       onSearch: function(year){
         changeSliderTo(year);
 
-        requestInfluences(year, function(influences){
-          renderInfluencesInMap(influences);
+        requestMoments(year, function(moments){
+          renderMomentsInMap(moments);
         });
       }
     });
