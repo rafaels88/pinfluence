@@ -1,5 +1,5 @@
-guard :rspec, cmd: "bundle exec rspec" do
-  require "guard/rspec/dsl"
+guard :rspec, cmd: 'bundle exec rspec' do
+  require 'guard/rspec/dsl'
   dsl = Guard::RSpec::Dsl.new(self)
 
   # RSpec files
@@ -17,5 +17,5 @@ guard :rspec, cmd: "bundle exec rspec" do
   watch(%r{^apps/(.+)/views/(.+)/(.+)\.rb$}) { |m| "spec/requests/#{m[1]}/" }
 
   # APIL
-  watch(%r{^apps/api/(schemas|types)/(.+)\.rb$}) { |m| "spec/requests/api/" }
+  watch(%r{^apps/api/(schemas|types)/(.+)\.rb$}) { |_| 'spec/requests/api/' }
 end

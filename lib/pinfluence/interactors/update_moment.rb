@@ -6,18 +6,15 @@ class UpdateMoment
   attr_reader :id, :locations, :year_begin, :year_end,
               :repository, :location_repository, :location_service
 
-  def initialize(id:, influencer:, locations:, year_begin:, year_end:,
-                 repository: MomentRepository.new,
-                 location_service: LocationService.new,
-                 location_repository: LocationRepository.new)
-    @repository = repository
-    @location_repository = location_repository
-    @location_service = location_service
+  def initialize(moment:, influencer:, locations:, opts: {})
+    @repository = opts.fetch(:repository, MomentRepository.new)
+    @location_repository = opts.fetch(:location_repository, LocationRepository.new)
+    @location_service = opts.fetch(:location_service, LocationService.new)
+    @year_begin = moment[:year_begin]
+    @year_end = moment[:year_end].to_s.empty? ? nil : moment[:year_end]
+    @id = moment[:id]
     @locations = locations
     @influencer = influencer
-    @year_begin = year_begin
-    @year_end = year_end.to_s.empty? ? nil : year_end
-    @id = id
   end
 
   def call
@@ -42,21 +39,21 @@ class UpdateMoment
   private
 
   def changed_moment
-    if person?
-      {
-        year_begin: year_begin,
-        year_end: year_end,
-        person_id: influencer[:id]
-      }
-    end
+    return unless person?
+
+    {
+      year_begin: year_begin,
+      year_end: year_end,
+      person_id: influencer[:id]
+    }
   end
 
   def create_influencer_if_new!
-    if new_influencer? && person?
-      person = CreatePerson.call(name: influencer[:name],
-                                 gender: influencer[:gender])
-      @influencer[:id] = person.id.to_s
-    end
+    return unless new_influencer? && person?
+
+    person = CreatePerson.call(name: influencer[:name],
+                               gender: influencer[:gender])
+    @influencer[:id] = person.id.to_s
   end
 
   def new_influencer?

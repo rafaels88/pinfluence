@@ -7,7 +7,7 @@ require_relative './factory_girl_helper'
 require 'byebug'
 
 Hanami.boot
-Hanami::Utils.require!("spec/support")
+Hanami::Utils.require!('spec/support')
 
 RSpec.configure do |c|
   c.include Helpers

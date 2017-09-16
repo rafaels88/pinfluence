@@ -1,8 +1,31 @@
+AllCops:
+  Exclude:
+    - db/migrations/*
+  TargetRubyVersion: 2.4.1
+
+Metrics/LineLength:
+  Max: 120
+
 Style/FrozenStringLiteralComment:
   Enabled: false
-Documentation:
+
+# Some RSpec matchers must be used with {} syntax
+Style/BlockDelimiters:
   Enabled: false
-AllCops:
-  TargetRubyVersion: 2.3
-Style/ClassAndModuleChildren:
+
+Style/BlockLength:
+  Exclude:
+    - 'spec/**/*.rb'
+    - 'apps/**/application.rb'
+
+Style/Documentation:
   Enabled: false
+
+ClassAndModuleChildren:
+  Enabled: false
+
+DoubleNegation:
+  Enabled: false
+
+Style/Lambda:
+  EnforcedStyle: 'literal'

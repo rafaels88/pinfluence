@@ -51,7 +51,7 @@ class CreateMoment
   end
 
   def failure?
-    @errors.count > 0
+    @errors.count.positive?
   end
 
   def success?
@@ -67,13 +67,13 @@ class CreateMoment
   end
 
   def new_moment
-    if person?
-      Moment.new(
-        person_id: influencer[:id],
-        year_begin: year_begin,
-        year_end: year_end
-      )
-    end
+    return unless person?
+
+    Moment.new(
+      person_id: influencer[:id],
+      year_begin: year_begin,
+      year_end: year_end
+    )
   end
 
   def external_location_by(address)
@@ -81,11 +81,11 @@ class CreateMoment
   end
 
   def create_influencer_if_new!
-    if new_influencer? && person?
-      person = CreatePerson.call(name: influencer[:name],
-                                 gender: influencer[:gender])
-      influencer[:id] = person.id.to_s
-    end
+    return unless new_influencer? && person?
+
+    person = CreatePerson.call(name: influencer[:name],
+                               gender: influencer[:gender])
+    influencer[:id] = person.id.to_s
   end
 
   def new_influencer?

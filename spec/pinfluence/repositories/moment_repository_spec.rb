@@ -9,7 +9,7 @@ describe MomentRepository do
   let!(:location01) { create :location, moment_id: moment01.id }
   let!(:location02) { create :location, moment_id: moment02.id }
 
-  describe "#search_by_date" do
+  describe '#search_by_date' do
     let(:search_year) { 1009 }
     subject { described_class.new.search_by_date(year: search_year) }
 
@@ -30,7 +30,7 @@ describe MomentRepository do
     end
   end
 
-  describe "#search_by_influencer" do
+  describe '#search_by_influencer' do
     subject { described_class.new.search_by_influencer(person) }
 
     it 'returns a list of found moments' do

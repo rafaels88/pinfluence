@@ -1,5 +1,4 @@
 require 'json'
-require 'uri'
 
 class LocationService
   Location = Struct.new(:address, :latlng, :valid?)
@@ -31,7 +30,7 @@ class LocationService
   end
 
   def api_url(address)
-    URI.escape("http://nominatim.openstreetmap.org" \
+    CGI.escape('http://nominatim.openstreetmap.org' \
                "/search/#{address}?format=json")
   end
 end

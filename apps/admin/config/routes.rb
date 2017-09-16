@@ -5,7 +5,7 @@
 # get '/hello', to: ->(env) { [200, {}, ['Hello from Hanami!']] }
 resources :moments
 resources :people
-resources :sessions, only: [:new, :create]
+resources :sessions, only: %i[new create]
 delete 'sessions', to: 'sessions#destroy', as: :session
 
-get '/', to: "people#index", as: :home
+get '/', to: 'people#index', as: :home

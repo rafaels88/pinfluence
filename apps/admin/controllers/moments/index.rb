@@ -3,7 +3,7 @@ module Admin::Controllers::Moments
     include Admin::Action
     expose :moments
 
-    def call(params)
+    def call(_)
       @moments = MomentRepository.new.all_with_influencers
     end
   end

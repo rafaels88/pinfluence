@@ -13,7 +13,8 @@ module Admin::Controllers::Moments
       # Need to transform :locations in an array until we have a
       # nice solution, since :fields_for helper does not work for collections
 
-      @_moment_params = params[:moment].dup.update(id: params[:id])
+      @_moment_params = {}
+      @_moment_params[:moment] = params[:moment].dup.update(id: params[:id])
       @_moment_params[:locations] = [params[:moment][:locations]]
       @_moment_params
     end

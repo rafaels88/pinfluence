@@ -8,6 +8,7 @@ describe UpdateMoment do
     let(:new_year_end) { 1100 }
     let(:latlng) { '100,-100' }
     let(:address) { 'Updated address' }
+    let(:moment_params) { { year_begin: new_year_begin, year_end: new_year_end, id: moment.id } }
     let(:locations_params) { [{ address: address, id: location.id }] }
 
     let(:location_info) { double 'LocationInfo', latlng: latlng }
@@ -19,12 +20,10 @@ describe UpdateMoment do
 
     subject do
       described_class.new(
-        id: moment.id,
+        moment: moment_params,
         influencer: influencer_params,
         locations: locations_params,
-        year_begin: new_year_begin,
-        year_end: new_year_end,
-        location_service: location_service
+        opts: { location_service: location_service }
       )
     end
     before { subject.call }
