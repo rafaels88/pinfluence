@@ -30,7 +30,6 @@ class LocationService
   end
 
   def api_url(address)
-    CGI.escape('http://nominatim.openstreetmap.org' \
-               "/search/#{address}?format=json")
+    Addressable::URI.escape "http://nominatim.openstreetmap.org/search/#{address}?format=json"
   end
 end

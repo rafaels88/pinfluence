@@ -7,14 +7,15 @@ class UpdateMoment
               :repository, :location_repository, :location_service
 
   def initialize(moment:, influencer:, locations:, opts: {})
-    @repository = opts.fetch(:repository, MomentRepository.new)
-    @location_repository = opts.fetch(:location_repository, LocationRepository.new)
-    @location_service = opts.fetch(:location_service, LocationService.new)
     @year_begin = moment[:year_begin]
     @year_end = moment[:year_end].to_s.empty? ? nil : moment[:year_end]
     @id = moment[:id]
     @locations = locations
     @influencer = influencer
+
+    @repository = opts.fetch(:repository, MomentRepository.new)
+    @location_repository = opts.fetch(:location_repository, LocationRepository.new)
+    @location_service = opts.fetch(:location_service, LocationService.new)
   end
 
   def call
@@ -23,8 +24,7 @@ class UpdateMoment
 
     locations.each do |location_params|
       location_info = external_location_by(location_params[:address])
-      location_persist_params = location_persist_params(location_params,
-                                                        location_info)
+      location_persist_params = location_persist_params(location_params, location_info)
 
       if location_persist_params[:id]
         location_id = location_persist_params.delete(:id)
@@ -51,8 +51,7 @@ class UpdateMoment
   def create_influencer_if_new!
     return unless new_influencer? && person?
 
-    person = CreatePerson.call(name: influencer[:name],
-                               gender: influencer[:gender])
+    person = CreatePerson.call(name: influencer[:name], gender: influencer[:gender])
     @influencer[:id] = person.id.to_s
   end
 

@@ -1,4 +1,14 @@
 language: ruby
+before_install:
+  - export QMAKE=/usr/lib/x86_64-linux-gnu/qt5/bin/qmake
+addons:
+  apt:
+    sources:
+      - ubuntu-sdk-team
+    packages:
+      - libqt5webkit5-dev
+      - qtdeclarative5-dev
+      - libqt5webkit5
 rvm:
   - 2.4.1
 services:
@@ -8,4 +18,4 @@ before_script:
   - bundle exec hanami db prepare
 script:
   - bundle exec rubocop
-  - bundle exec rspec
+  - xvfb-run bundle exec rspec

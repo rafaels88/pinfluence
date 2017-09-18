@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'addressable'
 gem 'bcrypt'
 gem 'graphql'
 gem 'hanami',       '~> 1.0'
@@ -29,8 +30,12 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'capybara-webkit'
+  gem 'colorize'
   gem 'factory_girl'
   gem 'rspec'
+  gem 'vcr'
+  gem 'webmock'
 end
 
 group :production do

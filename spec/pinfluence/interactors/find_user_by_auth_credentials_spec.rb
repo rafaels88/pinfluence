@@ -6,7 +6,7 @@ describe FindUserByAuthCredentials do
   let(:credentials) { { email: email, password: password } }
   let!(:user) do
     create :user, email: 'admin@domain.com',
-                  password: BCrypt::Password.create('123!@#qwe()_')
+                  password: '123!@#qwe()_'
   end
 
   after { database_clean }

@@ -19,7 +19,7 @@ to contribute on this one as well.
 - Rspec (>= 3.5)
 - Postgresql (>= 9.3)
 
-## Setup
+## Quick start
 
 1. Make a copy of `.env.development.example` to `.env.development`;
 1. Open `.env.development` and `.env.test` files and configure the `DATABASE_URL` with your local database informations
@@ -28,29 +28,23 @@ This is a Ruby project, so it is nice to have [RVM](https://rvm.io/) or [Rbenv](
 
 ```bash
 $ gem install bundler
-$ bundle
+$ bundle # install all gems
 ```
 
-After, you need to prepare your database for development and testing.
+After, you need to setup your database.
 
 ```bash
 $ bundle exec hanami db prepare
-$ HANAMI_ENV=test bundle exec hanami db prepare
 ```
 
-Now, run the tests. If everything is fine, all tests are going to pass.
-
-```bash
-$ bundle exec rspec
-```
-
-To run server:
+Now, run the server:
 
 ```bash
 $ bundle exec hanami server
 ```
 
 Website will be available in [http://localhost:2300](http://localhost:2300)
+
 
 ## Development
 
@@ -62,6 +56,9 @@ The project has three apps:
 
 When you run the server you run all these apps.
 
+
+### Creating admin user
+
 To create an access to admin, just create an user using `hanami console`:
 
 ```bash
@@ -71,6 +68,22 @@ CreateUser.call name: "Your Name", email: "your_email@domain.com", password: "yo
 ```
 
 And done. You now have access to local admin area.
+
+### Testing
+
+1. Since this project is using `capybara-webkit`, make sure you have all dependencies installed. [Click here for instructions](https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit#instructions-for-installing)
+
+1. You need to prepare your test database
+
+```bash
+$ HANAMI_ENV=test bundle exec hanami db prepare
+```
+
+Now, run the tests. If everything is fine, all tests are going to pass.
+
+```bash
+$ bundle exec rspec
+```
 
 A `Guardfile` is also available if you want to `bundle exec guard`.
 

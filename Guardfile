@@ -13,9 +13,11 @@ guard :rspec, cmd: 'bundle exec rspec' do
   dsl.watch_spec_files_for(ruby.lib_files)
 
   watch(%r{^lib/pinfluence/(.+)\.rb$}) { |m| "spec/pinfluence/#{m[1]}_spec.rb" }
-  watch(%r{^apps/(.+)/controllers/(.+)/(.+)\.rb$}) { |m| "spec/requests/#{m[1]}/" }
-  watch(%r{^apps/(.+)/views/(.+)/(.+)\.rb$}) { |m| "spec/requests/#{m[1]}/" }
+  watch(%r{^apps/(.+)/controllers/(.+)/(.+)\.rb$}) { |m| "spec/#{m[1]}/requests/" }
+  watch(%r{^apps/(.+)/controllers/(.+)/(.+)\.rb$}) { |m| "spec/#{m[1]}/features/" }
+  watch(%r{^apps/(.+)/views/(.+)/(.+)\.rb$}) { |m| "spec/#{m[1]}/requests/" }
+  watch(%r{^apps/(.+)/views/(.+)/(.+)\.rb$}) { |m| "spec/#{m[1]}/features/" }
 
-  # APIL
-  watch(%r{^apps/api/(schemas|types)/(.+)\.rb$}) { |_| 'spec/requests/api/' }
+  # API
+  watch(%r{^apps/api/(schemas|types)/(.+)\.rb$}) { |_| 'spec/api/requests' }
 end

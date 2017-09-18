@@ -16,6 +16,7 @@ module Admin::Controllers::Moments
       @_moment_params = {}
       @_moment_params[:moment] = params[:moment].dup.update(id: params[:id])
       @_moment_params[:locations] = [params[:moment][:locations]]
+      @_moment_params[:influencer] = params[:moment][:influencer]
       @_moment_params
     end
   end
