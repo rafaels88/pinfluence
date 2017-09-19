@@ -17,6 +17,7 @@ Style/BlockLength:
   Exclude:
     - 'spec/**/*.rb'
     - 'apps/**/application.rb'
+    - 'apps/**/types/*_type.rb'
 
 Style/Documentation:
   Enabled: false

@@ -8,7 +8,7 @@ module Queries
       argument :influencer_name, types.String
       argument :year, types.Int
       argument :limit, types.Int, default_value: 100
-      description "Search moments by Influencer's Name"
+      description "Search moments by Influencer's Name or Year"
       resolve ->(_, args, _) do
         params = { limit: args[:limit] }
 
@@ -26,6 +26,13 @@ module Queries
       type !types[Types::YearType]
       description 'All available years for searching by moments'
       resolve ->(_, _, _) { MomentRepository.new.all_available_years }
+    end
+
+    field :influencers do
+      type !types[Types::InfluencerType]
+      argument :name, types.String
+      description 'Search influencers'
+      resolve ->(_, args, _) { Influencers::SearchQuery.call(name: args[:name]) }
     end
   end
 end

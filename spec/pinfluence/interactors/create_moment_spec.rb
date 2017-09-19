@@ -14,13 +14,16 @@ describe CreateMoment do
     let(:location_service) { double 'LocationService', by_address: location_info }
     let(:moment_repository) { MomentRepository.new }
     let(:location_repository) { LocationRepository.new }
+    let(:influencer_indexer) { double :InfluencerIndexer }
+
+    before { allow(influencer_indexer).to receive_message_chain(:new, :save) { true } }
 
     subject do
       described_class.new(
         influencer: influencer_params,
         locations: locations_params,
         moment: moment_params,
-        opts: { location_service: location_service }
+        opts: { location_service: location_service, influencer_indexer: influencer_indexer }
       )
     end
 

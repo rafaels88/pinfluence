@@ -45,6 +45,11 @@ class MomentRepository < Hanami::Repository
     q.map_to(Moment).call.collection
   end
 
+  def earliest_moment_of_an_influencer(influencer)
+    q = moments.where("#{influencer.type}_id": influencer.id).order(:year_begin).limit(1)
+    q.map_to(Moment).call.collection.first
+  end
+
   private
 
   def min_year

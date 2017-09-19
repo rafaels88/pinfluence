@@ -1,0 +1,105 @@
+---
+http_interactions:
+- request:
+    method: put
+    uri: https://myalgoliaid.algolia.net/1/indexes/influencers/settings
+    body:
+      encoding: UTF-8
+      string: '{"searchableAttributes":["name"]}'
+    headers:
+      User-Agent:
+      - Algolia for Ruby 1.16.0
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip,deflate
+      Date:
+      - Tue, 19 Sep 2017 23:20:12 GMT
+      X-Algolia-Api-Key:
+      - myalgoliakey
+      X-Algolia-Application-Id:
+      - myalgoliaid
+      Content-Type:
+      - application/json; charset=utf-8
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 19 Sep 2017 23:20:12 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '62'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - no-cache
+      X-Content-Type-Options:
+      - nosniff
+      Content-Disposition:
+      - inline; filename=a.txt
+    body:
+      encoding: UTF-8
+      string: '{"updatedAt":"2017-09-19T23:20:12.464Z","taskID":27060627201}
+
+'
+    http_version: 
+  recorded_at: Tue, 19 Sep 2017 23:20:12 GMT
+- request:
+    method: post
+    uri: https://myalgoliaid-dsn.algolia.net/1/indexes/influencers/query
+    body:
+      encoding: UTF-8
+      string: '{"params":"query=Socrates"}'
+    headers:
+      User-Agent:
+      - Algolia for Ruby 1.16.0
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip,deflate
+      Date:
+      - Tue, 19 Sep 2017 23:20:12 GMT
+      X-Algolia-Api-Key:
+      - myalgoliakey
+      X-Algolia-Application-Id:
+      - myalgoliaid
+      Content-Type:
+      - application/json; charset=utf-8
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 19 Sep 2017 23:20:12 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '151'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - no-cache
+      X-Content-Type-Options:
+      - nosniff
+      Content-Disposition:
+      - inline; filename=a.txt
+    body:
+      encoding: UTF-8
+      string: '{"hits":[],"nbHits":0,"page":0,"nbPages":0,"hitsPerPage":20,"processingTimeMS":1,"exhaustiveNbHits":true,"query":"Socrates","params":"query=Socrates"}
+
+'
+    http_version: 
+  recorded_at: Tue, 19 Sep 2017 23:20:12 GMT
+recorded_with: VCR 3.0.3

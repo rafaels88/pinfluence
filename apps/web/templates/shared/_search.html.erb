@@ -1,8 +1,11 @@
 <form action="<%= api_url %>" method="POST" id="search-form" class="ui form">
   <div class="inline field">
-    <div class="ui icon input">
-      <i class="search icon"></i>
-      <input placeholder="Search..." type="text" name="query[moments[name]]" id="search-field">
+    <div class="ui search">
+      <div class="ui icon fluid input">
+        <i class="search icon"></i>
+        <input placeholder="Search..." type="text" class="prompt" name="query[moments[name]]" id="search-field">
+      </div>
+      <div class="results"></div>
     </div>
   </div>
 </form>

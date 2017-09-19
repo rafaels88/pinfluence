@@ -5,6 +5,7 @@ require_relative '../config/environment'
 require_relative './database_cleaner_helper'
 require_relative './factory_girl_helper'
 require 'byebug'
+require_relative './vcr_setup'
 
 Hanami.boot
 Hanami::Utils.require!('spec/support')
