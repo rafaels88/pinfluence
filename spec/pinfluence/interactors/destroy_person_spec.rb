@@ -3,7 +3,7 @@ require 'spec_helper'
 describe DestroyPerson do
   after { database_clean }
 
-  describe "#call" do
+  describe '#call' do
     let(:person) { create :person }
     let!(:moment) { create :moment, person_id: person.id }
     let(:person_repository) { PersonRepository.new }
@@ -12,12 +12,12 @@ describe DestroyPerson do
     subject { described_class.new(person.id) }
     before { subject.call }
 
-    it "destroys the person" do
+    it 'destroys the person' do
       found_person = person_repository.find(person.id)
       expect(found_person).to be_nil
     end
 
-    it "destroys related moments" do
+    it 'destroys related moments' do
       found_moment = moment_repository.find(moment.id)
       expect(found_moment).to be_nil
     end

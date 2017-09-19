@@ -3,7 +3,7 @@ module Admin::Controllers::Moments
     include Admin::Action
     expose :influencers
 
-    def call(params)
+    def call(_)
       @influencers = ListAvailableInfluencers.call(repository: PersonRepository.new)
     end
   end

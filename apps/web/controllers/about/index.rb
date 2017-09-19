@@ -2,7 +2,6 @@ module Web::Controllers::About
   class Index
     include Web::Action
 
-    def call(params)
-    end
+    def call(_); end
   end
 end

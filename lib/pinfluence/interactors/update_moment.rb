@@ -3,60 +3,36 @@ require_relative './interactor'
 class UpdateMoment
   include Interactor
 
-  attr_reader :id, :locations, :year_begin, :year_end,
-              :repository, :location_repository, :location_service
+  attr_reader :id, :locations, :year_begin, :year_end, :repository
 
-  def initialize(id:, influencer:, locations:, year_begin:, year_end:,
-                 repository: MomentRepository.new,
-                 location_service: LocationService.new,
-                 location_repository: LocationRepository.new)
-    @repository = repository
-    @location_repository = location_repository
-    @location_service = location_service
+  def initialize(moment:, influencer:, locations:, opts: {})
+    @year_begin = moment[:year_begin]
+    @year_end = moment[:year_end].to_s.empty? ? nil : moment[:year_end]
+    @id = moment[:id]
     @locations = locations
     @influencer = influencer
-    @year_begin = year_begin
-    @year_end = year_end.to_s.empty? ? nil : year_end
-    @id = id
+    @opts = opts
+
+    @repository = opts.fetch(:repository, MomentRepository.new)
   end
 
   def call
     create_influencer_if_new!
-    repository.update(id, changed_moment)
-
-    locations.each do |location_params|
-      location_info = external_location_by(location_params[:address])
-      location_persist_params = location_persist_params(location_params,
-                                                        location_info)
-
-      if location_persist_params[:id]
-        location_id = location_persist_params.delete(:id)
-        location_repository.update(location_id, location_persist_params)
-      else
-        location_persist_params.delete(:id)
-        location_repository.create(location_persist_params)
-      end
-    end
+    repository.update(id, persist_params)
+    persist_locations!
   end
 
   private
 
-  def changed_moment
-    if person?
-      {
-        year_begin: year_begin,
-        year_end: year_end,
-        person_id: influencer[:id]
-      }
-    end
+  def create_influencer_if_new!
+    return unless new_influencer? && person?
+
+    person = CreatePerson.call(name: influencer[:name], gender: influencer[:gender])
+    @influencer[:id] = person.id
   end
 
-  def create_influencer_if_new!
-    if new_influencer? && person?
-      person = CreatePerson.call(name: influencer[:name],
-                                 gender: influencer[:gender])
-      @influencer[:id] = person.id.to_s
-    end
+  def persist_locations!
+    Moments::PersistLocations.call(moment: moment, locations: locations, opts: @opts)
   end
 
   def new_influencer?
@@ -71,17 +47,17 @@ class UpdateMoment
     @_moment ||= repository.find(id)
   end
 
-  def external_location_by(address)
-    @_location ||= location_service.by_address(address)
-  end
-
-  def location_persist_params(params, info)
-    params.merge(moment_id: moment.id, latlng: info.latlng)
-  end
-
   def influencer
     @influencer[:type] = @influencer[:type].to_sym
     @influencer[:id] = @influencer[:id].to_s
     @influencer
+  end
+
+  def persist_params
+    {
+      year_begin: year_begin,
+      year_end: year_end,
+      person_id: influencer[:id]
+    }
   end
 end

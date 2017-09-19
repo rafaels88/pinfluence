@@ -1,25 +1,27 @@
 source 'https://rubygems.org'
 
-gem 'rake'
-gem 'hanami',       '~> 1.0'
-gem 'hanami-model', '~> 1.0'
-gem 'pg'
-gem 'httparty'
-gem 'sass'
+gem 'addressable'
 gem 'bcrypt'
 gem 'graphql'
+gem 'hanami',       '~> 1.0'
+gem 'hanami-model', '~> 1.0'
+gem 'httparty'
+gem 'pg'
+gem 'rake'
+gem 'sass'
 
 group :development do
-  # Code reloading
-  # See: http://hanamirb.org/guides/applications/code-reloading
   gem 'byebug'
-  gem 'shotgun'
   gem 'capistrano'
-  gem 'capistrano3-puma'
   gem 'capistrano-bundler', '~> 1.1.2'
   gem 'capistrano-rbenv'
+  gem 'capistrano3-puma'
   gem 'guard'
   gem 'guard-rspec', require: false
+  gem 'rubocop', '~> 0.50.0', require: false
+  # Code reloading
+  # See: http://hanamirb.org/guides/applications/code-reloading
+  gem 'shotgun'
 end
 
 group :test, :development do
@@ -27,9 +29,13 @@ group :test, :development do
 end
 
 group :test do
-  gem 'rspec'
   gem 'capybara'
+  gem 'capybara-webkit'
+  gem 'colorize'
   gem 'factory_girl'
+  gem 'rspec'
+  gem 'vcr'
+  gem 'webmock'
 end
 
 group :production do

@@ -16,9 +16,9 @@ module Web
       # Relative load paths where this application will recursively load the code.
       # When you add new directories, remember to add them here.
       #
-      load_paths << [
-        'controllers',
-        'views'
+      load_paths << %w[
+        controllers
+        views
       ]
 
       # Handle exceptions with HTTP statuses (true) or don't catch them (false).
@@ -225,12 +225,13 @@ module Web
       #
       #  * https://developer.mozilla.org/en-US/docs/Web/Security/CSP/CSP_policy_directives
       #
-      security.content_security_policy %{
+      security.content_security_policy %(
         form-action 'self';
         frame-ancestors 'self';
         base-uri 'self';
         default-src 'none';
-        script-src 'self' 'unsafe-eval' 'unsafe-inline' blob: https://cdnjs.cloudflare.com https://www.google-analytics.com https://maps.googleapis.com;
+        script-src 'self' 'unsafe-eval' 'unsafe-inline' blob: https://cdnjs.cloudflare.com \
+          https://www.google-analytics.com https://maps.googleapis.com;
         connect-src 'self';
         img-src 'self' https: data:;
         style-src 'self' 'unsafe-inline' https:;
@@ -240,7 +241,7 @@ module Web
         child-src 'self' blob;
         frame-src 'self';
         media-src 'self'
-      }
+      )
 
       ##
       # FRAMEWORKS
@@ -298,7 +299,7 @@ module Web
         # Use digest file name for asset paths
         #
         # See: http://hanamirb.org/guides/assets/overview
-        fingerprint  true
+        fingerprint true
 
         # Content Delivery Network (CDN)
         #

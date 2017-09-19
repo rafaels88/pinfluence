@@ -33,29 +33,31 @@ class MomentRepository < Hanami::Repository
   end
 
   def all_available_years
-    return [] if moments.count == 0
+    return [] if moments.count.zero?
 
-    min_year = moments.min(:year_begin)
-    max_year = if all_still_ocurring.count > 0
-                 Time.now.year
-               else
-                 moments.max(:year_end)
-               end
-    (min_year..max_year).to_a.map do |year|
-      Values::Year.new year
-    end
+    (min_year..max_year).to_a.map { |y| Values::Year.new y }
   end
 
   def search_by_influencer(influencer, limit: 100)
     q = aggregate(:person, :locations)
-          .where("#{influencer.type}_id": influencer.id)
+        .where("#{influencer.type}_id": influencer.id)
     q = q.limit(limit) if limit
     q.map_to(Moment).call.collection
   end
 
   private
 
-  def all_still_ocurring
+  def min_year
+    moments.min(:year_begin)
+  end
+
+  def max_year
+    return Time.now.year if moments_happening_now.count.positive?
+
+    moments.max(:year_end)
+  end
+
+  def moments_happening_now
     moments.where(year_end: nil)
   end
 end

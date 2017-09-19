@@ -5,9 +5,9 @@ module Types
 
     field :id, !types.Int
     field :latlng, types[!types.String] do
-      resolve ->(obj, args, ctx) {
+      resolve ->(obj, _, _) do
         obj.latlng.split(',').map(&:to_s)
-      }
+      end
     end
     field :density, !types.Int
   end

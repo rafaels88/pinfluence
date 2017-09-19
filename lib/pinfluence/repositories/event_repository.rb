@@ -1,2 +1,2 @@
-class EventRepository <  Hanami::Repository
+class EventRepository < Hanami::Repository
 end

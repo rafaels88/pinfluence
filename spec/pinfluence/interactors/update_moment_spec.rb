@@ -8,6 +8,7 @@ describe UpdateMoment do
     let(:new_year_end) { 1100 }
     let(:latlng) { '100,-100' }
     let(:address) { 'Updated address' }
+    let(:moment_params) { { year_begin: new_year_begin, year_end: new_year_end, id: moment.id } }
     let(:locations_params) { [{ address: address, id: location.id }] }
 
     let(:location_info) { double 'LocationInfo', latlng: latlng }
@@ -19,41 +20,25 @@ describe UpdateMoment do
 
     subject do
       described_class.new(
-        id: moment.id,
+        moment: moment_params,
         influencer: influencer_params,
         locations: locations_params,
-        year_begin: new_year_begin,
-        year_end: new_year_end,
-        location_service: location_service
+        opts: { location_service: location_service }
       )
     end
     before { subject.call }
 
     context 'when associated influencer is a person' do
-      let(:moment) do
-        create :moment, year_begin: 1000, year_end: 1100,
-                        person_id: influencer.id
-      end
+      let(:moment) { create :moment, year_begin: 1000, year_end: 1100, person_id: influencer.id }
       let(:location) { create :location, address: 'Old', moment_id: moment.id }
       let(:influencer) { create :person }
       let(:influencer_params) { { id: influencer.id, type: influencer.type } }
-
-      let(:found_moment) do
-        moment_repository.search_by_influencer(influencer)
-                         .first
-      end
+      let(:found_moment) { moment_repository.search_by_influencer(influencer).first }
 
       context 'when associated influencer is a new person' do
-        let(:influencer_params) do
-          { name: 'New Person', type: 'person', gender: 'female' }
-        end
-        let(:new_influencer) do
-          PersonRepository.new.search_by_name('New Person')[0]
-        end
-        let(:found_moment) do
-          moment_repository.search_by_influencer(new_influencer)
-                           .first
-        end
+        let(:influencer_params) { { name: 'New Person', type: 'person', gender: 'female' } }
+        let(:new_influencer) { PersonRepository.new.search_by_name('New Person')[0] }
+        let(:found_moment) { moment_repository.search_by_influencer(new_influencer).first }
 
         it 'creates new person' do
           expect(new_influencer).to_not be_nil

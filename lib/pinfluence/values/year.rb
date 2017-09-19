@@ -7,10 +7,10 @@ module Values
     end
 
     def formatted
-      if year < 0
+      if year.negative?
         @positive_year = year * -1
         "#{@positive_year} BC"
-      elsif year > 0
+      elsif year.positive?
         "#{year} AD"
       else
         year.to_s

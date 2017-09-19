@@ -10,7 +10,7 @@ module Admin::Controllers::People
     private
 
     def person_params(params)
-      params[:person].update({ id: params[:id] })
+      params[:person].update(id: params[:id])
     end
   end
 end

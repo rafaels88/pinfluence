@@ -3,7 +3,7 @@ module Admin::Controllers::People
     include Admin::Action
     expose :people
 
-    def call(params)
+    def call(_)
       @people = ListAvailableInfluencers.call(repository: PersonRepository.new)
     end
   end

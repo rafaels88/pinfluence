@@ -4,7 +4,7 @@ module Web::Controllers::Home
 
     expose :gmaps_api_key
 
-    def call(params)
+    def call(_)
       @gmaps_api_key = ENV['GOOGLE_MAPS_API_KEY']
     end
   end

@@ -3,18 +3,16 @@ require_relative './interactor'
 class CreateMoment
   include Interactor
 
-  attr_reader :locations, :year_begin, :year_end,
-              :repository, :location_service
+  attr_reader :locations, :repository, :location_service
 
-  def initialize(influencer:, locations:, year_begin:, year_end:,
-                 repository: MomentRepository.new,
-                 location_service: LocationService.new)
-    @repository = repository
-    @location_service = location_service
+  def initialize(influencer:, locations:, moment:, opts: {})
     @locations = locations
     @influencer = influencer
-    @year_begin = year_begin
-    @year_end = year_end.to_s.empty? ? nil : year_end
+    @moment = moment
+
+    @repository = opts.fetch(:repository, MomentRepository.new)
+    @location_service = opts.fetch(:location_service, Locations::Searcher.new)
+
     @errors = []
   end
 
@@ -22,14 +20,11 @@ class CreateMoment
 
   def call
     check_locations!
+
     if success?
       create_influencer_if_new!
       moment = repository.create(new_moment)
-
-      locations.each do |location_param|
-        location_param.delete(:id)
-        repository.add_location(moment, location_param)
-      end
+      add_locations_to_moment(moment)
     else
       moment = nil_moment
     end
@@ -38,6 +33,13 @@ class CreateMoment
   end
 
   private
+
+  def add_locations_to_moment(moment)
+    locations.each do |location_param|
+      location_param.delete(:id)
+      repository.add_location(moment, location_param)
+    end
+  end
 
   def check_locations!
     locations.each do |location_param|
@@ -51,7 +53,7 @@ class CreateMoment
   end
 
   def failure?
-    @errors.count > 0
+    @errors.count.positive?
   end
 
   def success?
@@ -61,19 +63,19 @@ class CreateMoment
   def nil_moment
     Moment.new(
       person_id: nil,
-      year_begin: year_begin,
-      year_end: year_end
+      year_begin: moment[:year_begin],
+      year_end: moment[:year_end]
     )
   end
 
   def new_moment
-    if person?
-      Moment.new(
-        person_id: influencer[:id],
-        year_begin: year_begin,
-        year_end: year_end
-      )
-    end
+    return unless person?
+
+    Moment.new(
+      person_id: influencer[:id],
+      year_begin: moment[:year_begin],
+      year_end: moment[:year_end]
+    )
   end
 
   def external_location_by(address)
@@ -81,11 +83,11 @@ class CreateMoment
   end
 
   def create_influencer_if_new!
-    if new_influencer? && person?
-      person = CreatePerson.call(name: influencer[:name],
-                                 gender: influencer[:gender])
-      influencer[:id] = person.id.to_s
-    end
+    return unless new_influencer? && person?
+
+    person = CreatePerson.call(name: influencer[:name],
+                               gender: influencer[:gender])
+    influencer[:id] = person.id.to_s
   end
 
   def new_influencer?
@@ -100,5 +102,12 @@ class CreateMoment
     @influencer[:type] = @influencer[:type].to_sym
     @influencer[:id] = @influencer[:id].to_s
     @influencer
+  end
+
+  def moment
+    {
+      year_begin: @moment[:year_begin],
+      year_end: @moment[:year_end].to_s.empty? ? nil : @moment[:year_end]
+    }
   end
 end

@@ -8,15 +8,15 @@
       div class: 'two fields' do
         fields_for :influencer do
           div class: 'field' do
-            label  "Type"
+            label "Type"
             select :type, Hash['Person', 'person'], class: "ui search dropdown"
           end
 
           div class: 'field' do
-            label      "Name"
+            label "Name"
 
             values = Hash[influencers_options.collect { |i| [i.name, i.id.to_s] }]
-            select :id, values, options: { selected: person_id }, class: "ui search dropdown"
+            select :id, values, options: { selected: person_id }, class: "ui search dropdown people"
           end
         end
       end
@@ -30,12 +30,12 @@
           div class: 'field' do
             values = Hash["Male" => "male", "Female" => "female"]
 
-            label  :gender
-            select :gender, values, class: "ui search dropdown"
+            label :gender
+            select :gender, values, class: "ui search dropdown gender"
           end
 
           div class: 'field' do
-            label      :name
+            label :name
             text_field :name
           end
         end

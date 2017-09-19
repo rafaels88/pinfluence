@@ -39,7 +39,7 @@ module Admin::Views::Moments
     def moment_first_location
       return @_first if @_first
 
-      @_first ||= if moment.locations.count > 0
+      @_first ||= if moment.locations.count.positive?
                     moment.locations.first
                   else
                     NilLocation.new(nil, '1', '')

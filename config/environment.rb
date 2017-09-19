@@ -18,7 +18,7 @@ Hanami.configure do
   end
 
   mailer do
-    root Hanami.root.join("lib", "pinfluence", "mailers")
+    root Hanami.root.join('lib', 'pinfluence', 'mailers')
 
     delivery :test
   end

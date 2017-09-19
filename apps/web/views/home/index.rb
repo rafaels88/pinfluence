@@ -8,7 +8,7 @@ module Web::Views::Home
     end
 
     def api_url
-      Api::routes.root_path
+      Api.routes.root_path
     end
   end
 end
