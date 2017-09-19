@@ -3,8 +3,8 @@ module Admin::Controllers::Moments
     include Admin::Action
     expose :moment, :influencers
 
-    def call(_)
-      result = CreateMoment.call(moment_params)
+    def call(params)
+      result = CreateMoment.call(moment_params(params))
       redirect_to routes.moments_path if result.success?
 
       prepare_for_editing(result)
@@ -20,13 +20,15 @@ module Admin::Controllers::Moments
       @moment = result.moment
     end
 
-    def moment_params
+    def moment_params(params)
       # Need to transform :locations in an array until we have a
       # nice solution, since :fields_for helper does not work for collections
 
-      @_moment_params = params[:moment].dup
+      @_moment_params = {}
+      @_moment_params[:moment] = params[:moment].dup
       @_moment_params[:locations] = [params[:moment][:locations]]
-      @_moment_params.delete(:id)
+      @_moment_params[:influencer] = params[:moment][:influencer]
+      @_moment_params[:moment].delete(:id)
       @_moment_params
     end
   end

@@ -8,11 +8,10 @@ describe CreateMoment do
     let(:year_end) { 1100 }
     let(:latlng) { '100,-100' }
     let(:address) { 'Rio de Janeiro, Brazil' }
+    let(:moment_params) { { year_begin: year_begin, year_end: year_end } }
     let(:locations_params) { [{ address: address, id: nil }] }
     let(:location_info) { double 'LocationInfo', latlng: latlng }
-    let(:location_service) do
-      double 'LocationService', by_address: location_info
-    end
+    let(:location_service) { double 'LocationService', by_address: location_info }
     let(:moment_repository) { MomentRepository.new }
     let(:location_repository) { LocationRepository.new }
 
@@ -20,9 +19,8 @@ describe CreateMoment do
       described_class.new(
         influencer: influencer_params,
         locations: locations_params,
-        year_begin: year_begin,
-        year_end: year_end,
-        location_service: location_service
+        moment: moment_params,
+        opts: { location_service: location_service }
       )
     end
 
