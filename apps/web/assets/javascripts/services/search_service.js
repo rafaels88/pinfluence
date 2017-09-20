@@ -15,10 +15,13 @@ function listenSearch(callbacks){
     }
   })
 
-  $searchField.keyup(function(e){
-    var term = $(this).val().trim();
-    showSearchingLoading();
-    callbacks.onSearch(term);
+  $searchField.typeWatch({
+    wait: 500,
+    callback: function(value){
+      var term = value.trim();
+      showSearchingLoading();
+      callbacks.onSearch(term);
+    }
   });
 
   $results.on('click', '.result.clickable', function(){

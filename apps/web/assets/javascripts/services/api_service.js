@@ -1,5 +1,4 @@
-var searchingInfluencers = false,
-    apiUrl = $("#map-container").data("api-endpoint"),
+var apiUrl = $("#map-container").data("api-endpoint"),
     graph = graphql(apiUrl, {
       method: "POST",
       headers: {},
@@ -30,12 +29,8 @@ function requestYearByInfluenceName(name, cb){
 }
 
 function requestInfluencers(term, cb){
-  if(searchingInfluencers) { return; }
-
-  searchingInfluencers = true;
   graph.query(`query { influencers(name: "`+term+`") { id name gender kind earliest_year_in } }`)()
     .then(function(response){
-      searchingInfluencers = false;
       return cb(response.influencers)
     });
 }
