@@ -21,10 +21,15 @@ $().ready(function(){
 
     listenSearch({
       onSearch: function(term){
-        requestYearByInfluenceName(term, function(moments){
+        requestInfluencers(term, function(influencers){
+          renderInfluencers(influencers);
+        });
+      },
+      onSelectedResult: function(year){
+        requestMoments(year, function(moments){
           changeSliderTo(moments[0].year_begin);
           renderMomentsInMap(moments);
-        })
+        });
       }
     });
 

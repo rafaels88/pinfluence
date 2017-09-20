@@ -8,11 +8,11 @@ feature 'Creates a moment', js: true do
     sign_in_on_dashboard
   end
 
-  scenario 'Admin user updates a moment with another existent person', vcr: true do
+  scenario 'Admin user creates a moment with an existent person', vcr: true do
     step 'GIVEN an existent person called Gandhi'
     gandhi = create_gandhi
 
-    step 'Visit the edit page of this moment'
+    step 'Visit the creating page'
     visit Admin.routes.new_moment_path
 
     step 'GIVEN I change the person to Picasso'

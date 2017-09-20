@@ -17,16 +17,21 @@ describe UpdateMoment do
     end
     let(:moment_repository) { MomentRepository.new }
     let(:location_repository) { LocationRepository.new }
+    let(:influencer_indexer) { double :InfluencerIndexer }
 
     subject do
       described_class.new(
         moment: moment_params,
         influencer: influencer_params,
         locations: locations_params,
-        opts: { location_service: location_service }
+        opts: { location_service: location_service, influencer_indexer: influencer_indexer }
       )
     end
-    before { subject.call }
+
+    before do
+      allow(influencer_indexer).to receive_message_chain(:new, :save) { true }
+      subject.call
+    end
 
     context 'when associated influencer is a person' do
       let(:moment) { create :moment, year_begin: 1000, year_end: 1100, person_id: influencer.id }

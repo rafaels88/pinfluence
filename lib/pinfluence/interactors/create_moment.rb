@@ -9,6 +9,7 @@ class CreateMoment
     @locations = locations
     @influencer = influencer
     @moment = moment
+    @opts = opts
 
     @repository = opts.fetch(:repository, MomentRepository.new)
     @location_service = opts.fetch(:location_service, Locations::Searcher.new)
@@ -86,7 +87,8 @@ class CreateMoment
     return unless new_influencer? && person?
 
     person = CreatePerson.call(name: influencer[:name],
-                               gender: influencer[:gender])
+                               gender: influencer[:gender],
+                               opts: { indexer: @opts[:influencer_indexer] })
     influencer[:id] = person.id.to_s
   end
 

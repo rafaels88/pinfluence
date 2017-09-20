@@ -27,7 +27,8 @@ class UpdateMoment
   def create_influencer_if_new!
     return unless new_influencer? && person?
 
-    person = CreatePerson.call(name: influencer[:name], gender: influencer[:gender])
+    person = CreatePerson.call(name: influencer[:name], gender: influencer[:gender],
+                               opts: { indexer: @opts[:influencer_indexer] })
     @influencer[:id] = person.id
   end
 

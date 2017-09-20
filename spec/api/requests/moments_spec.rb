@@ -23,9 +23,8 @@ RSpec.describe 'API moments', type: :request do
       let!(:location2) { create :location, address: 'Any place on earth', moment_id: moment2.id }
 
       before do
-        post endpoint,
-             query: '{ moments(influencer_name: "Socrates") { ' \
-               'id influencer { id name gender kind } locations { id density latlng } year_begin } }'
+        post endpoint, query: "{ moments(influencer_name: \"#{influencer.name}\") " \
+             '{ id influencer { id name gender kind } locations { id density latlng } year_begin } }'
       end
       after { database_clean }
 

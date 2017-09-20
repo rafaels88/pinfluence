@@ -9,5 +9,6 @@ module Types
     field :kind, !types.String do
       resolve ->(obj, _, _) { obj.type }
     end
+    field :earliest_year_in, !types.Int
   end
 end

@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'addressable'
+gem 'algoliasearch'
 gem 'bcrypt'
 gem 'graphql'
 gem 'hanami',       '~> 1.0'

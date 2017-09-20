@@ -1,4 +1,5 @@
-var apiUrl = $("#map-container").data("api-endpoint"),
+var searchingInfluencers = false,
+    apiUrl = $("#map-container").data("api-endpoint"),
     graph = graphql(apiUrl, {
       method: "POST",
       headers: {},
@@ -25,5 +26,16 @@ function requestYearByInfluenceName(name, cb){
   graph.query(`query { moments(influencer_name: "`+name+`", limit: 1) { influencer { id name gender } locations { latlng } year_begin } }`)()
     .then(function(response){
       cb(response.moments)
+    });
+}
+
+function requestInfluencers(term, cb){
+  if(searchingInfluencers) { return; }
+
+  searchingInfluencers = true;
+  graph.query(`query { influencers(name: "`+term+`") { id name gender kind earliest_year_in } }`)()
+    .then(function(response){
+      searchingInfluencers = false;
+      return cb(response.influencers)
     });
 }

@@ -65,4 +65,12 @@ describe MomentRepository do
       end
     end
   end
+
+  describe '#earliest_moment_of_an_influencer' do
+    subject { described_class.new.earliest_moment_of_an_influencer(person) }
+
+    it 'returns the moment with the earlier year_begin' do
+      is_expected.to eq moment01
+    end
+  end
 end
