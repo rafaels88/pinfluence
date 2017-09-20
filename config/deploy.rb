@@ -70,3 +70,12 @@ namespace :deploy do
   after :publishing, :db_migrate
   after :publishing, :precompile
 end
+
+namespace :index do
+  task :all_people do
+    on roles(:app), in: :sequence, wait: 5 do
+      execute "cd #{current_path} && HANAMI_ENV=#{ENV['DEPLOY_ENV']} #{fetch(:rbenv_prefix)} " \
+        'bundle exec rake index_all_people'
+    end
+  end
+end
