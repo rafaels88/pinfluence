@@ -27,7 +27,7 @@ $().ready(function(){
       },
       onSelectedResult: function(year){
         requestMoments(year, function(moments){
-          changeSliderTo(moments[0].year_begin);
+          changeSliderTo(year);
           renderMomentsInMap(moments);
         });
       }
