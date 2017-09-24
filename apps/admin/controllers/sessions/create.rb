@@ -3,8 +3,8 @@ module Admin::Controllers::Sessions
     include Admin::Action
 
     def call(_)
-      user = FindUserByAuthCredentials.call(email: requested_email,
-                                            password: requested_password)
+      user = Users::FindUserByAuthCredentials.call(email: requested_email,
+                                                   password: requested_password)
 
       if !user.nil?
         session[:user_id] = user.id

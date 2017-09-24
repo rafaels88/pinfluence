@@ -1,8 +1,11 @@
 module Influencers
-  class IndexObject
+  class EventIndexObject
     extend Forwardable
     attr_reader :influencer, :moment_repository
-    def_delegators :influencer, :id, :name, :gender, :type
+    def_delegators :influencer, :id, :name, :type, :earliest_year
+
+    SEARCH_INDEX_NAME = 'events'.freeze
+    SEARCHABLE_ATTRIBUTES = ['name'].freeze
 
     def initialize(influencer, opts: {})
       @influencer = to_object(influencer)
@@ -16,26 +19,16 @@ module Influencers
         'objectID' => influencer.id,
         'id' => influencer.id,
         'name' => influencer.name,
-        'gender' => influencer.gender,
-        'kind' => kind,
-        'earliest_year_in' => earliest_year_in
+        'type' => influencer.type,
+        'earliest_year' => influencer.earliest_year
       }
-    end
-
-    def kind
-      @_kind ||= influencer.type
-    end
-
-    def earliest_year_in
-      @_earliest_year_in ||= moment_repository.earliest_moment_of_an_influencer(influencer)&.year_begin
     end
 
     private
 
     def to_object(influencer)
       return influencer if influencer.respond_to? :id
-      @_earliest_year_in = influencer[:earliest_year_in]
-      influencer_class_by_string(influencer[:kind]).new influencer
+      influencer_class_by_string(influencer[:type]).new influencer
     end
 
     def influencer_class_by_string(string)

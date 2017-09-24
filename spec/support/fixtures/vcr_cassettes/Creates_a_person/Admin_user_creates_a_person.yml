@@ -2,11 +2,11 @@
 http_interactions:
 - request:
     method: post
-    uri: https://myalgoliaid.algolia.net/1/indexes/influencers/batch
+    uri: https://ua6ysns2dh.algolia.net/1/indexes/events/batch
     body:
       encoding: UTF-8
-      string: '{"requests":[{"action":"addObject","body":{"objectID":4949,"id":4949,"name":"Marie
-        Curie","gender":"female","kind":"person"}}]}'
+      string: '{"requests":[{"action":"addObject","body":{"objectID":8889,"id":8889,"name":"Marie
+        Curie","type":"person","earliest_year":null}}]}'
     headers:
       User-Agent:
       - Algolia for Ruby 1.16.0
@@ -15,11 +15,11 @@ http_interactions:
       Accept-Encoding:
       - gzip,deflate
       Date:
-      - Wed, 20 Sep 2017 01:40:00 GMT
+      - Fri, 29 Sep 2017 03:44:55 GMT
       X-Algolia-Api-Key:
-      - myalgoliakey
+      - 89869638d077cd3c8e801dfe86a5db16
       X-Algolia-Application-Id:
-      - myalgoliaid
+      - UA6YSNS2DH
       Content-Type:
       - application/json; charset=utf-8
   response:
@@ -30,7 +30,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Wed, 20 Sep 2017 01:40:00 GMT
+      - Fri, 29 Sep 2017 03:44:56 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Content-Length:
@@ -47,9 +47,9 @@ http_interactions:
       - inline; filename=a.txt
     body:
       encoding: UTF-8
-      string: '{"objectIDs":["4949"],"taskID":25028767030}
+      string: '{"objectIDs":["8889"],"taskID":27066984791}
 
 '
     http_version: 
-  recorded_at: Wed, 20 Sep 2017 01:40:00 GMT
+  recorded_at: Fri, 29 Sep 2017 03:44:56 GMT
 recorded_with: VCR 3.0.3

@@ -9,18 +9,19 @@ function renderMomentsInMap(moments){
   currentMapSources = {};
 
   $(moments).each(function(i, moment){
+    if(moment.influencer.type === 'person') {
+      if(oldMapSources[moment.influencer.id] == undefined){
+        moment.marker = _createMarker(moment);
+      } else {
+        moment.marker = oldMapSources[moment.influencer.id].marker;
+        _moveMarker(moment.marker, moment.locations[0]);
+      }
 
-    if(oldMapSources[moment.influencer.id] == undefined){
-      moment.marker = _createMarker(moment);
-    } else {
-      moment.marker = oldMapSources[moment.influencer.id].marker;
-      _moveMarker(moment.marker, moment.locations[0]);
+      moment.marker.infowindow.setContent(_createInfoWindowContent(moment));
+
+      currentMapSources[moment.influencer.id] = moment;
+      delete oldMapSources[moment.influencer.id];
     }
-
-    moment.marker.infowindow.setContent(_createInfoWindowContent(moment));
-
-    currentMapSources[moment.influencer.id] = moment;
-    delete oldMapSources[moment.influencer.id];
   });
 
   // Remove Markers

@@ -20,6 +20,7 @@ module Admin
       load_paths << %w[
         controllers
         views
+        presenters
       ]
 
       # Handle exceptions with HTTP statuses (true) or don't catch them (false).

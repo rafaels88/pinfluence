@@ -1,0 +1,28 @@
+<%=
+  form_for form, class: 'ui form' do
+    div class: 'field' do
+      label      :name
+      text_field :name
+    end
+
+    fields_for_collection :moments do
+      div class: 'two fields inline' do
+        div class: 'field' do
+          label      'Year Begin'
+          text_field :year_begin
+        end
+
+        div class: 'field' do
+          label      'Year End'
+          text_field :year_end
+        end
+
+        hidden_field :id
+      end
+    end
+
+    div class: 'field' do
+      submit submit_label, class: 'ui teal button'
+    end
+  end
+%>

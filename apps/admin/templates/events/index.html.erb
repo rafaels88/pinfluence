@@ -1,0 +1,29 @@
+<%= render partial: 'events/title' %>
+<%= render partial: 'events/menu' %>
+
+<table class="ui celled padded table">
+  <thead>
+    <tr><th class="single line">Name</th>
+    <th></th>
+    <th></th>
+  </tr></thead>
+  <tbody>
+    <% events.each do |event| %>
+      <tr>
+        <td>
+          <%= event.name %>
+        </td>
+        <td class="center aligned">
+          <a href="<%= routes.edit_event_path(id: event.id) %>" class="ui teal tiny button">Edit</a>
+        </td>
+        <td class="center aligned">
+          <%=
+            form_for :influcencer, routes.event_path(id: event.id), style: 'display: inline-block', method: :delete do
+              submit 'Delete', { class: "ui red tiny button" }
+            end
+          %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

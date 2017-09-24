@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ListAvailableInfluencers do
+describe Influencers::ListAvailableInfluencers do
   after { database_clean }
 
   describe '#call' do

@@ -1,5 +1,6 @@
 class Moment < Hanami::Entity
   def influencer
-    Person.new(person) if person_id
+    return person if person_id
+    event
   end
 end

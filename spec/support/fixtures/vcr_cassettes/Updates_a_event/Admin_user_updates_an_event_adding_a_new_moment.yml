@@ -1,11 +1,12 @@
 ---
 http_interactions:
 - request:
-    method: put
-    uri: https://myalgoliaid.algolia.net/1/indexes/influencers/settings
+    method: post
+    uri: https://ua6ysns2dh.algolia.net/1/indexes/events/batch
     body:
       encoding: UTF-8
-      string: '{"searchableAttributes":["name"]}'
+      string: '{"requests":[{"action":"addObject","body":{"objectID":1653,"id":1653,"name":"Second
+        World War","type":"event","earliest_year":1000}}]}'
     headers:
       User-Agent:
       - Algolia for Ruby 1.16.0
@@ -14,11 +15,11 @@ http_interactions:
       Accept-Encoding:
       - gzip,deflate
       Date:
-      - Tue, 19 Sep 2017 23:20:12 GMT
+      - Fri, 29 Sep 2017 03:45:00 GMT
       X-Algolia-Api-Key:
-      - myalgoliakey
+      - 89869638d077cd3c8e801dfe86a5db16
       X-Algolia-Application-Id:
-      - myalgoliaid
+      - UA6YSNS2DH
       Content-Type:
       - application/json; charset=utf-8
   response:
@@ -29,11 +30,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 19 Sep 2017 23:20:12 GMT
+      - Fri, 29 Sep 2017 03:45:00 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Content-Length:
-      - '62'
+      - '44'
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -46,17 +47,18 @@ http_interactions:
       - inline; filename=a.txt
     body:
       encoding: UTF-8
-      string: '{"updatedAt":"2017-09-19T23:20:12.789Z","taskID":27060627211}
+      string: '{"objectIDs":["1653"],"taskID":27066984831}
 
 '
     http_version: 
-  recorded_at: Tue, 19 Sep 2017 23:20:12 GMT
+  recorded_at: Fri, 29 Sep 2017 03:45:00 GMT
 - request:
     method: post
-    uri: https://myalgoliaid-dsn.algolia.net/1/indexes/influencers/query
+    uri: https://ua6ysns2dh.algolia.net/1/indexes/events/batch
     body:
       encoding: UTF-8
-      string: '{"params":"query=Pedr"}'
+      string: '{"requests":[{"action":"addObject","body":{"objectID":1653,"id":1653,"name":"Second
+        World War","type":"event","earliest_year":1000}}]}'
     headers:
       User-Agent:
       - Algolia for Ruby 1.16.0
@@ -65,11 +67,11 @@ http_interactions:
       Accept-Encoding:
       - gzip,deflate
       Date:
-      - Tue, 19 Sep 2017 23:20:12 GMT
+      - Fri, 29 Sep 2017 03:45:00 GMT
       X-Algolia-Api-Key:
-      - myalgoliakey
+      - 89869638d077cd3c8e801dfe86a5db16
       X-Algolia-Application-Id:
-      - myalgoliaid
+      - UA6YSNS2DH
       Content-Type:
       - application/json; charset=utf-8
   response:
@@ -80,11 +82,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 19 Sep 2017 23:20:12 GMT
+      - Fri, 29 Sep 2017 03:45:00 GMT
       Content-Type:
       - application/json; charset=UTF-8
-      Transfer-Encoding:
-      - chunked
+      Content-Length:
+      - '44'
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -95,16 +97,11 @@ http_interactions:
       - nosniff
       Content-Disposition:
       - inline; filename=a.txt
-      Content-Encoding:
-      - gzip
     body:
       encoding: UTF-8
-      string: '{"hits":[{"id":2,"name":"Dom Pedro II","gender":"male","kind":"person","earliest_year_in":"1100","objectID":"320354022","_highlightResult":{"name":{"value":"Dom
-        <em>Pedr</em>o II","matchLevel":"full","fullyHighlighted":false,"matchedWords":["pedr"]}}},{"id":1,"name":"Dom
-        Pedro I","gender":"male","kind":"person","objectID":"320354012","earliest_year_in":"1000","_highlightResult":{"name":{"value":"Dom
-        <em>Pedr</em>o I","matchLevel":"full","fullyHighlighted":false,"matchedWords":["pedr"]}}}],"nbHits":2,"page":0,"nbPages":1,"hitsPerPage":20,"processingTimeMS":1,"exhaustiveNbHits":true,"query":"Pedr","params":"query=Pedr"}
+      string: '{"objectIDs":["1653"],"taskID":27066984841}
 
 '
     http_version: 
-  recorded_at: Tue, 19 Sep 2017 23:20:13 GMT
+  recorded_at: Fri, 29 Sep 2017 03:45:00 GMT
 recorded_with: VCR 3.0.3
