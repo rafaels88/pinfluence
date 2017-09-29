@@ -4,7 +4,7 @@ function renderMap(){
   map = new google.maps.Map(document.getElementById("map"), { zoom: 3, center: new google.maps.LatLng(0, 0) });
 }
 
-function renderMomentsInMap(moments){
+function renderMomentsInMap(moments, currentYear){
   oldMapSources = currentMapSources;
   currentMapSources = {};
 
@@ -17,7 +17,7 @@ function renderMomentsInMap(moments){
         _moveMarker(moment.marker, moment.locations[0]);
       }
 
-      moment.marker.infowindow.setContent(_createInfoWindowContent(moment));
+      moment.marker.infowindow.setContent(_createInfoWindowContent(moment, currentYear));
 
       currentMapSources[moment.influencer.id] = moment;
       delete oldMapSources[moment.influencer.id];
@@ -53,6 +53,11 @@ function _createMarker(moment) {
   return marker;
 }
 
-function _createInfoWindowContent(moment) {
-  return moment.influencer.name;
+function _createInfoWindowContent(moment, currentYear) {
+  var currentAge = _currentAgeForInfluencer(moment.influencer.earliest_year, currentYear);
+  return moment.influencer.name + ' (' + currentAge + 'y)';
+}
+
+function _currentAgeForInfluencer(birthYear, currentYear) {
+  return parseInt(currentYear, 10) - parseInt(birthYear, 10);
 }

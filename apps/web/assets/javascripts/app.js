@@ -7,13 +7,13 @@ $().ready(function(){
       renderSlider(years, {
         onChange: function(currentYear){
           requestMoments(currentYear, function(moments){
-            renderMomentsInMap(moments);
+            renderMomentsInMap(moments, currentYear);
           });
         },
         onInit: function(){
           changeSliderTo(initialYear);
           requestMoments(initialYear, function(moments){
-            renderMomentsInMap(moments);
+            renderMomentsInMap(moments, initialYear);
           });
         }
       });
@@ -28,7 +28,7 @@ $().ready(function(){
       onSelectedResult: function(year){
         requestMoments(year, function(moments){
           changeSliderTo(year);
-          renderMomentsInMap(moments);
+          renderMomentsInMap(moments, year);
         });
       }
     });
@@ -38,7 +38,7 @@ $().ready(function(){
         changeSliderTo(year);
 
         requestMoments(year, function(moments){
-          renderMomentsInMap(moments);
+          renderMomentsInMap(moments, year);
         });
       }
     });

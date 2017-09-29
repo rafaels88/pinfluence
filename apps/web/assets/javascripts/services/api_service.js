@@ -7,23 +7,27 @@ var apiUrl = $("#map-container").data("api-endpoint"),
       }
     });
 
-function requestYears(cb){
-  graph.query(`query { available_years { year, formatted } }`)()
+function performRequest(query, cb){
+  graph.query(`query { `+query+` }`)()
     .then(function(response){
-      cb(response.available_years)
+      cb(response)
     });
+}
+
+function requestYears(cb){
+  performRequest('available_years { year, formatted }', function(response){
+    return cb(response.available_years);
+  })
 }
 
 function requestMoments(year, cb){
-  graph.query(`query { moments(year: `+year+`) { influencer { id name type gender } locations { latlng } year_begin } }`)()
-    .then(function(response){
-      cb(response.moments)
-    });
+  performRequest(`moments(year: `+year+`) { influencer { id name type gender earliest_year } locations { latlng } year_begin }`, function(response){
+    return cb(response.moments);
+  })
 }
 
 function requestInfluencers(term, cb){
-  graph.query(`query { influencers(name: "`+term+`") { people { id name gender type earliest_year  } events { id name type earliest_year } } }`)()
-    .then(function(response){
-      return cb(response.influencers)
-    });
+  performRequest(`influencers(name: "`+term+`") { people { id name gender type earliest_year  } events { id name type earliest_year } }`, function(response){
+    return cb(response.influencers);
+  })
 }
