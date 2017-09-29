@@ -79,3 +79,12 @@ namespace :index do
     end
   end
 end
+
+namespace :db do
+  task :update_all_moments do
+    on roles(:app), in: :sequence, wait: 5 do
+      execute "cd #{current_path} && HANAMI_ENV=#{ENV['DEPLOY_ENV']} #{fetch(:rbenv_prefix)} " \
+        'bundle exec rake update_all_moments'
+    end
+  end
+end
