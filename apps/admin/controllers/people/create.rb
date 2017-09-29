@@ -3,8 +3,16 @@ module Admin::Controllers::People
     include Admin::Action
 
     def call(params)
-      CreatePerson.call(params[:person])
+      CreatePerson.call(person_params(params))
       redirect_to routes.people_path
+    end
+
+    private
+
+    def person_params(params)
+      Hanami::Utils::Hash.deep_symbolize(
+        person: params[:person].merge(id: params[:id])
+      )
     end
   end
 end

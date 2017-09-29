@@ -39,31 +39,35 @@ function listenSearch(callbacks){
   });
 }
 
-function renderInfluencers(influencers){
+function renderInfluencersSearchResult(influencers){
   if(!$searchField.is(':focus')){
     hideSearchingLoading();
     return;
   }
 
-  var html = "", $results = $(".ui.search .results");
+  var html = '', $results = $('.ui.search .results');
 
-  if(influencers.length > 0){
-    $.each(influencers, function(i, influencer){
-      html += '' +
-        '<a class="result clickable" data-year="'+influencer.earliest_year_in+'">' +
-         '<div class="content">' +
-           '<div class="title">'+influencer.name+'</div>' +
-         '</div>' +
-        '</a>';
+  if(influencers.people.length > 0){
+    html += _buildSectionHtml('People');
+    $.each(influencers.people, function(i, person){
+      html += _buildInfluencerResultHtml(person);
     });
+  }
 
+  if(influencers.events.length > 0){
+    html += _buildSectionHtml('Events');
+    $.each(influencers.events, function(i, event){
+      html += _buildInfluencerResultHtml(event);
+    });
+  }
+
+  if(html !== ''){
     html += '' +
       '<a class="result image">' +
        '<div class="content">' +
         '<div class="title"><img src="https://www.algolia.com/static_assets/images/pricing/pricing_new/algolia-powered-by-14773f38.svg" /></div>' +
        '</div>' +
       '</a>';
-
   } else {
     html += '' +
       '<a class="result">' +
@@ -76,6 +80,22 @@ function renderInfluencers(influencers){
   $results.html(html);
   hideSearchingLoading();
   showSearchResults();
+}
+
+function _buildInfluencerResultHtml(influencer){
+  return '<a class="result clickable" data-year="'+influencer.earliest_year+'">' +
+         '<div class="content">' +
+           '<div class="title">'+influencer.name+'</div>' +
+         '</div>' +
+        '</a>';
+}
+
+function _buildSectionHtml(title){
+  return '<a class="result section">' +
+         '<div class="content">' +
+           '<div class="title">'+title+'</div>' +
+         '</div>' +
+        '</a>';
 }
 
 function showSearchResults(){

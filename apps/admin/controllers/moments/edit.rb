@@ -5,7 +5,7 @@ module Admin::Controllers::Moments
     expose :moment
 
     def call(params)
-      @influencers = ListAvailableInfluencers.call(repository: PersonRepository.new)
+      @influencers = Influencers::ListAvailableInfluencers.call(repository: PersonRepository.new)
       @moment = MomentRepository.new.find_with_locations(params[:id])
     end
   end

@@ -1,30 +1,27 @@
 require_relative './interactor'
+require_relative './influencers/concerns/persister'
 
 class CreatePerson
   include Interactor
+  include Influencers::Concerns::Persister
 
-  attr_reader :name, :gender, :repository, :indexer
+  INFLUENCER_PARAMS_WHITELIST = %i[name gender].freeze
 
-  def initialize(name:, gender:, opts: {})
-    @name = name
-    @gender = gender
-    @repository = opts[:repository] || PersonRepository.new
+  def initialize(person:, moments: [], opts: {})
+    @influencer_params = person
+    @moments_params = moments
+
+    @influencer_repository = opts[:influencer_repository] || PersonRepository.new
+    @moment_repository = opts[:moment_repository] || MomentRepository.new
     @indexer = opts[:indexer] || Influencers::Indexer
+    @index_object = opts[:index_object] || Influencers::EventIndexObject
   end
 
   def call
-    person = repository.create(new_person)
-    add_index(person)
-    person
-  end
+    person = influencer_repository.create(persist_influencer_params)
+    persist_moments_for person
 
-  private
-
-  def new_person
-    Person.new(name: name, gender: gender)
-  end
-
-  def add_index(person)
-    indexer.new(influencers: [person]).save
+    persist_index(reloaded_influencer(person.id))
+    reloaded_influencer(person.id)
   end
 end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe FindUserByAuthCredentials do
+describe Users::FindUserByAuthCredentials do
   let(:email) { 'admin@domain.com' }
   let(:password) { '123!@#qwe()_' }
   let(:credentials) { { email: email, password: password } }

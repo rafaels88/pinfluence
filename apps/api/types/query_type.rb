@@ -5,34 +5,25 @@ module Queries
 
     field :moments do
       type !types[Types::MomentType]
-      argument :influencer_name, types.String
       argument :year, types.Int
       argument :limit, types.Int, default_value: 100
       description "Search moments by Influencer's Name or Year"
-      resolve ->(_, args, _) do
-        params = { limit: args[:limit] }
-
-        if args[:influencer_name]
-          params[:name] = args[:influencer_name]
-        elsif args['year']
-          params[:year] = args[:year]
-        end
-
-        SearchMoments.new(params).call
+      resolve ->(_obj, args, _ctx) do
+        Moments::SearchMomentsByYear.new(limit: args[:limit], year: args[:year]).call
       end
     end
 
     field :available_years do
       type !types[Types::YearType]
       description 'All available years for searching by moments'
-      resolve ->(_, _, _) { MomentRepository.new.all_available_years }
+      resolve ->(_obj, _args, _ctx) { MomentRepository.new.all_available_years }
     end
 
     field :influencers do
-      type !types[Types::InfluencerType]
+      type Types::InfluencersType
       argument :name, types.String
       description 'Search influencers'
-      resolve ->(_, args, _) { Influencers::SearchQuery.call(name: args[:name]) }
+      resolve ->(_obj, args, _ctx) { Influencers::SearchQuery.call(name: args[:name]) }
     end
   end
 end

@@ -1,14 +1,15 @@
 module Influencers
   class Indexer
-    attr_reader :influencers
+    attr_reader :influencers, :index_object_class
 
-    def initialize(influencers: [])
+    def initialize(influencers: [], index_object:)
       @influencers = influencers
+      @index_object_class = index_object
     end
 
     def save
       index_object_hashes = influencers.map do |influencer|
-        index_object = IndexObject.new influencer
+        index_object = index_object_class.new influencer
         index_object.to_hash
       end
 
@@ -18,7 +19,7 @@ module Influencers
     private
 
     def index
-      @index ||= Algolia::Index.new(Influencer::SEARCH_INDEX_NAME)
+      @index ||= Algolia::Index.new(index_object_class::SEARCH_INDEX_NAME)
     end
   end
 end

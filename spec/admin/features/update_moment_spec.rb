@@ -15,23 +15,26 @@ feature 'Updates a moment', js: true do
     step 'GIVEN an existent person called Gandhi'
     create_gandhi
 
-    step 'GIVEN an existent person called Picasso'
+    step 'AND an existent person called Picasso'
     picasso = create_picasso
 
-    step 'GIVEN a created moment for Gandhi'
+    step 'AND a created moment for Gandhi'
     moment = create_moment
 
-    step 'GIVEN a created location for this moment'
+    step 'AND a created location for this moment'
     location = create_location
 
-    step 'Visit the edit page of this moment'
+    step 'AND I Visit the edit page of this moment'
     visit Admin.routes.edit_moment_path(id: moment.id)
 
-    step 'GIVEN I change the person to Picasso'
+    step 'AND I change the person to Picasso'
     select_from_dropdown 'Picasso', from: '.people'
 
-    step 'GIVEN I change the location address'
+    step 'AND I change the location address'
     set_input_value 'Paris, France', from: "input[value='#{location.address}']"
+
+    step 'AND I change the year begin to an earlier year'
+    set_input_value '500', from: "input[value='#{moment.year_begin}']"
 
     step 'WHEN I click on Update button'
     click_on 'Update'
@@ -41,29 +44,33 @@ feature 'Updates a moment', js: true do
     updated_moment = MomentRepository.new.find moment.id
     expect(updated_moment.person_id).to eq picasso.id
 
-    step "THEN moment's location is updated with the new address"
+    step "AND moment's location is updated with the new address"
     locations = LocationRepository.new.by_moment updated_moment
     expect(locations.count).to eq 1
     expect(locations.first.address).to eq 'Paris, France'
+
+    step "AND moment's year begin is updated with the new year"
+    person = PersonRepository.new.find picasso.id
+    expect(person.earliest_year).to eq updated_moment.year_begin
   end
 
   scenario 'Admin user updates a moment with a new person', vcr: true do
     step 'GIVEN an existent person called Gandhi'
     create_gandhi
 
-    step 'GIVEN a created moment for Gandhi'
+    step 'AND a created moment for Gandhi'
     moment = create_moment
 
-    step 'GIVEN a created location for this moment'
+    step 'AND a created location for this moment'
     create_location
 
-    step 'Visit the edit page of this moment'
+    step 'AND I Visit the edit page of this moment'
     visit Admin.routes.edit_moment_path(id: moment.id)
 
-    step "GIVEN I choose a new gender on the New Person's field"
+    step "AND I choose a new gender on the New Person's field"
     select_from_dropdown 'Female', from: '.gender'
 
-    step 'GIVEN I filled the field Name for the new person'
+    step 'AND I filled the field Name for the new person'
     set_input_value 'Marie Curie', from: "input[name='moment[influencer][name]']"
 
     step 'WHEN I click on Update button'
@@ -75,7 +82,7 @@ feature 'Updates a moment', js: true do
     new_person = PersonRepository.new.search_by_name('Marie Curie').first
     expect(updated_moment.person_id).to eq new_person.id
 
-    step "THEN moment's location keeps the same"
+    step "AND moment's location keeps the same"
     locations = LocationRepository.new.by_moment updated_moment
     expect(locations.count).to eq 1
     expect(locations.first.address).to eq 'Barcelona, Spain'

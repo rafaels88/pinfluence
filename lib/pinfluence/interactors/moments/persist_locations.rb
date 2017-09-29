@@ -2,22 +2,22 @@ module Moments
   class PersistLocations
     include Interactor
 
-    attr_reader :moment, :locations, :repository, :service
+    attr_reader :moment, :locations_params, :repository, :moment_repository, :service
 
     def initialize(moment:, locations:, opts: {})
       @moment = moment
-      @locations = locations
+      @locations_params = locations
 
       @service = opts.fetch(:location_service, Locations::Searcher.new)
       @repository = opts.fetch(:location_repository, LocationRepository.new)
     end
 
     def call
-      locations.each do |params|
-        if params[:id]
-          update(persist_params(params))
-        else
+      locations_params.each do |params|
+        if params[:id].to_s.empty?
           create(persist_params(params))
+        else
+          update(persist_params(params))
         end
       end
     end

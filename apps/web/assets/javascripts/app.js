@@ -22,7 +22,7 @@ $().ready(function(){
     listenSearch({
       onSearch: function(term){
         requestInfluencers(term, function(influencers){
-          renderInfluencers(influencers);
+          renderInfluencersSearchResult(influencers);
         });
       },
       onSelectedResult: function(year){

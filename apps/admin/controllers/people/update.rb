@@ -10,7 +10,9 @@ module Admin::Controllers::People
     private
 
     def person_params(params)
-      params[:person].update(id: params[:id])
+      Hanami::Utils::Hash.deep_symbolize(
+        person: params[:person].merge(id: params[:id])
+      )
     end
   end
 end

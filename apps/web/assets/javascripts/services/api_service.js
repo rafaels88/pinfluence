@@ -15,21 +15,14 @@ function requestYears(cb){
 }
 
 function requestMoments(year, cb){
-  graph.query(`query { moments(year: `+year+`) { influencer { id name gender } locations { latlng } year_begin } }`)()
-    .then(function(response){
-      cb(response.moments)
-    });
-}
-
-function requestYearByInfluenceName(name, cb){
-  graph.query(`query { moments(influencer_name: "`+name+`", limit: 1) { influencer { id name gender } locations { latlng } year_begin } }`)()
+  graph.query(`query { moments(year: `+year+`) { influencer { id name type gender } locations { latlng } year_begin } }`)()
     .then(function(response){
       cb(response.moments)
     });
 }
 
 function requestInfluencers(term, cb){
-  graph.query(`query { influencers(name: "`+term+`") { id name gender kind earliest_year_in } }`)()
+  graph.query(`query { influencers(name: "`+term+`") { people { id name gender type earliest_year  } events { id name type earliest_year } } }`)()
     .then(function(response){
       return cb(response.influencers)
     });
