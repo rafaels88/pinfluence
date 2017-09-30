@@ -6,18 +6,22 @@
     end
 
     fields_for_collection :moments do
-      div class: 'two fields inline' do
-        div class: 'field' do
-          label      'Year Begin'
-          text_field :year_begin
-        end
+      h4 'Moment', class: 'ui dividing header'
 
-        div class: 'field' do
-          label      'Year End'
-          text_field :year_end
-        end
+      div class: 'ui padded basic segment' do
+        div class: 'two fields ' do
+          div class: 'field' do
+            label      'Year Begin'
+            text_field :year_begin
+          end
 
-        hidden_field :id
+          div class: 'field' do
+            label      'Year End'
+            text_field :year_end
+          end
+
+          hidden_field :id
+        end
       end
     end
 

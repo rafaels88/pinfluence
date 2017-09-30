@@ -14,6 +14,35 @@
       end
     end
 
+    fields_for_collection :moments do
+      h4 'Moment', class: 'ui dividing header'
+
+      div class: 'ui padded basic segment' do
+        div class: 'two fields ' do
+          div class: 'field' do
+            label      'Year Begin'
+            text_field :year_begin
+          end
+
+          div class: 'field' do
+            label      'Year End'
+            text_field :year_end
+          end
+
+          hidden_field :id
+        end
+
+        fields_for_collection :locations do
+          div class: 'field' do
+            label      'Address'
+            text_field :address
+          end
+
+          hidden_field :id
+        end
+      end
+    end
+
     div class: 'field' do
       submit submit_label, class: 'ui teal button'
     end

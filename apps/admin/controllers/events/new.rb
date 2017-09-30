@@ -4,7 +4,7 @@ module Admin::Controllers::Events
     expose :event
 
     def call(_)
-      @event = EventPresenter.new(Event.new)
+      @event = InfluencerPresenter.new(Event.new)
     end
   end
 end

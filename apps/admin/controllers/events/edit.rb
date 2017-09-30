@@ -5,7 +5,7 @@ module Admin::Controllers::Events
 
     def call(params)
       event = EventRepository.new.find(params[:id])
-      @event = EventPresenter.new event
+      @event = InfluencerPresenter.new event
     end
   end
 end

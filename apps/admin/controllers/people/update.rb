@@ -11,6 +11,7 @@ module Admin::Controllers::People
 
     def person_params(params)
       Hanami::Utils::Hash.deep_symbolize(
+        moments: params[:person].delete(:moments),
         person: params[:person].merge(id: params[:id])
       )
     end

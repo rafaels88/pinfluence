@@ -3,7 +3,7 @@ module Admin::Views::People
     include Admin::View
 
     def form
-      Form.new(:person, routes.people_path)
+      Form.new(:person, routes.people_path, person: person)
     end
 
     def submit_label
