@@ -16,6 +16,10 @@ module Influencers
       index.add_objects(index_object_hashes)
     end
 
+    def delete
+      index.delete_objects(influencers.map(&:id))
+    end
+
     private
 
     def index

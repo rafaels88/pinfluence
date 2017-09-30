@@ -19,6 +19,7 @@ class CreateMoment
   end
 
   def call
+    clean_empty_locations!
     check_locations!
     return unless errors.empty?
 

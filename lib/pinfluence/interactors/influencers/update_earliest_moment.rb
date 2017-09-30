@@ -36,7 +36,7 @@ module Influencers
     end
 
     def earliest_year
-      MomentRepository.new.earliest_moment_of_an_influencer(influencer).year_begin
+      MomentRepository.new.earliest_moment_of_an_influencer(influencer)&.year_begin
     end
   end
 end

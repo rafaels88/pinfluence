@@ -4,8 +4,8 @@ module Interactor
   end
 
   module ClassMethods
-    def call(params)
-      new(params).call
+    def call(*params, **kw)
+      new(*params, **kw).call
     end
   end
 end

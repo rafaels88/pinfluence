@@ -42,6 +42,19 @@ describe CreateMoment do
       end
     end
 
+    context 'when the location address is empty' do
+      let(:address) { '' }
+      let(:latlng) { nil }
+      let(:influencer) { create :person }
+      let(:influencer_params) { { id: influencer.id, type: influencer.type } }
+
+      it 'ignores the location and creates the moment' do
+        subject.call
+        created_moment = moment_repository.search_by_influencer(influencer).first
+        expect(created_moment).to_not be_nil
+      end
+    end
+
     context 'when associated influencer is a new person' do
       let(:influencer_params) { { name: 'New Person', type: 'person', gender: 'female' } }
       let(:influencer) { PersonRepository.new.search_by_name('New Person')[0] }

@@ -4,8 +4,14 @@ module Moments
       attr_reader :moment_params, :locations_params, :influencer_params, :repository, :person_repository,
                   :errors, :location_service, :opts
 
+      def clean_empty_locations!
+        locations_params.each do |location_param|
+          locations_params.delete(location_param) if location_param[:address].to_s.empty?
+        end
+      end
+
       def check_locations!
-        locations_params.map do |location_param|
+        locations_params.each do |location_param|
           location_info = location_service.by_address(location_param[:address])
 
           if location_info.latlng
