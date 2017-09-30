@@ -15,6 +15,7 @@ describe CreateMoment do
     let(:moment_repository) { MomentRepository.new }
     let(:location_repository) { LocationRepository.new }
     let(:influencer_indexer) { double :InfluencerIndexer }
+    let(:opts) { { location_service: location_service, indexer: influencer_indexer } }
 
     before do
       allow(influencer_indexer).to receive_message_chain(:new, :save) { true }
@@ -25,7 +26,7 @@ describe CreateMoment do
         influencer: influencer_params,
         locations: locations_params,
         moment: moment_params,
-        opts: { location_service: location_service, influencer_indexer: influencer_indexer }
+        opts: opts
       )
     end
 

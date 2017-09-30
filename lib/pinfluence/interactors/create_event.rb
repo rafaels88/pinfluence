@@ -11,6 +11,7 @@ class CreateEvent
     @influencer_params = event
     @moments_params = moments
 
+    @opts = opts
     @influencer_repository = opts[:influencer_repository] || EventRepository.new
     @moment_repository = opts[:moment_repository] || MomentRepository.new
     @indexer = opts[:indexer] || Influencers::Indexer

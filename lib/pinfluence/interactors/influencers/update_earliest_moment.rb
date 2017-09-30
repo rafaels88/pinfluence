@@ -24,23 +24,19 @@ module Influencers
     def update_person!
       UpdatePerson.call(
         person: { id: influencer.id, earliest_year: earliest_year },
-        opts: opts_param
+        opts: opts
       )
     end
 
     def update_event!
       UpdateEvent.call(
         event: { id: influencer.id, earliest_year: earliest_year },
-        opts: opts_param
+        opts: opts
       )
     end
 
     def earliest_year
       MomentRepository.new.earliest_moment_of_an_influencer(influencer).year_begin
-    end
-
-    def opts_param
-      { indexer: opts[:influencer_indexer] }
     end
   end
 end

@@ -2,7 +2,7 @@ module Influencers
   module Concerns
     module Persister
       attr_reader :influencer_params, :moments_params, :influencer_repository, :indexer,
-                  :index_object, :moment_repository
+                  :index_object, :moment_repository, :opts
 
       private
 
@@ -18,9 +18,9 @@ module Influencers
         moments_params.each do |moment_params|
           Moments::PersistMoment.call(
             influencer: { id: influencer.id, type: influencer.type },
-            locations: [],
+            locations: moment_params.delete(:locations) || [],
             moment: moment_params,
-            opts: { influencer_indexer: indexer }
+            opts: opts
           )
         end
       end

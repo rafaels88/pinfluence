@@ -20,13 +20,14 @@ describe UpdateMoment do
     let(:influencer) { create :person }
     let(:influencer_params) { { id: influencer.id, type: influencer.type } }
     let(:found_moment) { moment_repository.search_by_influencer(influencer).first }
+    let(:opts) { { location_service: location_service, indexer: influencer_indexer } }
 
     subject do
       described_class.new(
         moment: moment_params,
         influencer: influencer_params,
         locations: locations_params,
-        opts: { location_service: location_service, influencer_indexer: influencer_indexer }
+        opts: opts
       )
     end
 

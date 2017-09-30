@@ -32,7 +32,7 @@ module Moments
       def create_influencer
         Influencers::PersistInfluencer.call(
           influencer: influencer_params,
-          opts: { indexer: opts[:influencer_indexer] }
+          opts: opts
         )
       end
 
