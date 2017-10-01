@@ -3,8 +3,11 @@ module Admin::Controllers::People
     include Admin::Action
 
     def call(params)
-      CreatePerson.call(person_params(params))
-      redirect_to routes.people_path
+      person = CreatePerson.call(person_params(params))
+      redirect_to routes.edit_person_path(id: person.id)
+    rescue StandardError => e
+      flash[:error] = e.message
+      redirect_to routes.new_person_path
     end
 
     private

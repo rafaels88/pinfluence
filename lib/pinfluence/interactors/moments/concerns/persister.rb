@@ -4,6 +4,8 @@ module Moments
       attr_reader :moment_params, :locations_params, :influencer_params, :repository, :person_repository,
                   :errors, :location_service, :opts
 
+      class LocationAddressNotFound < StandardError; end
+
       def clean_empty_locations!
         locations_params.each do |location_param|
           locations_params.delete(location_param) if location_param[:address].to_s.empty?
@@ -14,11 +16,9 @@ module Moments
         locations_params.each do |location_param|
           location_info = location_service.by_address(location_param[:address])
 
-          if location_info.latlng
-            location_param[:latlng] = location_info.latlng
-          else
-            errors.push("'#{location_param[:address]}' address not found")
-          end
+          raise LocationAddressNotFound, "'#{location_param[:address]}' address not found" unless location_info.latlng
+
+          location_param[:latlng] = location_info.latlng
         end
       end
 

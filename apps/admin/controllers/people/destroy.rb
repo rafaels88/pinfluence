@@ -4,6 +4,9 @@ module Admin::Controllers::People
 
     def call(params)
       DestroyPerson.call(params[:id])
+    rescue StandardError => e
+      flash[:error] = e.message
+    ensure
       redirect_to routes.people_path
     end
   end

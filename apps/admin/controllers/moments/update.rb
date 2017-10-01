@@ -3,23 +3,14 @@ module Admin::Controllers::Moments
     include Admin::Action
 
     def call(params)
-      updater = UpdateMoment.new(moment_params(params))
-      moment = updater.call
-
-      prepare_for_editing(moment)
-      flash[:error] = updater.errors.first unless updater.errors.empty?
-
+      UpdateMoment.call(moment_params(params))
+    rescue StandardError => e
+      flash[:error] = e.message
+    ensure
       redirect_to routes.edit_moment_path(id: params[:id])
     end
 
     private
-
-    def prepare_for_editing(moment)
-      @influencers = Influencers::ListAvailableInfluencers.call(
-        repository: PersonRepository.new
-      )
-      @moment = moment
-    end
 
     def moment_params(params)
       # Need to transform :locations in an array until we have a

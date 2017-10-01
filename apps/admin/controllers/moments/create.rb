@@ -4,22 +4,14 @@ module Admin::Controllers::Moments
     expose :moment, :influencers
 
     def call(params)
-      creator = CreateMoment.new(moment_params(params))
-      creator.call
-      redirect_to routes.moments_path if creator.errors.empty?
-
-      prepare_for_editing(Moment.new)
-      flash[:error] = creator.errors.first
+      moment = CreateMoment.call(moment_params(params))
+      redirect_to routes.edit_moment_path(id: moment.id)
+    rescue StandardError => e
+      flash[:error] = e.message
+      redirect_to routes.new_moment_path
     end
 
     private
-
-    def prepare_for_editing(moment)
-      @influencers = Influencers::ListAvailableInfluencers.call(
-        repository: PersonRepository.new
-      )
-      @moment = moment
-    end
 
     def moment_params(params)
       # Need to transform :locations in an array until we have a

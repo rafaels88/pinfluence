@@ -35,10 +35,8 @@ describe CreateMoment do
       let(:influencer) { create :person }
       let(:influencer_params) { { id: influencer.id, type: influencer.type } }
 
-      it 'does not create a new moment' do
-        subject.call
-        created_moment = moment_repository.search_by_influencer(influencer).first
-        expect(created_moment).to be_nil
+      it 'raises LocationAddressNotFound error' do
+        expect { subject.call }.to raise_error Moments::Concerns::Persister::LocationAddressNotFound
       end
     end
 

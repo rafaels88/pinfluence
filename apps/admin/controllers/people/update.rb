@@ -4,6 +4,9 @@ module Admin::Controllers::People
 
     def call(params)
       UpdatePerson.call(person_params(params))
+    rescue StandardError => e
+      flash[:error] = e.message
+    ensure
       redirect_to routes.edit_person_path(id: params[:id])
     end
 
