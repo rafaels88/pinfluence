@@ -1,6 +1,10 @@
-var $searchForm = $("#search-form"), $searchContainer = $(".ui.search"),
-  $results = $searchContainer.find(".results"), $searchField = $("#search-field"),
-  $searchInputContainer = $searchContainer.find(".icon.input");
+var $searchForm = $("#search-form"),
+  $searchContainer = $(".ui.search"),
+  $results = $searchContainer.find(".results"),
+  $searchField = $("#search-field"),
+  $searchInputContainer = $searchContainer.find(".icon.input"),
+  $searchFieldIcon = $searchInputContainer.find('.icon'),
+  searchResultCount = 0;
 
 function listenSearch(callbacks){
   $searchForm.submit(function(e){
@@ -24,11 +28,29 @@ function listenSearch(callbacks){
     }
   });
 
+  $searchField.on('focus', function(){
+    if(searchResultCount > 0){
+      showSearchResults();
+    }
+  });
+
   $results.on('click', '.result.clickable', function(){
-    var year = $(this).data('year');
-    callbacks.onSelectedResult(year);
+    var year = $(this).data('year'), influencer_id = $(this).data('id'), influencer_type = $(this).data('type')
+        selectedTerm = $(this).find('.title').text();
+
+    callbacks.onSelectedResult({ year: year, influencer: { id: influencer_id, type: influencer_type } });
+    hideSearchResults();
+    $searchField.val(selectedTerm);
+    $searchFieldIcon.removeClass('search').addClass('close link');
+  });
+
+  $searchInputContainer.on('click', '.close', function(){
+    callbacks.onResetSearch();
+    $searchFieldIcon.removeClass('close link').addClass('search');
+    $searchField.val('');
     hideSearchResults();
   });
+
 
   $(window).mouseup(function(e){
     // if the target of the click isn't the container nor a descendant of the container
@@ -46,6 +68,7 @@ function renderInfluencersSearchResult(influencers){
   }
 
   var html = '', $results = $('.ui.search .results');
+  searchResultCount = influencers.people.length + influencers.events.length;
 
   if(influencers.people.length > 0){
     html += _buildSectionHtml('People');
@@ -83,7 +106,7 @@ function renderInfluencersSearchResult(influencers){
 }
 
 function _buildInfluencerResultHtml(influencer){
-  return '<a class="result clickable" data-year="'+influencer.earliest_year+'">' +
+  return '<a class="result clickable" data-year="'+influencer.earliest_year+'" data-type="'+influencer.type+'" data-id="'+influencer.id+'">' +
          '<div class="content">' +
            '<div class="title">'+influencer.name+'</div>' +
          '</div>' +

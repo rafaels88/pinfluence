@@ -1,8 +1,7 @@
 $().ready(function(){
-  function init(){
-    var initialYear = new Date().getFullYear() - 100;
-    renderMap();
+  var initialYear = new Date().getFullYear() - 100;
 
+  function resetSearch(){
     requestYears(function(years){
       renderSlider(years, {
         onChange: function(currentYear){
@@ -18,6 +17,12 @@ $().ready(function(){
         }
       });
     });
+  }
+
+  function init(){
+    renderMap();
+
+    resetSearch();
 
     listenSearch({
       onSearch: function(term){
@@ -25,12 +30,24 @@ $().ready(function(){
           renderInfluencersSearchResult(influencers);
         });
       },
-      onSelectedResult: function(year){
-        requestMoments(year, function(moments){
-          changeSliderTo(year);
-          renderMomentsInMap(moments, year);
+      onSelectedResult: function(ctx){
+        requestYearsForInfluencer(ctx.influencer, function(years){
+          renderSlider(years, {
+            onChange: function(currentYear){
+              requestMoments(currentYear, function(moments){
+                renderMomentsInMap(moments, currentYear);
+              });
+            },
+            onInit: function(){
+              requestMoments(ctx.year, function(moments){
+                changeSliderTo(ctx.year);
+                renderMomentsInMap(moments, ctx.year);
+              });
+            }
+          });
         });
-      }
+      },
+      onResetSearch: resetSearch
     });
 
     listenRequestYear({

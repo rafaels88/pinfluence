@@ -3,14 +3,18 @@ var bigValueSlider = document.getElementById('slider-huge'),
     increaseBtn = document.getElementById('slider-increase'),
     decreaseBtn = document.getElementById('slider-decrease'),
     changeCurrentYearBtn = document.getElementsByClassName('change-current-year')[0],
-    sliderRange, currentYear, yearFormActive = false;
+    sliderRange, currentYear, yearFormActive = false, slider;
 
 function renderSlider(years, callbacks){
   sliderRange = years.map(function(year){ return year.year });
   currentYear = sliderRange[0];
   var maxSliderValue = sliderRange.length-1;
 
-  noUiSlider.create(bigValueSlider, {
+  if(slider){
+    slider.destroy();
+  }
+
+  slider = noUiSlider.create(bigValueSlider, {
     start: 0,
     step: 1,
     orientation: 'vertical',
@@ -31,7 +35,7 @@ function renderSlider(years, callbacks){
     changeValueLabel(currentYearLabel);
   });
 
-  increaseBtn.addEventListener('click', function(){
+  $(increaseBtn).off('click').on('click', function(){
     var currentSliderValue = bigValueSlider.noUiSlider.get();
 
     if(currentSliderValue < maxSliderValue){
@@ -42,7 +46,7 @@ function renderSlider(years, callbacks){
     }
   });
 
-  decreaseBtn.addEventListener('click', function(){
+  $(decreaseBtn).off('click').on('click', function(){
     var currentSliderValue = bigValueSlider.noUiSlider.get();
 
     if(currentSliderValue > 0){
@@ -53,7 +57,7 @@ function renderSlider(years, callbacks){
     }
   });
 
-  changeCurrentYearBtn.addEventListener('click', function(){
+  $(changeCurrentYearBtn).off('click').on('click', function(){
     if(yearFormActive == false){
       yearFormActive = true;
 

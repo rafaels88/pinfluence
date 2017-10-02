@@ -53,12 +53,9 @@ class MomentRepository < Hanami::Repository
     (min_year..max_year).to_a.map { |y| Values::Year.new y }
   end
 
-  def search_by_influencer(influencer, limit: 100)
-    q = if influencer.type == :person
-          aggregate(:person, :locations).where("person_id": influencer.id)
-        elsif influencer.type == :event
-          aggregate(:event, :locations).where("event_id": influencer.id)
-        end
+  def search_by_influencer(influencer, limit: 100, order: :year_begin)
+    q = aggregate(influencer.type, :locations).where("#{influencer.type}_id": influencer.id)
+    q = q.order(order)
     q = q.limit(limit) if limit
     q.map_to(Moment).call.collection
   end

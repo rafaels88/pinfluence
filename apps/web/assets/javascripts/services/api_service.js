@@ -20,6 +20,12 @@ function requestYears(cb){
   })
 }
 
+function requestYearsForInfluencer(influencer, cb){
+  performRequest(`available_years(influencer_id: `+ influencer.id +`, influencer_type: "`+ influencer.type +`") { year, formatted }`, function(response){
+    return cb(response.available_years);
+  })
+}
+
 function requestMoments(year, cb){
   performRequest(`moments(year: `+year+`) { influencer { id name type gender earliest_year } locations { latlng } year_begin }`, function(response){
     return cb(response.moments);

@@ -15,8 +15,18 @@ module Queries
 
     field :available_years do
       type !types[Types::YearType]
+      argument :influencer_id, types.Int
+      argument :influencer_type, types.String
       description 'All available years for searching by moments'
-      resolve ->(_obj, _args, _ctx) { MomentRepository.new.all_available_years }
+      resolve ->(_obj, args, _ctx) do
+        if args[:influencer_id].to_s.empty? || args[:influencer_type].to_s.empty?
+          return MomentRepository.new.all_available_years
+        end
+
+        Moments::ListAvailableYearsForInfluencer.call(
+          influencer: { id: args[:influencer_id], type: args[:influencer_type] }
+        )
+      end
     end
 
     field :influencers do
