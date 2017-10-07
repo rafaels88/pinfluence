@@ -1,18 +1,25 @@
 $().ready(function(){
-  var initialYear = new Date().getFullYear() - 100;
+  var initialDate = new Date();
+  initialDate.setYear(initialDate.getYear() - 100);
+
+  var dd = initialDate.getDate();
+  var mm = initialDate.getMonth()+1;
+  var yyyy = initialDate.getFullYear();
+
+  var initialDateStr = yyyy + '-' + mm + '-' + dd;
 
   function resetSearch(){
-    requestYears(function(years){
-      renderSlider(years, {
-        onChange: function(currentYear){
-          requestMoments(currentYear, function(moments){
-            renderMomentsInMap(moments, currentYear);
+    requestDates(function(dates){
+      renderSlider(dates, {
+        onChange: function(currentDate){
+          requestMoments(currentDate, function(moments){
+            renderMomentsInMap(moments, currentDate);
           });
         },
         onInit: function(){
-          changeSliderTo(initialYear);
-          requestMoments(initialYear, function(moments){
-            renderMomentsInMap(moments, initialYear);
+          changeSliderTo(initialDateStr);
+          requestMoments(initialDateStr, function(moments){
+            renderMomentsInMap(moments, initialDateStr);
           });
         }
       });
@@ -31,17 +38,17 @@ $().ready(function(){
         });
       },
       onSelectedResult: function(ctx){
-        requestYearsForInfluencer(ctx.influencer, function(years){
-          renderSlider(years, {
-            onChange: function(currentYear){
-              requestMoments(currentYear, function(moments){
-                renderMomentsInMap(moments, currentYear);
+        requestDatesForInfluencer(ctx.influencer, function(dates){
+          renderSlider(dates, {
+            onChange: function(currentDate){
+              requestMoments(currentDate, function(moments){
+                renderMomentsInMap(moments, currentDate);
               });
             },
             onInit: function(){
-              requestMoments(ctx.year, function(moments){
-                changeSliderTo(ctx.year);
-                renderMomentsInMap(moments, ctx.year);
+              requestMoments(ctx.date, function(moments){
+                changeSliderTo(ctx.date);
+                renderMomentsInMap(moments, ctx.date);
               });
             }
           });
@@ -50,12 +57,12 @@ $().ready(function(){
       onResetSearch: resetSearch
     });
 
-    listenRequestYear({
-      onSearch: function(year){
-        changeSliderTo(year);
+    listenRequestDate({
+      onSearch: function(date){
+        changeSliderTo(date);
 
-        requestMoments(year, function(moments){
-          renderMomentsInMap(moments, year);
+        requestMoments(date, function(moments){
+          renderMomentsInMap(moments, date);
         });
       }
     });

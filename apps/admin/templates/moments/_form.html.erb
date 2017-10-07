@@ -47,13 +47,13 @@
 
       div class: 'two fields' do
         div class: 'field' do
-          label      "From Year"
-          number_field :year_begin, placeholder: "Eg.: 1989"
+          label      "From Date"
+          text_field :date_begin, placeholder: "Eg.: 1989-08-30"
         end
 
         div class: 'field' do
-          label      "Until Year"
-          number_field :year_end, placeholder: "(optional)"
+          label      "Until Date"
+          text_field :date_end, placeholder: "(optional)"
         end
       end
     end

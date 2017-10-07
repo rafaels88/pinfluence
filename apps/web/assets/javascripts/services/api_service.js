@@ -14,26 +14,26 @@ function performRequest(query, cb){
     });
 }
 
-function requestYears(cb){
-  performRequest('available_years { year, formatted }', function(response){
-    return cb(response.available_years);
+function requestDates(cb){
+  performRequest('available_dates { date, formatted }', function(response){
+    return cb(response.available_dates);
   })
 }
 
-function requestYearsForInfluencer(influencer, cb){
-  performRequest(`available_years(influencer_id: `+ influencer.id +`, influencer_type: "`+ influencer.type +`") { year, formatted }`, function(response){
-    return cb(response.available_years);
+function requestDatesForInfluencer(influencer, cb){
+  performRequest(`available_dates(influencer_id: `+ influencer.id +`, influencer_type: "`+ influencer.type +`") { date, formatted }`, function(response){
+    return cb(response.available_dates);
   })
 }
 
-function requestMoments(year, cb){
-  performRequest(`moments(year: `+year+`) { influencer { id name type gender earliest_year } locations { latlng } year_begin }`, function(response){
+function requestMoments(date, cb){
+  performRequest(`moments(date: "`+date+`") { influencer { id name type gender earliest_date } locations { latlng } date_begin }`, function(response){
     return cb(response.moments);
   })
 }
 
 function requestInfluencers(term, cb){
-  performRequest(`influencers(name: "`+term+`") { people { id name gender type earliest_year  } events { id name type earliest_year } }`, function(response){
+  performRequest(`influencers(name: "`+term+`") { people { id name gender type earliest_date  } events { id name type earliest_date } }`, function(response){
     return cb(response.influencers);
   })
 }

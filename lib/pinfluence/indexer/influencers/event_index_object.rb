@@ -2,7 +2,7 @@ module Influencers
   class EventIndexObject
     extend Forwardable
     attr_reader :influencer, :moment_repository
-    def_delegators :influencer, :id, :name, :type, :earliest_year
+    def_delegators :influencer, :id, :name, :type, :earliest_date
 
     SEARCH_INDEX_NAME = 'events'.freeze
     SEARCHABLE_ATTRIBUTES = ['name'].freeze
@@ -20,7 +20,7 @@ module Influencers
         'id' => influencer.id,
         'name' => influencer.name,
         'type' => influencer.type,
-        'earliest_year' => influencer.earliest_year
+        'earliest_date' => influencer.earliest_date
       }
     end
 

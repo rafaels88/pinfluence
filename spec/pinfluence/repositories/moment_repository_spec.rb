@@ -4,14 +4,18 @@ describe MomentRepository do
   after { database_clean }
 
   let!(:person) { create :person }
-  let!(:moment01) { create :moment, year_begin: 1000, year_end: 1010, person_id: person.id }
-  let!(:moment02) { create :moment, year_begin: 2000, year_end: 2010, person_id: person.id }
+  let!(:moment01) do
+    create :moment, date_begin: Date.new(1000, 1, 1), date_end: Date.new(1010, 1, 1), person_id: person.id
+  end
+  let!(:moment02) do
+    create :moment, date_begin: Date.new(2000, 1, 1), date_end: Date.new(2010, 1, 1), person_id: person.id
+  end
   let!(:location01) { create :location, moment_id: moment01.id }
   let!(:location02) { create :location, moment_id: moment02.id }
 
   describe '#search_by_date' do
-    let(:search_year) { 1009 }
-    subject { described_class.new.search_by_date(year: search_year) }
+    let(:search_date) { Date.new(1009, 1, 1) }
+    subject { described_class.new.search_by_date(date: search_date) }
 
     it 'returns a list of found moments' do
       expect(subject.size).to eq 1
@@ -24,7 +28,7 @@ describe MomentRepository do
     end
 
     context 'when no moment is found' do
-      let(:search_year) { 1011 }
+      let(:search_date) { Date.new(1011, 1, 1) }
 
       it { is_expected.to be_empty }
     end
@@ -69,7 +73,7 @@ describe MomentRepository do
   describe '#earliest_moment_of_an_influencer' do
     subject { described_class.new.earliest_moment_of_an_influencer(person) }
 
-    it 'returns the moment with the earlier year_begin' do
+    it 'returns the moment with the earlier date_begin' do
       is_expected.to eq moment01
     end
   end

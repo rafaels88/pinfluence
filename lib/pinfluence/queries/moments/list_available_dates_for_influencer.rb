@@ -1,28 +1,30 @@
-require_relative '../../interactors/interactor'
-
 module Moments
-  class ListAvailableYearsForInfluencer
+  class ListAvailableDatesForInfluencer
     include Interactor
 
-    attr_reader :influencer_params, :moment_repository
+    attr_reader :influencer_params, :opts, :moment_repository
 
     def initialize(influencer:, opts: {})
       @influencer_params = influencer
+      @opts = opts
+
       @moment_repository = opts[:moment_repository] || MomentRepository.new
     end
 
     def call
-      (min_year..max_year).to_a.map { |y| Values::Year.new y }
+      dates.map { |d| Values::Date.new d }
     end
 
     private
 
-    def max_year
-      moments.last.year_end || Time.now.year
+    def dates
+      dates_begin + [moments.last.date_end]
     end
 
-    def min_year
-      moments.first.year_begin
+    def dates_begin
+      return @_dates_begin if @_dates_begin
+
+      @_dates_begin = moments.map(&:date_begin)
     end
 
     def moments

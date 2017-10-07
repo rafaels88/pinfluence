@@ -1,4 +1,6 @@
 class MomentRepository < Hanami::Repository
+  INFLUENCER_TYPES = %i[event person].freeze
+
   relations :people
   relations :events
 
@@ -8,14 +10,23 @@ class MomentRepository < Hanami::Repository
     has_many :locations
   end
 
+  def add_location(moment, data)
+    assoc(:locations, moment).add(data)
+  end
+
+  def all_dates_begin
+    # Waiting for a solution https://github.com/hanami/model/issues/451
+    # .select(:date_begin).group(:id, :date_begin)
+
+    moments.order(:date_begin).map_to(Moment).call.collection
+  end
+
   def all_with_influencers
-    aggregate(:person)
-      .where('person_id IS NOT NULL')
-      .map_to(Moment)
-      .call.collection +
-      aggregate(:event).where('event_id IS NOT NULL')
-                       .map_to(Moment)
-                       .call.collection
+    INFLUENCER_TYPES.map do |influencer_type|
+      aggregate(influencer_type)
+        .where("#{influencer_type}_id IS NOT NULL")
+        .map_to(Moment).call.collection
+    end.flatten
   end
 
   def find_with_locations(id)
@@ -25,35 +36,20 @@ class MomentRepository < Hanami::Repository
       .one
   end
 
-  def add_location(moment, data)
-    assoc(:locations, moment).add(data)
-  end
-
   def search_by_date(params, limit: 100)
-    conditional = Sequel.lit('year_begin <= ? AND (year_end >= ? OR year_end IS NULL) AND person_id IS NOT NULL',
-                             params[:year], params[:year])
+    INFLUENCER_TYPES.map do |influencer_type|
+      conditional = Sequel.lit(
+        "date_begin <= ? AND (date_end >= ? OR date_end IS NULL) AND #{influencer_type}_id IS NOT NULL",
+        params[:date], params[:date]
+      )
 
-    q = aggregate(:locations, :person).where(conditional)
-    q = q.limit(limit) if limit
-    with_people = q.map_to(Moment).call.collection
-
-    conditional = Sequel.lit('year_begin <= ? AND (year_end >= ? OR year_end IS NULL) AND event_id IS NOT NULL',
-                             params[:year], params[:year])
-
-    q = aggregate(:locations, :event).where(conditional)
-    q = q.limit(limit) if limit
-    with_event = q.map_to(Moment).call.collection
-
-    with_people + with_event
+      query = aggregate(:locations, influencer_type).where(conditional)
+      query = query.limit(limit) if limit
+      query.map_to(Moment).call.collection
+    end.flatten
   end
 
-  def all_available_years
-    return [] if moments.count.zero?
-
-    (min_year..max_year).to_a.map { |y| Values::Year.new y }
-  end
-
-  def search_by_influencer(influencer, limit: 100, order: :year_begin)
+  def search_by_influencer(influencer, limit: 100, order: :date_begin)
     q = aggregate(influencer.type, :locations).where("#{influencer.type}_id": influencer.id)
     q = q.order(order)
     q = q.limit(limit) if limit
@@ -61,23 +57,7 @@ class MomentRepository < Hanami::Repository
   end
 
   def earliest_moment_of_an_influencer(influencer)
-    q = moments.where("#{influencer.type}_id": influencer.id).order(:year_begin).limit(1)
+    q = moments.where("#{influencer.type}_id": influencer.id).order(:date_begin).limit(1)
     q.map_to(Moment).call.collection.first
-  end
-
-  private
-
-  def min_year
-    moments.min(:year_begin)
-  end
-
-  def max_year
-    return Time.now.year if moments_happening_now.count.positive?
-
-    moments.max(:year_end)
-  end
-
-  def moments_happening_now
-    moments.where(year_end: nil)
   end
 end

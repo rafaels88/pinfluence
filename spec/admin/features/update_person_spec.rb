@@ -23,7 +23,7 @@ feature 'Updates a person', js: true do
 
     step 'WHEN I click on Update button'
     click_on 'Update'
-    sleep 2
+    sleep 3
 
     step 'THEN person is updated'
     created_person = PersonRepository.new.all.last

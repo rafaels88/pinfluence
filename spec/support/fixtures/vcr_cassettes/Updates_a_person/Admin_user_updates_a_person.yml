@@ -5,8 +5,8 @@ http_interactions:
     uri: https://ua6ysns2dh.algolia.net/1/indexes/people/batch
     body:
       encoding: UTF-8
-      string: '{"requests":[{"action":"addObject","body":{"objectID":8894,"id":8894,"name":"Rosa
-        Parks","gender":"female","type":"person","earliest_year":null}}]}'
+      string: '{"requests":[{"action":"addObject","body":{"objectID":10838,"id":10838,"name":"Rosa
+        Parks","gender":"female","type":"person","earliest_date":null}}]}'
     headers:
       User-Agent:
       - Algolia for Ruby 1.16.0
@@ -15,7 +15,7 @@ http_interactions:
       Accept-Encoding:
       - gzip,deflate
       Date:
-      - Fri, 29 Sep 2017 03:45:10 GMT
+      - Sat, 07 Oct 2017 10:09:41 GMT
       X-Algolia-Api-Key:
       - 89869638d077cd3c8e801dfe86a5db16
       X-Algolia-Application-Id:
@@ -30,11 +30,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Fri, 29 Sep 2017 03:45:10 GMT
+      - Sat, 07 Oct 2017 10:09:41 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Content-Length:
-      - '44'
+      - '46'
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -47,9 +47,9 @@ http_interactions:
       - inline; filename=a.txt
     body:
       encoding: UTF-8
-      string: '{"objectIDs":["8894"],"taskID":27066984941}
+      string: '{"objectIDs":["10838"],"taskID":270701031241}
 
 '
     http_version: 
-  recorded_at: Fri, 29 Sep 2017 03:45:10 GMT
+  recorded_at: Sat, 07 Oct 2017 10:09:41 GMT
 recorded_with: VCR 3.0.3

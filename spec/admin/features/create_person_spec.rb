@@ -19,7 +19,7 @@ feature 'Creates a person', js: true do
 
     step 'WHEN I click on Create button'
     click_on 'Create'
-    sleep 2
+    sleep 3
 
     step 'THEN person is create'
     created_person = PersonRepository.new.all.last

@@ -23,20 +23,20 @@ module Influencers
 
     def update_person!
       UpdatePerson.call(
-        person: { id: influencer.id, earliest_year: earliest_year },
+        person: { id: influencer.id, earliest_date: earliest_date },
         opts: opts
       )
     end
 
     def update_event!
       UpdateEvent.call(
-        event: { id: influencer.id, earliest_year: earliest_year },
+        event: { id: influencer.id, earliest_date: earliest_date },
         opts: opts
       )
     end
 
-    def earliest_year
-      MomentRepository.new.earliest_moment_of_an_influencer(influencer)&.year_begin
+    def earliest_date
+      MomentRepository.new.earliest_moment_of_an_influencer(influencer)&.date_begin
     end
   end
 end

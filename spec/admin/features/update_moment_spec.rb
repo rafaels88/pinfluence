@@ -4,7 +4,9 @@ feature 'Updates a moment', js: true do
   after { database_clean }
   given(:create_gandhi) { create :person, name: 'Gandhi' }
   given(:create_picasso) { create :person, name: 'Picasso' }
-  given(:create_moment) { create :moment, year_begin: 1000, year_end: 1050, person_id: create_gandhi.id }
+  given(:create_moment) do
+    create :moment, date_begin: Date.new(1000, 1, 1), date_end: Date.new(1050, 1, 1), person_id: create_gandhi.id
+  end
   given(:create_location) { create :location, address: 'Barcelona, Spain', moment_id: create_moment.id }
 
   background do
@@ -33,8 +35,8 @@ feature 'Updates a moment', js: true do
     step 'AND I change the location address'
     set_input_value 'Paris, France', from: "input[value='#{location.address}']"
 
-    step 'AND I change the year begin to an earlier year'
-    set_input_value '500', from: "input[value='#{moment.year_begin}']"
+    step 'AND I change the date begin to an earlier date'
+    set_input_value '500-4-10', from: "input[value='#{moment.date_begin}']"
 
     step 'WHEN I click on Update button'
     click_on 'Update'
@@ -49,9 +51,9 @@ feature 'Updates a moment', js: true do
     expect(locations.count).to eq 1
     expect(locations.first.address).to eq 'Paris, France'
 
-    step "AND moment's year begin is updated with the new year"
+    step "AND moment's date begin is updated with the new date"
     person = PersonRepository.new.find picasso.id
-    expect(person.earliest_year).to eq updated_moment.year_begin
+    expect(person.earliest_date).to eq updated_moment.date_begin
   end
 
   scenario 'Admin user updates a moment with a new person', vcr: true do

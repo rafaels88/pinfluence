@@ -7,6 +7,6 @@ module Types
     field :name, !types.String
     field :gender, !types.String
     field :type, !types.String
-    field :earliest_year, types.Int
+    field :earliest_date, types.String
   end
 end

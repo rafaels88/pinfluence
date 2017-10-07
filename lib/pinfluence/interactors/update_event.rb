@@ -5,7 +5,7 @@ class UpdateEvent
   include Interactor
   include Influencers::Concerns::Persister
 
-  INFLUENCER_PARAMS_WHITELIST = %i[name earliest_year].freeze
+  INFLUENCER_PARAMS_WHITELIST = %i[name earliest_date].freeze
 
   def initialize(event:, moments: [], opts: {})
     @influencer_params = event

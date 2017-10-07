@@ -26,11 +26,11 @@ feature 'Creates a event', js: true do
     step 'GIVEN I set a Name'
     set_input_value 'Second World War', from: "input[name='event[name]']"
 
-    step 'AND I set a Year Begin for a new moment'
-    set_input_value '1000', from: "input[name='event[moments][][year_begin]'][value='']"
+    step 'AND I set a Date Begin for a new moment'
+    set_input_value '1000-1-1', from: "input[name='event[moments][][date_begin]'][value='']"
 
-    step 'AND I set a Year End for a new moment'
-    set_input_value '1100', from: "input[name='event[moments][][year_end]'][value='']"
+    step 'AND I set a Date End for a new moment'
+    set_input_value '1100-5-10', from: "input[name='event[moments][][date_end]'][value='']"
 
     step 'WHEN I click on Create button'
     click_on 'Create'
@@ -40,12 +40,12 @@ feature 'Creates a event', js: true do
     created_event = EventRepository.new.last
     expect(created_event.name).to eq 'Second World War'
     expect(created_event.type).to eq :event
-    expect(created_event.earliest_year).to eq 1000
+    expect(created_event.earliest_date).to eq Date.new(1000, 1, 1)
 
     step 'AND the new moment is created'
     created_moment = MomentRepository.new.last
-    expect(created_moment.year_begin).to eq 1000
-    expect(created_moment.year_end).to eq 1100
+    expect(created_moment.date_begin).to eq Date.new(1000, 1, 1)
+    expect(created_moment.date_end).to eq Date.new(1100, 5, 10)
     expect(created_moment.event_id).to eq created_event.id
     expect(created_moment.person_id).to be_nil
   end

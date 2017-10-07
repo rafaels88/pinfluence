@@ -2,12 +2,12 @@ var bigValueSlider = document.getElementById('slider-huge'),
     bigValueSpan = document.getElementById('huge-value'),
     increaseBtn = document.getElementById('slider-increase'),
     decreaseBtn = document.getElementById('slider-decrease'),
-    changeCurrentYearBtn = document.getElementsByClassName('change-current-year')[0],
-    sliderRange, currentYear, yearFormActive = false, slider;
+    changeCurrentDateBtn = document.getElementsByClassName('change-current-date')[0],
+    sliderRange, currentDate, dateFormActive = false, slider;
 
-function renderSlider(years, callbacks){
-  sliderRange = years.map(function(year){ return year.year });
-  currentYear = sliderRange[0];
+function renderSlider(dates, callbacks){
+  sliderRange = dates.map(function(date){ return date.date });
+  currentDate = sliderRange[0];
   var maxSliderValue = sliderRange.length-1;
 
   if(slider){
@@ -26,23 +26,23 @@ function renderSlider(years, callbacks){
   });
 
   bigValueSlider.noUiSlider.on('change', function ( values, handle ) {
-    currentYear = sliderRange[values[handle]];
-    callbacks.onChange(currentYear);
+    currentDate = sliderRange[values[handle]];
+    callbacks.onChange(currentDate);
   });
 
   bigValueSlider.noUiSlider.on('update', function ( values, handle ) {
-    var currentYearLabel = years[values[handle]].formatted;
-    changeValueLabel(currentYearLabel);
+    var currentDateLabel = dates[values[handle]].formatted;
+    changeValueLabel(currentDateLabel);
   });
 
   $(increaseBtn).off('click').on('click', function(){
     var currentSliderValue = bigValueSlider.noUiSlider.get();
 
     if(currentSliderValue < maxSliderValue){
-      currentYear = parseInt(sliderRange[currentSliderValue], 10) + 1;
+      currentDate = parseInt(sliderRange[currentSliderValue], 10) + 1;
 
       bigValueSlider.noUiSlider.set(parseInt(currentSliderValue, 10) + 1);
-      callbacks.onChange(currentYear);
+      callbacks.onChange(currentDate);
     }
   });
 
@@ -50,20 +50,20 @@ function renderSlider(years, callbacks){
     var currentSliderValue = bigValueSlider.noUiSlider.get();
 
     if(currentSliderValue > 0){
-      currentYear = parseInt(sliderRange[currentSliderValue], 10) - 1;
+      currentDate = parseInt(sliderRange[currentSliderValue], 10) - 1;
 
       bigValueSlider.noUiSlider.set(parseInt(currentSliderValue, 10)-1);
-      callbacks.onChange(currentYear);
+      callbacks.onChange(currentDate);
     }
   });
 
-  $(changeCurrentYearBtn).off('click').on('click', function(){
-    if(yearFormActive == false){
-      yearFormActive = true;
+  $(changeCurrentDateBtn).off('click').on('click', function(){
+    if(dateFormActive == false){
+      dateFormActive = true;
 
-      $(this).find("input").val(Math.abs(currentYear))
+      $(this).find("input").val(Math.abs(currentDate))
 
-      if(currentYear < 0){
+      if(currentDate < 0){
         $(this).find(".option-time-label").text("BC")
       } else {
         $(this).find(".option-time-label").text("AD")
@@ -77,31 +77,31 @@ function renderSlider(years, callbacks){
   callbacks.onInit();
 }
 
-function listenRequestYear(callback){
-  $(changeCurrentYearBtn).find("form").submit(function(e){
+function listenRequestDate(callback){
+  $(changeCurrentDateBtn).find("form").submit(function(e){
     e.preventDefault();
-    var requestedYear = parseInt($(this).find("input").val(), 10),
+    var requestedDate = parseInt($(this).find("input").val(), 10),
         requestedTimeLabel = $(this).find(".option-time-label").text();
 
-    if(!isNaN(requestedYear)){
+    if(!isNaN(requestedDate)){
       if(requestedTimeLabel.toUpperCase().trim() == "BC"){
-        requestedYear = -Math.abs(requestedYear)
+        requestedDate = -Math.abs(requestedDate)
       } else {
-        requestedYear = Math.abs(requestedYear)
+        requestedDate = Math.abs(requestedDate)
       }
 
-      yearFormActive = false;
-      $(changeCurrentYearBtn).find(".input").addClass('hide');
-      $(changeCurrentYearBtn).find("span, label").removeClass('hide');
+      dateFormActive = false;
+      $(changeCurrentDateBtn).find(".input").addClass('hide');
+      $(changeCurrentDateBtn).find("span, label").removeClass('hide');
 
-      callback.onSearch(requestedYear);
+      callback.onSearch(requestedDate);
     }
   });
 }
 
-function changeSliderTo(year){
-  var index = sliderRange.indexOf(year);
-  currentYear = year;
+function changeSliderTo(date){
+  var index = sliderRange.indexOf(date);
+  currentDate = date;
   bigValueSlider.noUiSlider.set(index);
 }
 

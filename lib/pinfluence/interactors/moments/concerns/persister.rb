@@ -42,8 +42,8 @@ module Moments
         )
       end
 
-      def normalized_year_end
-        moment_params[:year_end].to_s.empty? ? nil : moment_params[:year_end]
+      def normalized_date_end
+        moment_params[:date_end].to_s.empty? ? nil : moment_params[:date_end]
       end
     end
   end

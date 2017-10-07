@@ -36,26 +36,26 @@ describe CreateEvent do
       before { subject.call }
 
       context 'with an empty id' do
-        let(:moments_params) { [{ id: '', year_begin: '200', year_end: '300' }] }
+        let(:moments_params) { [{ id: '', date_begin: '200-1-20', date_end: '300-1-1' }] }
 
         it 'add the new moments' do
           found_event = event_repository.last
           created_moment = MomentRepository.new.search_by_influencer(found_event).first
 
           expect(created_moment.event_id).to eq found_event.id
-          expect(created_moment.year_begin).to eq 200
-          expect(created_moment.year_end).to eq 300
+          expect(created_moment.date_begin).to eq Date.new(200, 1, 20)
+          expect(created_moment.date_end).to eq Date.new(300, 1, 1)
         end
 
-        it 'sets #earliest_year as the current earlier year associated' do
+        it 'sets #earliest_date as the current earlier date associated' do
           subject.call
           found_event = event_repository.last
-          expect(found_event.earliest_year).to eq 200
+          expect(found_event.earliest_date).to eq Date.new(200, 1, 20)
         end
       end
 
-      context 'with an empty year_begin' do
-        let(:moments_params) { [{ id: '', year_begin: '', year_end: '' }] }
+      context 'with an empty date_begin' do
+        let(:moments_params) { [{ id: '', date_begin: '', date_end: '' }] }
 
         it 'does not create any moment' do
           found_event = event_repository.last
@@ -68,7 +68,7 @@ describe CreateEvent do
       context 'with a list of locations' do
         let(:moments_params) do
           [
-            { id: '', year_begin: '200', year_end: '300', locations: [location01, location02] }
+            { id: '', date_begin: '200-1-1', date_end: '300-1-1', locations: [location01, location02] }
           ]
         end
 

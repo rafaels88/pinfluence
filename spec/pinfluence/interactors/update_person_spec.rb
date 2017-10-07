@@ -8,8 +8,8 @@ describe UpdatePerson do
 
     let(:new_name) { 'Irmã Dulce' }
     let(:new_gender) { 'female' }
-    let(:new_earliest_year) { 1900 }
-    let(:update_params) { { name: new_name, gender: new_gender, earliest_year: new_earliest_year } }
+    let(:new_earliest_date) { Date.new(1900, 1, 1) }
+    let(:update_params) { { name: new_name, gender: new_gender, earliest_date: new_earliest_date } }
     let(:person_params) { update_params.merge(id: person.id) }
     let(:moments_params) { [] }
 
@@ -31,7 +31,7 @@ describe UpdatePerson do
       found_person = person_repository.last
       expect(found_person.name).to eq new_name
       expect(found_person.gender).to eq new_gender
-      expect(found_person.earliest_year).to eq new_earliest_year
+      expect(found_person.earliest_date).to eq new_earliest_date
       expect(found_person.updated_at).to_not be_nil
       expect(found_person.created_at).to_not be_nil
     end
@@ -42,7 +42,7 @@ describe UpdatePerson do
     end
 
     context 'when only one person attribute is given' do
-      let(:update_params) { { earliest_year: new_earliest_year } }
+      let(:update_params) { { earliest_date: new_earliest_date } }
 
       it 'updates only the given attribute' do
         subject.call
@@ -50,7 +50,7 @@ describe UpdatePerson do
         found_person = person_repository.last
         expect(found_person.name).to eq person.name
         expect(found_person.gender).to eq person.gender
-        expect(found_person.earliest_year).to eq new_earliest_year
+        expect(found_person.earliest_date).to eq new_earliest_date
         expect(found_person.updated_at).to_not be_nil
         expect(found_person.created_at).to_not be_nil
       end
@@ -60,19 +60,19 @@ describe UpdatePerson do
       before { subject.call }
 
       context 'with an empty id' do
-        let(:moments_params) { [{ id: '', year_begin: '200', year_end: '300' }] }
+        let(:moments_params) { [{ id: '', date_begin: '200-1-1', date_end: '300-1-1' }] }
 
         it 'add the new moments' do
           created_moment = MomentRepository.new.search_by_influencer(person).first
 
           expect(created_moment.person_id).to eq person.id
-          expect(created_moment.year_begin).to eq 200
-          expect(created_moment.year_end).to eq 300
+          expect(created_moment.date_begin).to eq Date.new(200, 1, 1)
+          expect(created_moment.date_end).to eq Date.new(300, 1, 1)
         end
       end
 
-      context 'with an empty year_begin' do
-        let(:moments_params) { [{ id: '', year_begin: '', year_end: '' }] }
+      context 'with an empty date_begin' do
+        let(:moments_params) { [{ id: '', date_begin: '', date_end: '' }] }
 
         it 'does not create any moment' do
           found_moments = MomentRepository.new.search_by_influencer(person)
@@ -82,8 +82,10 @@ describe UpdatePerson do
       end
 
       context 'with a filled id' do
-        let(:existent_moment) { create(:moment, person_id: person.id, year_begin: 200, year_end: 300) }
-        let(:moments_params) { [{ id: existent_moment.id, year_begin: '1000', year_end: '' }] }
+        let(:existent_moment) do
+          create(:moment, person_id: person.id, date_begin: Date.new(200, 1, 1), date_end: Date.new(300, 1, 1))
+        end
+        let(:moments_params) { [{ id: existent_moment.id, date_begin: '1000-1-1', date_end: '' }] }
 
         it 'updates the existent moment' do
           found_moments = MomentRepository.new.search_by_influencer(person)
@@ -91,12 +93,14 @@ describe UpdatePerson do
 
           expect(found_moments.count).to eq 1
           expect(updated_moment.person_id).to eq person.id
-          expect(updated_moment.year_begin).to eq 1000
-          expect(updated_moment.year_end).to eq nil
+          expect(updated_moment.date_begin).to eq Date.new(1000, 1, 1)
+          expect(updated_moment.date_end).to eq nil
         end
 
         context 'with a list of existent locations' do
-          let(:existent_moment) { create(:moment, person_id: person.id, year_begin: 200, year_end: 300) }
+          let(:existent_moment) do
+            create(:moment, person_id: person.id, date_begin: Date.new(200, 1, 1), date_end: Date.new(300, 1, 1))
+          end
           let!(:location01) do
             create(:location, address: 'A place on earth', latlng: '100,-100', moment_id: existent_moment.id)
           end
@@ -106,7 +110,8 @@ describe UpdatePerson do
           let(:new_location01) { { id: location01.id, address: 'A place on earth 02' } }
           let(:new_location02) { { id: location02.id, address: 'Another place on earth 02' } }
           let(:moments_params) do
-            [{ id: existent_moment.id, year_begin: '1000', year_end: '', locations: [new_location01, new_location02] }]
+            [{ id: existent_moment.id, date_begin: '1000-1-1', date_end: '',
+               locations: [new_location01, new_location02] }]
           end
 
           it 'updates all the given locations associated to the related moment' do
@@ -125,7 +130,7 @@ describe UpdatePerson do
         let(:location01) { { id: nil, address: 'A place on earth' } }
         let(:location02) { { id: nil, address: 'Another place on earth' } }
         let(:moments_params) do
-          [{ id: '', year_begin: '200', year_end: '300', locations: [location01, location02] }]
+          [{ id: '', date_begin: '200', date_end: '300', locations: [location01, location02] }]
         end
 
         it 'creates all the new locations associated to the related moment' do

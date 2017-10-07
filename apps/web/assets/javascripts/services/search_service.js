@@ -35,10 +35,10 @@ function listenSearch(callbacks){
   });
 
   $results.on('click', '.result.clickable', function(){
-    var year = $(this).data('year'), influencer_id = $(this).data('id'), influencer_type = $(this).data('type')
+    var date = $(this).data('date'), influencer_id = $(this).data('id'), influencer_type = $(this).data('type')
         selectedTerm = $(this).find('.title').text();
 
-    callbacks.onSelectedResult({ year: year, influencer: { id: influencer_id, type: influencer_type } });
+    callbacks.onSelectedResult({ date: date, influencer: { id: influencer_id, type: influencer_type } });
     hideSearchResults();
     $searchField.val(selectedTerm);
     $searchFieldIcon.removeClass('search').addClass('close link');
@@ -106,7 +106,7 @@ function renderInfluencersSearchResult(influencers){
 }
 
 function _buildInfluencerResultHtml(influencer){
-  return '<a class="result clickable" data-year="'+influencer.earliest_year+'" data-type="'+influencer.type+'" data-id="'+influencer.id+'">' +
+  return '<a class="result clickable" data-date="'+influencer.earliest_date+'" data-type="'+influencer.type+'" data-id="'+influencer.id+'">' +
          '<div class="content">' +
            '<div class="title">'+influencer.name+'</div>' +
          '</div>' +
