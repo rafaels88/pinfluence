@@ -38,8 +38,8 @@
     <!-- Marker smooth sliding -->
     <%= javascript 'jquery.easing.1.3.min', 'markerAnimate', 'SlidingMarker.min' %>
     <script type="text/javascript" charset="utf-8" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.6/semantic.min.js"></script>
-    <%= javascript 'graphql.min' %>
-    <%= javascript 'jquery.typewatch', 'search_service', 'api_service', 'map_service', 'slider_service' %>
+    <%= javascript 'graphql.min', 'jquery.typewatch' %>
+    <%= javascript 'date_helpers', 'search_service', 'api_service', 'map_service', 'slider_service' %>
     <%= javascript 'form', 'app' %>
 
     <% if production? %>

@@ -1,3 +1,5 @@
+require 'date'
+
 module Values
   class Date
     attr_reader :date
@@ -7,7 +9,8 @@ module Values
     end
 
     def formatted
-      "#{date} AD"
+      "#{date.strftime('%d/%m/%Y')} BC" if date.year.negative?
+      "#{date.strftime('%d/%m/%Y')} AD"
     end
   end
 end

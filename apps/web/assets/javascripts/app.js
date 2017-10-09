@@ -1,12 +1,5 @@
 $().ready(function(){
-  var initialDate = new Date();
-  initialDate.setYear(initialDate.getYear() - 100);
-
-  var dd = initialDate.getDate();
-  var mm = initialDate.getMonth()+1;
-  var yyyy = initialDate.getFullYear();
-
-  var initialDateStr = yyyy + '-' + mm + '-' + dd;
+  var initialDateStr = changeDateYear(new Date(), -100);
 
   function resetSearch(){
     requestDates(function(dates){

@@ -6,8 +6,8 @@ Hanami::Model.migration do
     # backfill_all_dates
     execute 'UPDATE moments SET date_begin=sub.year_begin_date, date_end=sub.year_end_date FROM ' \
             "(SELECT id, to_date(cast(moments.year_begin as varchar), 'YYYY') as year_begin_date, " \
-            "to_date(cast(moments.year_end as varchar), 'YYYY') as year_end_date FROM moments) as sub " \
-            'WHERE moments.id = sub.id'
+            "to_date(CONCAT(cast(moments.year_end as varchar), '-', 12, '-', 31), 'YYYY-MM-DD') as year_end_date " \
+            'FROM moments) as sub WHERE moments.id = sub.id'
 
     alter_table :moments do
       drop_column :year_begin

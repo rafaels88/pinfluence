@@ -1,6 +1,7 @@
 module Moments
   class ListAvailableDatesForInfluencer
     include Interactor
+    include DatesLister
 
     attr_reader :influencer_params, :opts, :moment_repository
 
@@ -12,7 +13,7 @@ module Moments
     end
 
     def call
-      dates.map { |d| Values::Date.new d }
+      fill_gap_years(dates).map { |d| Values::Date.new d }
     end
 
     private

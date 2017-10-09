@@ -39,9 +39,10 @@ function renderSlider(dates, callbacks){
     var currentSliderValue = bigValueSlider.noUiSlider.get();
 
     if(currentSliderValue < maxSliderValue){
-      currentDate = parseInt(sliderRange[currentSliderValue], 10) + 1;
+      var nextIndex = parseInt(currentSliderValue, 10) + 1;
+      currentDate = sliderRange[nextIndex];
 
-      bigValueSlider.noUiSlider.set(parseInt(currentSliderValue, 10) + 1);
+      bigValueSlider.noUiSlider.set(nextIndex);
       callbacks.onChange(currentDate);
     }
   });
@@ -50,29 +51,36 @@ function renderSlider(dates, callbacks){
     var currentSliderValue = bigValueSlider.noUiSlider.get();
 
     if(currentSliderValue > 0){
-      currentDate = parseInt(sliderRange[currentSliderValue], 10) - 1;
+      var nextIndex = parseInt(currentSliderValue, 10) - 1;
+      currentDate = sliderRange[nextIndex];
 
-      bigValueSlider.noUiSlider.set(parseInt(currentSliderValue, 10)-1);
+      bigValueSlider.noUiSlider.set(nextIndex);
       callbacks.onChange(currentDate);
     }
   });
 
-  $(changeCurrentDateBtn).off('click').on('click', function(){
-    if(dateFormActive == false){
-      dateFormActive = true;
-
-      $(this).find("input").val(Math.abs(currentDate))
-
-      if(currentDate < 0){
-        $(this).find(".option-time-label").text("BC")
-      } else {
-        $(this).find(".option-time-label").text("AD")
-      }
-
-      $(this).find("span, label").addClass('hide');
-      $(this).find(".input").removeClass('hide');
-    }
-  });
+/*
+ *  Bind for clicking and searching for a specific date
+ *  We will comment this functionality since it became too complex right now
+ *  after we have dates instead of years. But we want this functionality back again asap
+ *
+ *  $(changeCurrentDateBtn).off('click').on('click', function(){
+ *    if(dateFormActive == false){
+ *      dateFormActive = true;
+ *
+ *      $(this).find("input").val(Math.abs(currentDate))
+ *
+ *      if(currentDate < 0){
+ *        $(this).find(".option-time-label").text("BC")
+ *      } else {
+ *        $(this).find(".option-time-label").text("AD")
+ *      }
+ *
+ *      $(this).find("span, label").addClass('hide');
+ *      $(this).find(".input").removeClass('hide');
+ *    }
+ *  });
+ */
 
   callbacks.onInit();
 }
@@ -80,21 +88,18 @@ function renderSlider(dates, callbacks){
 function listenRequestDate(callback){
   $(changeCurrentDateBtn).find("form").submit(function(e){
     e.preventDefault();
-    var requestedDate = parseInt($(this).find("input").val(), 10),
+    var requestedDate = new Date($(this).find("input").val()),
         requestedTimeLabel = $(this).find(".option-time-label").text();
 
-    if(!isNaN(requestedDate)){
+    if(!isNaN(requestedDate.getDate())){
       if(requestedTimeLabel.toUpperCase().trim() == "BC"){
-        requestedDate = -Math.abs(requestedDate)
-      } else {
-        requestedDate = Math.abs(requestedDate)
-      }
+      } else {}
 
       dateFormActive = false;
       $(changeCurrentDateBtn).find(".input").addClass('hide');
       $(changeCurrentDateBtn).find("span, label").removeClass('hide');
 
-      callback.onSearch(requestedDate);
+      callback.onSearch(formatDate(requestedDate));
     }
   });
 }

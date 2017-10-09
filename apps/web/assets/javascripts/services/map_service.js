@@ -59,7 +59,5 @@ function _createInfoWindowContent(moment, currentDate) {
 }
 
 function _currentAgeForInfluencer(birthDate, currentDate) {
-  var current = new Date(currentDate), birth = new Date(birthDate),
-      differenceInYears = Math.floor((current - birth) / (1000*60*60*24*31*12));
-  return differenceInYears;
+  return differenceInYearsBetween(new Date(currentDate), new Date(birthDate));
 }

@@ -14,11 +14,8 @@ class MomentRepository < Hanami::Repository
     assoc(:locations, moment).add(data)
   end
 
-  def all_dates_begin
-    # Waiting for a solution https://github.com/hanami/model/issues/451
-    # .select(:date_begin).group(:id, :date_begin)
-
-    moments.order(:date_begin).map_to(Moment).call.collection
+  def first_ordered_by_date_begin(direction = :asc)
+    moments.order { date_begin.send(direction) }.limit(1).map_to(Moment).one
   end
 
   def all_with_influencers
