@@ -6,8 +6,8 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"requests":[{"action":"addObject","body":{"objectID":1,"id":1,"name":"Dom
-        Pedro I","gender":"male","type":"person","earliest_year":1000}},{"action":"addObject","body":{"objectID":2,"id":2,"name":"Dom
-        Pedro II","gender":"male","type":"person","earliest_year":1100}}]}'
+        Pedro I","gender":"male","type":"person","earliest_date":"1000-01-01"}},{"action":"addObject","body":{"objectID":2,"id":2,"name":"Dom
+        Pedro II","gender":"male","type":"person","earliest_date":"1100-01-01"}}]}'
     headers:
       User-Agent:
       - Algolia for Ruby 1.16.0
@@ -16,7 +16,7 @@ http_interactions:
       Accept-Encoding:
       - gzip,deflate
       Date:
-      - Fri, 29 Sep 2017 03:45:13 GMT
+      - Sat, 07 Oct 2017 10:07:56 GMT
       X-Algolia-Api-Key:
       - 89869638d077cd3c8e801dfe86a5db16
       X-Algolia-Application-Id:
@@ -31,11 +31,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Fri, 29 Sep 2017 03:45:13 GMT
+      - Sat, 07 Oct 2017 10:07:56 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Content-Length:
-      - '45'
+      - '46'
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -48,18 +48,18 @@ http_interactions:
       - inline; filename=a.txt
     body:
       encoding: UTF-8
-      string: '{"objectIDs":["1","2"],"taskID":27066984961}
+      string: '{"objectIDs":["1","2"],"taskID":270701031061}
 
 '
     http_version: 
-  recorded_at: Fri, 29 Sep 2017 03:45:13 GMT
+  recorded_at: Sat, 07 Oct 2017 10:07:56 GMT
 - request:
     method: post
     uri: https://ua6ysns2dh.algolia.net/1/indexes/events/batch
     body:
       encoding: UTF-8
       string: '{"requests":[{"action":"addObject","body":{"objectID":1,"id":1,"name":"Pedro
-        War","type":"event","earliest_year":1050}}]}'
+        War","type":"event","earliest_date":"1050-01-01"}}]}'
     headers:
       User-Agent:
       - Algolia for Ruby 1.16.0
@@ -68,7 +68,7 @@ http_interactions:
       Accept-Encoding:
       - gzip,deflate
       Date:
-      - Fri, 29 Sep 2017 03:45:13 GMT
+      - Sat, 07 Oct 2017 10:07:56 GMT
       X-Algolia-Api-Key:
       - 89869638d077cd3c8e801dfe86a5db16
       X-Algolia-Application-Id:
@@ -83,11 +83,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Fri, 29 Sep 2017 03:45:13 GMT
+      - Sat, 07 Oct 2017 10:07:56 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Content-Length:
-      - '41'
+      - '42'
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -100,11 +100,11 @@ http_interactions:
       - inline; filename=a.txt
     body:
       encoding: UTF-8
-      string: '{"objectIDs":["1"],"taskID":27066984971}
+      string: '{"objectIDs":["1"],"taskID":270701031071}
 
 '
     http_version: 
-  recorded_at: Fri, 29 Sep 2017 03:45:13 GMT
+  recorded_at: Sat, 07 Oct 2017 10:07:56 GMT
 - request:
     method: post
     uri: https://ua6ysns2dh-dsn.algolia.net/1/indexes/*/queries?strategy=none
@@ -119,7 +119,7 @@ http_interactions:
       Accept-Encoding:
       - gzip,deflate
       Date:
-      - Fri, 29 Sep 2017 03:45:13 GMT
+      - Sat, 07 Oct 2017 10:07:59 GMT
       X-Algolia-Api-Key:
       - 89869638d077cd3c8e801dfe86a5db16
       X-Algolia-Application-Id:
@@ -134,7 +134,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Fri, 29 Sep 2017 03:45:13 GMT
+      - Sat, 07 Oct 2017 10:07:59 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -153,14 +153,72 @@ http_interactions:
       - gzip
     body:
       encoding: UTF-8
-      string: '{"results":[{"hits":[{"id":2,"name":"Dom Pedro II","gender":"male","type":"person","earliest_year":1100,"objectID":"2","_highlightResult":{"name":{"value":"Dom
-        <em>Pedro</em> II","matchLevel":"full","fullyHighlighted":false,"matchedWords":["pedro"]},"gender":{"value":"male","matchLevel":"none","matchedWords":[]},"type":{"value":"person","matchLevel":"none","matchedWords":[]}}},{"id":1,"name":"Dom
-        Pedro I","gender":"male","type":"person","earliest_year":1000,"objectID":"1","_highlightResult":{"name":{"value":"Dom
-        <em>Pedro</em> I","matchLevel":"full","fullyHighlighted":false,"matchedWords":["pedro"]},"gender":{"value":"male","matchLevel":"none","matchedWords":[]},"type":{"value":"person","matchLevel":"none","matchedWords":[]}}}],"nbHits":2,"page":0,"nbPages":1,"hitsPerPage":7,"processingTimeMS":1,"exhaustiveNbHits":true,"query":"Pedro","params":"query=Pedro&hitsPerPage=7","index":"people"},{"hits":[{"id":1,"name":"Pedro
-        War","type":"event","earliest_year":1050,"objectID":"1","_highlightResult":{"name":{"value":"<em>Pedro</em>
-        War","matchLevel":"full","fullyHighlighted":false,"matchedWords":["pedro"]},"type":{"value":"event","matchLevel":"none","matchedWords":[]}}}],"nbHits":1,"page":0,"nbPages":1,"hitsPerPage":7,"processingTimeMS":1,"exhaustiveNbHits":true,"query":"Pedro","params":"query=Pedro&hitsPerPage=7","index":"events"}]}
+      string: '{"results":[{"hits":[{"id":2,"name":"Dom Pedro II","gender":"male","type":"person","earliest_date":"1100-01-01","objectID":"2","_highlightResult":{"name":{"value":"Dom
+        <em>Pedro</em> II","matchLevel":"full","fullyHighlighted":false,"matchedWords":["pedro"]},"gender":{"value":"male","matchLevel":"none","matchedWords":[]},"type":{"value":"person","matchLevel":"none","matchedWords":[]},"earliest_date":{"value":"1100-01-01","matchLevel":"none","matchedWords":[]}}},{"id":1,"name":"Dom
+        Pedro I","gender":"male","type":"person","earliest_date":"1000-01-01","objectID":"1","_highlightResult":{"name":{"value":"Dom
+        <em>Pedro</em> I","matchLevel":"full","fullyHighlighted":false,"matchedWords":["pedro"]},"gender":{"value":"male","matchLevel":"none","matchedWords":[]},"type":{"value":"person","matchLevel":"none","matchedWords":[]},"earliest_date":{"value":"1000-01-01","matchLevel":"none","matchedWords":[]}}}],"nbHits":2,"page":0,"nbPages":1,"hitsPerPage":7,"processingTimeMS":1,"exhaustiveNbHits":true,"query":"Pedro","params":"query=Pedro&hitsPerPage=7","index":"people"},{"hits":[{"id":1,"name":"Pedro
+        War","type":"event","earliest_date":"1050-01-01","objectID":"1","_highlightResult":{"name":{"value":"<em>Pedro</em>
+        War","matchLevel":"full","fullyHighlighted":false,"matchedWords":["pedro"]},"type":{"value":"event","matchLevel":"none","matchedWords":[]},"earliest_date":{"value":"1050-01-01","matchLevel":"none","matchedWords":[]}}}],"nbHits":1,"page":0,"nbPages":1,"hitsPerPage":7,"processingTimeMS":1,"exhaustiveNbHits":true,"query":"Pedro","params":"query=Pedro&hitsPerPage=7","index":"events"}]}
 
 '
     http_version: 
-  recorded_at: Fri, 29 Sep 2017 03:45:13 GMT
+  recorded_at: Sat, 07 Oct 2017 10:07:59 GMT
+- request:
+    method: post
+    uri: https://ua6ysns2dh-dsn.algolia.net/1/indexes/*/queries?strategy=none
+    body:
+      encoding: UTF-8
+      string: '{"requests":[{"indexName":"people","params":"query=Pedro&hitsPerPage=7"},{"indexName":"events","params":"query=Pedro&hitsPerPage=7"}]}'
+    headers:
+      User-Agent:
+      - Algolia for Ruby 1.16.0
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip,deflate
+      Date:
+      - Sat, 07 Oct 2017 10:08:17 GMT
+      X-Algolia-Api-Key:
+      - 89869638d077cd3c8e801dfe86a5db16
+      X-Algolia-Application-Id:
+      - UA6YSNS2DH
+      Content-Type:
+      - application/json; charset=utf-8
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 07 Oct 2017 10:08:17 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - no-cache
+      X-Content-Type-Options:
+      - nosniff
+      Content-Disposition:
+      - inline; filename=a.txt
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: UTF-8
+      string: '{"results":[{"hits":[{"id":2,"name":"Dom Pedro II","gender":"male","type":"person","earliest_date":"1100-01-01","objectID":"2","_highlightResult":{"name":{"value":"Dom
+        <em>Pedro</em> II","matchLevel":"full","fullyHighlighted":false,"matchedWords":["pedro"]},"gender":{"value":"male","matchLevel":"none","matchedWords":[]},"type":{"value":"person","matchLevel":"none","matchedWords":[]},"earliest_date":{"value":"1100-01-01","matchLevel":"none","matchedWords":[]}}},{"id":1,"name":"Dom
+        Pedro I","gender":"male","type":"person","earliest_date":"1000-01-01","objectID":"1","_highlightResult":{"name":{"value":"Dom
+        <em>Pedro</em> I","matchLevel":"full","fullyHighlighted":false,"matchedWords":["pedro"]},"gender":{"value":"male","matchLevel":"none","matchedWords":[]},"type":{"value":"person","matchLevel":"none","matchedWords":[]},"earliest_date":{"value":"1000-01-01","matchLevel":"none","matchedWords":[]}}}],"nbHits":2,"page":0,"nbPages":1,"hitsPerPage":7,"processingTimeMS":1,"exhaustiveNbHits":true,"query":"Pedro","params":"query=Pedro&hitsPerPage=7","index":"people"},{"hits":[{"id":1,"name":"Pedro
+        War","type":"event","earliest_date":"1050-01-01","objectID":"1","_highlightResult":{"name":{"value":"<em>Pedro</em>
+        War","matchLevel":"full","fullyHighlighted":false,"matchedWords":["pedro"]},"type":{"value":"event","matchLevel":"none","matchedWords":[]},"earliest_date":{"value":"1050-01-01","matchLevel":"none","matchedWords":[]}}}],"nbHits":1,"page":0,"nbPages":1,"hitsPerPage":7,"processingTimeMS":1,"exhaustiveNbHits":true,"query":"Pedro","params":"query=Pedro&hitsPerPage=7","index":"events"}]}
+
+'
+    http_version: 
+  recorded_at: Sat, 07 Oct 2017 10:08:17 GMT
 recorded_with: VCR 3.0.3

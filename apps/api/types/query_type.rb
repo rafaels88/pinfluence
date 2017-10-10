@@ -5,18 +5,12 @@ module Queries
 
     field :moments do
       type !types[Types::MomentType]
-      argument :year, types.Int
+      argument :date, types.String
       argument :limit, types.Int, default_value: 100
-      description "Search moments by Influencer's Name or Year"
+      description "Search moments by Influencer's Name or Date"
       resolve ->(_obj, args, _ctx) do
-        Moments::SearchMomentsByYear.new(limit: args[:limit], year: args[:year]).call
+        Moments::SearchMomentsByDate.new(limit: args[:limit], date: args[:date]).call
       end
-    end
-
-    field :available_years do
-      type !types[Types::YearType]
-      description 'All available years for searching by moments'
-      resolve ->(_obj, _args, _ctx) { MomentRepository.new.all_available_years }
     end
 
     field :influencers do
@@ -24,6 +18,22 @@ module Queries
       argument :name, types.String
       description 'Search influencers'
       resolve ->(_obj, args, _ctx) { Influencers::SearchQuery.call(name: args[:name]) }
+    end
+
+    field :available_dates do
+      type !types[Types::DateType]
+      argument :influencer_id, types.Int
+      argument :influencer_type, types.String
+      description 'All available dates of found moments'
+      resolve ->(_obj, args, _ctx) do
+        if args[:influencer_id].to_s.empty? || args[:influencer_type].to_s.empty?
+          return Moments::ListAvailableDatesInSystem.call
+        end
+
+        Moments::ListAvailableDatesForInfluencer.call(
+          influencer: { id: args[:influencer_id], type: args[:influencer_type] }
+        )
+      end
     end
   end
 end

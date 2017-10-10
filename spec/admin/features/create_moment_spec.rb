@@ -18,11 +18,11 @@ feature 'Creates a moment', js: true do
     step 'AND I change the person to Picasso'
     select_from_dropdown gandhi.name, from: '.people'
 
-    step 'AND I set Year Begin'
-    set_input_value '1000', from: "input[name='moment[year_begin]']"
+    step 'AND I set Date Begin'
+    set_input_value '1000-1-1', from: "input[name='moment[date_begin]']"
 
-    step 'AND I set Year End'
-    set_input_value '1100', from: "input[name='moment[year_end]']"
+    step 'AND I set Date End'
+    set_input_value '1100-1-1', from: "input[name='moment[date_end]']"
 
     step 'AND I change the location address'
     set_input_value 'Paris, France', from: "input[name='moment[locations][address]']"
@@ -35,19 +35,19 @@ feature 'Creates a moment', js: true do
     created_moment = MomentRepository.new.all.last
     expect(created_moment.person_id).to eq gandhi.id
 
-    step 'AND moment is create with the new year begin'
-    expect(created_moment.year_begin).to eq 1000
+    step 'AND moment is create with the new date begin'
+    expect(created_moment.date_begin).to eq Date.new(1000, 1, 1)
 
-    step 'AND moment is create with the new year end'
-    expect(created_moment.year_end).to eq 1100
+    step 'AND moment is create with the new date end'
+    expect(created_moment.date_end).to eq Date.new(1100, 1, 1)
 
     step "AND moment's location is created with the new address"
     locations = LocationRepository.new.by_moment created_moment
     expect(locations.count).to eq 1
     expect(locations.first.address).to eq 'Paris, France'
 
-    step 'AND the earliest_year of the associated person is updated'
+    step 'AND the earliest_date of the associated person is updated'
     person = PersonRepository.new.find gandhi.id
-    expect(person.earliest_year).to eq created_moment.year_begin
+    expect(person.earliest_date).to eq created_moment.date_begin
   end
 end

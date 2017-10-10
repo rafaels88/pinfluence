@@ -35,11 +35,11 @@ feature 'Updates a event', js: true do
     step 'AND I Visit the updating page of Event'
     visit Admin.routes.edit_event_path(event.id)
 
-    step 'AND I set a Year Begin for a new moment'
-    set_input_value '1000', from: "input[name='event[moments][][year_begin]'][value='']"
+    step 'AND I set a Date Begin for a new moment'
+    set_input_value '1000-1-1', from: "input[name='event[moments][][date_begin]'][value='']"
 
-    step 'AND I set a Year End for a new moment'
-    set_input_value '1100', from: "input[name='event[moments][][year_end]'][value='']"
+    step 'AND I set a Date End for a new moment'
+    set_input_value '1100-1-1', from: "input[name='event[moments][][date_end]'][value='']"
 
     step 'WHEN I click on Update button'
     click_on 'Update'
@@ -50,13 +50,13 @@ feature 'Updates a event', js: true do
     expect(updated_event.name).to eq event.name
     expect(updated_event.type).to eq :event
 
-    step 'AND event#earliest_year id updated'
-    expect(updated_event.earliest_year).to eq 1000
+    step 'AND event#earliest_date id updated'
+    expect(updated_event.earliest_date).to eq Date.new(1000, 1, 1)
 
     step 'AND the new moment is created'
     created_moment = MomentRepository.new.last
-    expect(created_moment.year_begin).to eq 1000
-    expect(created_moment.year_end).to eq 1100
+    expect(created_moment.date_begin).to eq Date.new(1000, 1, 1)
+    expect(created_moment.date_end).to eq Date.new(1100, 1, 1)
     expect(created_moment.event_id).to eq updated_event.id
     expect(created_moment.person_id).to be_nil
   end
@@ -64,18 +64,18 @@ feature 'Updates a event', js: true do
   scenario 'Admin user open an event page with existent moments' do
     step 'GIVEN an existent event with two moments'
     event = create_second_ww
-    create :moment, event_id: event.id, year_begin: 1000, year_end: 1100
-    create :moment, event_id: event.id, year_begin: 1101, year_end: 1200
+    create :moment, event_id: event.id, date_begin: Date.new(1000, 1, 1), date_end: Date.new(1100, 1, 1)
+    create :moment, event_id: event.id, date_begin: Date.new(1101, 1, 1), date_end: Date.new(1200, 1, 1)
 
     step 'WHEN I visit the event page'
     visit Admin.routes.edit_event_path(event.id)
 
     step 'THEN I see two moments for editing'
     # First moment
-    expect(page).to have_selector("input[name='event[moments][][year_begin]'][value='1000']")
-    expect(page).to have_selector("input[name='event[moments][][year_end]'][value='1100']")
+    expect(page).to have_selector("input[name='event[moments][][date_begin]'][value='1000-01-01']")
+    expect(page).to have_selector("input[name='event[moments][][date_end]'][value='1100-01-01']")
     # Second moment
-    expect(page).to have_selector("input[name='event[moments][][year_begin]'][value='1101']")
-    expect(page).to have_selector("input[name='event[moments][][year_end]'][value='1200']")
+    expect(page).to have_selector("input[name='event[moments][][date_begin]'][value='1101-01-01']")
+    expect(page).to have_selector("input[name='event[moments][][date_end]'][value='1200-01-01']")
   end
 end

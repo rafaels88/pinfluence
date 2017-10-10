@@ -5,8 +5,8 @@ http_interactions:
     uri: https://ua6ysns2dh.algolia.net/1/indexes/events/batch
     body:
       encoding: UTF-8
-      string: '{"requests":[{"action":"addObject","body":{"objectID":1653,"id":1653,"name":"Second
-        World War","type":"event","earliest_year":1000}}]}'
+      string: '{"requests":[{"action":"addObject","body":{"objectID":2683,"id":2683,"name":"Second
+        World War","type":"event","earliest_date":"1000-01-01"}}]}'
     headers:
       User-Agent:
       - Algolia for Ruby 1.16.0
@@ -15,7 +15,7 @@ http_interactions:
       Accept-Encoding:
       - gzip,deflate
       Date:
-      - Fri, 29 Sep 2017 03:45:00 GMT
+      - Sat, 07 Oct 2017 10:14:16 GMT
       X-Algolia-Api-Key:
       - 89869638d077cd3c8e801dfe86a5db16
       X-Algolia-Application-Id:
@@ -30,7 +30,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Fri, 29 Sep 2017 03:45:00 GMT
+      - Sat, 07 Oct 2017 10:14:16 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Content-Length:
@@ -47,18 +47,18 @@ http_interactions:
       - inline; filename=a.txt
     body:
       encoding: UTF-8
-      string: '{"objectIDs":["1653"],"taskID":27066984831}
+      string: '{"objectIDs":["2683"],"taskID":27086705950}
 
 '
     http_version: 
-  recorded_at: Fri, 29 Sep 2017 03:45:00 GMT
+  recorded_at: Sat, 07 Oct 2017 10:14:16 GMT
 - request:
     method: post
     uri: https://ua6ysns2dh.algolia.net/1/indexes/events/batch
     body:
       encoding: UTF-8
-      string: '{"requests":[{"action":"addObject","body":{"objectID":1653,"id":1653,"name":"Second
-        World War","type":"event","earliest_year":1000}}]}'
+      string: '{"requests":[{"action":"addObject","body":{"objectID":2683,"id":2683,"name":"Second
+        World War","type":"event","earliest_date":"1000-01-01"}}]}'
     headers:
       User-Agent:
       - Algolia for Ruby 1.16.0
@@ -67,7 +67,7 @@ http_interactions:
       Accept-Encoding:
       - gzip,deflate
       Date:
-      - Fri, 29 Sep 2017 03:45:00 GMT
+      - Sat, 07 Oct 2017 10:14:16 GMT
       X-Algolia-Api-Key:
       - 89869638d077cd3c8e801dfe86a5db16
       X-Algolia-Application-Id:
@@ -82,7 +82,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Fri, 29 Sep 2017 03:45:00 GMT
+      - Sat, 07 Oct 2017 10:14:16 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Content-Length:
@@ -99,9 +99,9 @@ http_interactions:
       - inline; filename=a.txt
     body:
       encoding: UTF-8
-      string: '{"objectIDs":["1653"],"taskID":27066984841}
+      string: '{"objectIDs":["2683"],"taskID":27086705960}
 
 '
     http_version: 
-  recorded_at: Fri, 29 Sep 2017 03:45:00 GMT
+  recorded_at: Sat, 07 Oct 2017 10:14:16 GMT
 recorded_with: VCR 3.0.3

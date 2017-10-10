@@ -4,11 +4,11 @@ describe CreateMoment do
   after { database_clean }
 
   describe '#call' do
-    let(:year_begin) { 1000 }
-    let(:year_end) { 1100 }
+    let(:date_begin) { Date.new(1000, 10, 30) }
+    let(:date_end) { Date.new(1100, 5, 1) }
     let(:latlng) { '100,-100' }
     let(:address) { 'Rio de Janeiro, Brazil' }
-    let(:moment_params) { { year_begin: year_begin, year_end: year_end } }
+    let(:moment_params) { { date_begin: date_begin, date_end: date_end } }
     let(:locations_params) { [{ address: address, id: nil }] }
     let(:location_info) { double 'LocationInfo', latlng: latlng }
     let(:location_service) { double 'LocationService', by_address: location_info }
@@ -67,8 +67,8 @@ describe CreateMoment do
 
       it 'creates a new moment' do
         expect(created_moment.person_id).to eq influencer.id
-        expect(created_moment.year_begin).to eq year_begin
-        expect(created_moment.year_end).to eq year_end
+        expect(created_moment.date_begin).to eq date_begin
+        expect(created_moment.date_end).to eq date_end
         expect(created_moment.updated_at).to_not be_nil
         expect(created_moment.created_at).to_not be_nil
       end
@@ -79,8 +79,8 @@ describe CreateMoment do
         expect(found_location.address).to eq address
       end
 
-      it 'updates #earliest_year of the new person' do
-        expect(influencer.earliest_year).to eq year_begin
+      it 'updates #earliest_date of the new person' do
+        expect(influencer.earliest_date).to eq date_begin
       end
     end
 
@@ -98,8 +98,8 @@ describe CreateMoment do
 
       it 'creates new moment' do
         expect(created_moment.event_id).to eq influencer.id
-        expect(created_moment.year_begin).to eq year_begin
-        expect(created_moment.year_end).to eq year_end
+        expect(created_moment.date_begin).to eq date_begin
+        expect(created_moment.date_end).to eq date_end
         expect(created_moment.updated_at).to_not be_nil
         expect(created_moment.created_at).to_not be_nil
       end
@@ -110,8 +110,8 @@ describe CreateMoment do
         expect(found_location.address).to eq address
       end
 
-      it 'updates #earliest_year of the new event' do
-        expect(influencer.earliest_year).to eq year_begin
+      it 'updates #earliest_date of the new event' do
+        expect(influencer.earliest_date).to eq date_begin
       end
     end
 
@@ -124,8 +124,8 @@ describe CreateMoment do
 
       it 'creates new moment' do
         expect(created_moment.person_id).to eq influencer.id
-        expect(created_moment.year_begin).to eq year_begin
-        expect(created_moment.year_end).to eq year_end
+        expect(created_moment.date_begin).to eq date_begin
+        expect(created_moment.date_end).to eq date_end
         expect(created_moment.updated_at).to_not be_nil
         expect(created_moment.created_at).to_not be_nil
       end
@@ -142,34 +142,34 @@ describe CreateMoment do
         expect(existent_person.id).to eq influencer.id
       end
 
-      it 'updates #earliest_year of the existent person' do
+      it 'updates #earliest_date of the existent person' do
         existent_person = PersonRepository.new.last
-        expect(existent_person.earliest_year).to eq year_begin
+        expect(existent_person.earliest_date).to eq date_begin
       end
 
-      context 'when end_year is nil' do
-        let(:year_end) { nil }
+      context 'when end_date is nil' do
+        let(:date_end) { nil }
 
         it 'creates new moment' do
           created_moment = moment_repository.search_by_influencer(influencer).first
 
           expect(created_moment.person_id).to eq influencer.id
-          expect(created_moment.year_begin).to eq year_begin
-          expect(created_moment.year_end).to be_nil
+          expect(created_moment.date_begin).to eq date_begin
+          expect(created_moment.date_end).to be_nil
           expect(created_moment.updated_at).to_not be_nil
           expect(created_moment.created_at).to_not be_nil
         end
       end
 
-      context 'when end_year is blank' do
-        let(:year_end) { '' }
+      context 'when end_date is blank' do
+        let(:date_end) { '' }
 
         it 'creates new moment' do
           created_moment = moment_repository.search_by_influencer(influencer).first
 
           expect(created_moment.person_id).to eq influencer.id
-          expect(created_moment.year_begin).to eq year_begin
-          expect(created_moment.year_end).to be_nil
+          expect(created_moment.date_begin).to eq date_begin
+          expect(created_moment.date_end).to be_nil
           expect(created_moment.updated_at).to_not be_nil
           expect(created_moment.created_at).to_not be_nil
         end
@@ -185,8 +185,8 @@ describe CreateMoment do
 
       it 'creates new moment' do
         expect(created_moment.event_id).to eq influencer.id
-        expect(created_moment.year_begin).to eq year_begin
-        expect(created_moment.year_end).to eq year_end
+        expect(created_moment.date_begin).to eq date_begin
+        expect(created_moment.date_end).to eq date_end
         expect(created_moment.updated_at).to_not be_nil
         expect(created_moment.created_at).to_not be_nil
       end
@@ -202,34 +202,34 @@ describe CreateMoment do
         expect(existent_event.id).to eq influencer.id
       end
 
-      it 'updates #earliest_year of the existent event' do
+      it 'updates #earliest_date of the existent event' do
         existent_person = EventRepository.new.last
-        expect(existent_person.earliest_year).to eq year_begin
+        expect(existent_person.earliest_date).to eq date_begin
       end
 
-      context 'when end_year is nil' do
-        let(:year_end) { nil }
+      context 'when end_date is nil' do
+        let(:date_end) { nil }
 
         it 'creates new moment' do
           created_moment = moment_repository.search_by_influencer(influencer).first
 
           expect(created_moment.event_id).to eq influencer.id
-          expect(created_moment.year_begin).to eq year_begin
-          expect(created_moment.year_end).to be_nil
+          expect(created_moment.date_begin).to eq date_begin
+          expect(created_moment.date_end).to be_nil
           expect(created_moment.updated_at).to_not be_nil
           expect(created_moment.created_at).to_not be_nil
         end
       end
 
-      context 'when end_year is blank' do
-        let(:year_end) { '' }
+      context 'when end_date is blank' do
+        let(:date_end) { '' }
 
         it 'creates new moment' do
           created_moment = moment_repository.search_by_influencer(influencer).first
 
           expect(created_moment.event_id).to eq influencer.id
-          expect(created_moment.year_begin).to eq year_begin
-          expect(created_moment.year_end).to be_nil
+          expect(created_moment.date_begin).to eq date_begin
+          expect(created_moment.date_end).to be_nil
           expect(created_moment.updated_at).to_not be_nil
           expect(created_moment.created_at).to_not be_nil
         end

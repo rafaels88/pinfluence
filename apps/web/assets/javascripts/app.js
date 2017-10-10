@@ -1,23 +1,28 @@
 $().ready(function(){
-  function init(){
-    var initialYear = new Date().getFullYear() - 100;
-    renderMap();
+  var initialDateStr = changeDateYear(new Date(), -100);
 
-    requestYears(function(years){
-      renderSlider(years, {
-        onChange: function(currentYear){
-          requestMoments(currentYear, function(moments){
-            renderMomentsInMap(moments, currentYear);
+  function resetSearch(){
+    requestDates(function(dates){
+      renderSlider(dates, {
+        onChange: function(currentDate){
+          requestMoments(currentDate, function(moments){
+            renderMomentsInMap(moments, currentDate);
           });
         },
         onInit: function(){
-          changeSliderTo(initialYear);
-          requestMoments(initialYear, function(moments){
-            renderMomentsInMap(moments, initialYear);
+          changeSliderTo(initialDateStr);
+          requestMoments(initialDateStr, function(moments){
+            renderMomentsInMap(moments, initialDateStr);
           });
         }
       });
     });
+  }
+
+  function init(){
+    renderMap();
+
+    resetSearch();
 
     listenSearch({
       onSearch: function(term){
@@ -25,20 +30,32 @@ $().ready(function(){
           renderInfluencersSearchResult(influencers);
         });
       },
-      onSelectedResult: function(year){
-        requestMoments(year, function(moments){
-          changeSliderTo(year);
-          renderMomentsInMap(moments, year);
+      onSelectedResult: function(ctx){
+        requestDatesForInfluencer(ctx.influencer, function(dates){
+          renderSlider(dates, {
+            onChange: function(currentDate){
+              requestMoments(currentDate, function(moments){
+                renderMomentsInMap(moments, currentDate);
+              });
+            },
+            onInit: function(){
+              requestMoments(ctx.date, function(moments){
+                changeSliderTo(ctx.date);
+                renderMomentsInMap(moments, ctx.date);
+              });
+            }
+          });
         });
-      }
+      },
+      onResetSearch: resetSearch
     });
 
-    listenRequestYear({
-      onSearch: function(year){
-        changeSliderTo(year);
+    listenRequestDate({
+      onSearch: function(date){
+        changeSliderTo(date);
 
-        requestMoments(year, function(moments){
-          renderMomentsInMap(moments, year);
+        requestMoments(date, function(moments){
+          renderMomentsInMap(moments, date);
         });
       }
     });

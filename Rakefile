@@ -33,7 +33,7 @@ task update_all_moments: :environment do
     influencer = moment.influencer
 
     UpdateMoment.call(
-      moment: { year_begin: moment.year_begin, year_end: moment.year_end, id: moment.id },
+      moment: { date_begin: moment.date_begin, date_end: moment.date_end, id: moment.id },
       influencer: { type: influencer.type, id: influencer.id },
       locations: []
     )

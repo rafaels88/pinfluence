@@ -18,9 +18,9 @@ RSpec.describe 'API influencers', type: :request, vcr: true do
 
     context 'with an incomplete name as argument' do
       context 'when some people are found' do
-        let(:influencer01) { build :person, id: 1, name: 'Dom Pedro I', earliest_year: 1000 }
-        let(:influencer02) { build :person, id: 2, name: 'Dom Pedro II', earliest_year: 1100 }
-        let(:event) { build :event, id: 1, name: 'Pedro War', earliest_year: 1050 }
+        let(:influencer01) { build :person, id: 1, name: 'Dom Pedro I', earliest_date: Date.new(1000, 1, 1) }
+        let(:influencer02) { build :person, id: 2, name: 'Dom Pedro II', earliest_date: Date.new(1100, 1, 1) }
+        let(:event) { build :event, id: 1, name: 'Pedro War', earliest_date: Date.new(1050, 1, 1) }
 
         def index_people(people)
           Influencers::Indexer.new(influencers: people, index_object: Influencers::PersonIndexObject).save
@@ -34,8 +34,8 @@ RSpec.describe 'API influencers', type: :request, vcr: true do
           index_people([influencer01, influencer02])
           index_event
           post endpoint,
-               query: '{ influencers(name: "Pedro") { people { id name gender type earliest_year } ' \
-                      'events { id name type earliest_year } } }'
+               query: '{ influencers(name: "Pedro") { people { id name gender type earliest_date } ' \
+                      'events { id name type earliest_date } } }'
         end
 
         after { database_clean }
@@ -49,7 +49,7 @@ RSpec.describe 'API influencers', type: :request, vcr: true do
             name: influencer02.name,
             gender: influencer02.gender,
             type: influencer02.type.to_s.downcase,
-            earliest_year: influencer02.earliest_year
+            earliest_date: influencer02.earliest_date.to_s
           )
 
           expect(last_json_response[:data][:influencers][:people][1]).to eq(
@@ -57,14 +57,14 @@ RSpec.describe 'API influencers', type: :request, vcr: true do
             name: influencer01.name,
             gender: influencer01.gender,
             type: influencer01.type.to_s.downcase,
-            earliest_year: influencer01.earliest_year
+            earliest_date: influencer01.earliest_date.to_s
           )
 
           expect(last_json_response[:data][:influencers][:events][0]).to eq(
             id: event.id,
             name: event.name,
             type: event.type.to_s.downcase,
-            earliest_year: event.earliest_year
+            earliest_date: event.earliest_date.to_s
           )
         end
       end

@@ -10,15 +10,16 @@ gem 'httparty'
 gem 'pg'
 gem 'rake'
 gem 'sass'
+gem 'sequel', github: 'rafaels88/sequel', branch: 'handling-bc-date-on-postgres_450'
 
 group :development do
-  gem 'byebug'
   gem 'capistrano'
   gem 'capistrano-bundler', '~> 1.1.2'
   gem 'capistrano-rbenv'
   gem 'capistrano3-puma'
   gem 'guard'
   gem 'guard-rspec', require: false
+  gem 'pry-byebug'
   gem 'rubocop', '~> 0.50.0', require: false
   # Code reloading
   # See: http://hanamirb.org/guides/applications/code-reloading

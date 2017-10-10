@@ -7,8 +7,8 @@ describe UpdateEvent do
     let(:event) { create :event, name: 'Old name' }
 
     let(:new_name) { 'World War' }
-    let(:new_earliest_year) { 1000 }
-    let(:update_params) { { name: new_name, earliest_year: new_earliest_year } }
+    let(:new_earliest_date) { Date.new(1000, 1, 1) }
+    let(:update_params) { { name: new_name, earliest_date: new_earliest_date } }
     let(:event_params) { update_params.merge(id: event.id) }
     let(:moments_params) { [] }
 
@@ -29,7 +29,7 @@ describe UpdateEvent do
 
       found_event = event_repository.last
       expect(found_event.name).to eq new_name
-      expect(found_event.earliest_year).to eq new_earliest_year
+      expect(found_event.earliest_date).to eq new_earliest_date
       expect(found_event.updated_at).to_not be_nil
       expect(found_event.created_at).to_not be_nil
     end
@@ -40,14 +40,14 @@ describe UpdateEvent do
     end
 
     context 'when only one event attribute is given' do
-      let(:update_params) { { earliest_year: new_earliest_year } }
+      let(:update_params) { { earliest_date: new_earliest_date } }
 
       it 'updates only the given attribute' do
         subject.call
 
         found_event = event_repository.last
         expect(found_event.name).to eq event.name
-        expect(found_event.earliest_year).to eq new_earliest_year
+        expect(found_event.earliest_date).to eq new_earliest_date
         expect(found_event.updated_at).to_not be_nil
         expect(found_event.created_at).to_not be_nil
       end
@@ -57,19 +57,19 @@ describe UpdateEvent do
       before { subject.call }
 
       context 'with an empty id' do
-        let(:moments_params) { [{ id: '', year_begin: '200', year_end: '300' }] }
+        let(:moments_params) { [{ id: '', date_begin: '200-1-1', date_end: '300-1-1' }] }
 
         it 'add the new moments' do
           created_moment = MomentRepository.new.search_by_influencer(event).first
 
           expect(created_moment.event_id).to eq event.id
-          expect(created_moment.year_begin).to eq 200
-          expect(created_moment.year_end).to eq 300
+          expect(created_moment.date_begin).to eq Date.new(200, 1, 1)
+          expect(created_moment.date_end).to eq Date.new(300, 1, 1)
         end
       end
 
-      context 'with an empty year_begin' do
-        let(:moments_params) { [{ id: '', year_begin: '', year_end: '' }] }
+      context 'with an empty date_begin' do
+        let(:moments_params) { [{ id: '', date_begin: '', date_end: '' }] }
 
         it 'does not create any moment' do
           found_moments = MomentRepository.new.search_by_influencer(event)
@@ -79,8 +79,10 @@ describe UpdateEvent do
       end
 
       context 'with a filled id' do
-        let(:existent_moment) { create(:moment, event_id: event.id, year_begin: 200, year_end: 300) }
-        let(:moments_params) { [{ id: existent_moment.id, year_begin: '1000', year_end: '' }] }
+        let(:existent_moment) do
+          create(:moment, event_id: event.id, date_begin: Date.new(200, 1, 1), date_end: Date.new(300, 1, 1))
+        end
+        let(:moments_params) { [{ id: existent_moment.id, date_begin: '1000-1-1', date_end: '' }] }
 
         it 'updates the existent moment' do
           found_moments = MomentRepository.new.search_by_influencer(event)
@@ -88,12 +90,14 @@ describe UpdateEvent do
 
           expect(found_moments.count).to eq 1
           expect(updated_moment.event_id).to eq event.id
-          expect(updated_moment.year_begin).to eq 1000
-          expect(updated_moment.year_end).to eq nil
+          expect(updated_moment.date_begin).to eq Date.new(1000, 1, 1)
+          expect(updated_moment.date_end).to eq nil
         end
 
         context 'with a list of existent locations' do
-          let(:existent_moment) { create(:moment, event_id: event.id, year_begin: 200, year_end: 300) }
+          let(:existent_moment) do
+            create(:moment, event_id: event.id, date_begin: Date.new(200, 1, 1), date_end: Date.new(300, 1, 1))
+          end
           let!(:location01) do
             create(:location, address: 'A place on earth', latlng: '100,-100', moment_id: existent_moment.id)
           end
@@ -103,7 +107,8 @@ describe UpdateEvent do
           let(:new_location01) { { id: location01.id, address: 'A place on earth 02' } }
           let(:new_location02) { { id: location02.id, address: 'Another place on earth 02' } }
           let(:moments_params) do
-            [{ id: existent_moment.id, year_begin: '1000', year_end: '', locations: [new_location01, new_location02] }]
+            [{ id: existent_moment.id, date_begin: '1000-1-1', date_end: '',
+               locations: [new_location01, new_location02] }]
           end
 
           it 'updates all the given locations associated to the related moment' do
@@ -121,7 +126,7 @@ describe UpdateEvent do
           let(:location01) { { id: nil, address: 'A place on earth' } }
           let(:location02) { { id: nil, address: 'Another place on earth' } }
           let(:moments_params) do
-            [{ id: '', year_begin: '200', year_end: '300', locations: [location01, location02] }]
+            [{ id: '', date_begin: '200-1-1', date_end: '300-1-1', locations: [location01, location02] }]
           end
 
           it 'creates all the new locations associated to the related moment' do

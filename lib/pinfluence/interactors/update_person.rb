@@ -5,7 +5,7 @@ class UpdatePerson
   include Interactor
   include Influencers::Concerns::Persister
 
-  INFLUENCER_PARAMS_WHITELIST = %i[name gender earliest_year].freeze
+  INFLUENCER_PARAMS_WHITELIST = %i[name gender earliest_date].freeze
 
   def initialize(person:, moments: [], opts: {})
     @influencer_params = person

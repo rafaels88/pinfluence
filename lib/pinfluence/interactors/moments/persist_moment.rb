@@ -23,7 +23,7 @@ module Moments
     private
 
     def enable_to_persist?
-      !moment_params[:year_begin].to_s.empty?
+      !moment_params[:date_begin].to_s.empty?
     end
 
     def new_moment?

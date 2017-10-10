@@ -12,6 +12,6 @@ module Types
       end
     end
     field :type, !types.String
-    field :earliest_year, types.Int
+    field :earliest_date, types.String
   end
 end

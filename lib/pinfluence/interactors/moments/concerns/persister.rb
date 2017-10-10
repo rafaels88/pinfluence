@@ -42,8 +42,17 @@ module Moments
         )
       end
 
-      def normalized_year_end
-        moment_params[:year_end].to_s.empty? ? nil : moment_params[:year_end]
+      def normalized_date_begin
+        postgres_bc_date_transform(moment_params[:date_begin])
+      end
+
+      def normalized_date_end
+        moment_params[:date_end].to_s.empty? ? nil : postgres_bc_date_transform(moment_params[:date_end])
+      end
+
+      def postgres_bc_date_transform(date_value)
+        return date_value unless date_value[0] == '-'
+        "#{date_value[1..-1]} BC"
       end
     end
   end

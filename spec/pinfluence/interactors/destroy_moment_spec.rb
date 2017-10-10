@@ -20,16 +20,16 @@ describe DestroyMoment do
     end
 
     context 'when an influencer has the moment associated to it' do
-      let(:influencer) { create :person, earliest_year: 1000 }
-      let(:moment) { create :moment, year_begin: 1000, person_id: influencer.id }
+      let(:influencer) { create :person, earliest_date: Date.new(1000, 1, 1) }
+      let(:moment) { create :moment, date_begin: Date.new(1000, 1, 1), person_id: influencer.id }
 
-      before { create :moment, year_begin: 1200, person_id: influencer.id }
+      before { create :moment, date_begin: Date.new(1200, 1, 1), person_id: influencer.id }
 
-      it 'updates earliest_year for the associated influencer' do
+      it 'updates earliest_date for the associated influencer' do
         subject.call
 
         reloaded_influencer = PersonRepository.new.find(influencer.id)
-        expect(reloaded_influencer.earliest_year).to eq 1200
+        expect(reloaded_influencer.earliest_date).to eq Date.new(1200, 1, 1)
       end
     end
   end

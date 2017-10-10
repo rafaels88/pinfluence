@@ -2,7 +2,7 @@ module Influencers
   class PersonIndexObject
     extend Forwardable
     attr_reader :influencer, :moment_repository
-    def_delegators :influencer, :id, :name, :gender, :type, :earliest_year
+    def_delegators :influencer, :id, :name, :gender, :type, :earliest_date
 
     SEARCH_INDEX_NAME = 'people'.freeze
     SEARCHABLE_ATTRIBUTES = ['name'].freeze
@@ -21,7 +21,7 @@ module Influencers
         'name' => influencer.name,
         'gender' => influencer.gender,
         'type' => influencer.type,
-        'earliest_year' => influencer.earliest_year
+        'earliest_date' => influencer.earliest_date
       }
     end
 
