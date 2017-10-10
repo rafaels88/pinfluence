@@ -9,7 +9,7 @@ module Values
     end
 
     def formatted
-      "#{date.strftime('%d/%m/%Y')} BC" if date.year.negative?
+      return "#{date.strftime('%d/%m/%Y').delete('-')} BC" if date.year.negative?
       "#{date.strftime('%d/%m/%Y')} AD"
     end
   end

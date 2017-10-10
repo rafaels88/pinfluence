@@ -36,7 +36,7 @@ class UpdateMoment
   def persist_params(influencer)
     {
       "#{influencer.type}_id".to_sym => influencer.id,
-      date_begin: moment_params[:date_begin],
+      date_begin: normalized_date_begin,
       date_end: normalized_date_end
     }
   end

@@ -6,6 +6,21 @@ function formatDate(date){
   return (yyyy + '-' + mm + '-' + dd);
 }
 
+function splitDate(date){
+  var dateIsNegative = false;
+
+  if(date[0] === '-') {
+    date = date.replace('-', '');
+    dateIsNegative = true;
+  }
+
+  var dateNums = date.split('-');
+
+  if(dateIsNegative){ dateNums[0] = '-' + dateNums[0]; }
+
+  return dateNums;
+}
+
 function changeDateYear(date, amount){
   if(typeof date === 'string') { date = new Date(date) }
 
@@ -14,10 +29,15 @@ function changeDateYear(date, amount){
 }
 
 function differenceInYearsBetween(today, pastDate){
-  var difference = today.getFullYear() - pastDate.getFullYear();
-  var m = today.getMonth() - pastDate.getMonth();
-  if (m < 0 || (m === 0 && today.getDate() < pastDate.getDate())) {
-      difference--;
-  }
-  return difference
+  var todayNums = splitDate(today),
+    pastDateNums = splitDate(pastDate),
+    difference;
+
+  today = moment([todayNums[0], todayNums[1], todayNums[2]]);
+  pastDate = moment([pastDateNums[0], pastDateNums[1], pastDateNums[2]]);
+  difference = moment.range(pastDate, today).diff('years');
+
+  if(pastDate.year() < 0 && today.year() > 0) { difference--; }
+
+  return difference;
 }

@@ -18,7 +18,7 @@ module Moments
     def missing_dates_between(newest, oldest)
       return [] unless (newest - oldest) > 1
 
-      (oldest...newest).to_a[1..-1].map { |y| Date.new(y) }
+      (oldest...newest).to_a[1..-1].map { |y| Date.new(y) unless y.zero? }.compact
     end
   end
 end

@@ -36,7 +36,7 @@ class CreateMoment
   def build_moment(influencer)
     Moment.new(
       "#{influencer.type}_id".to_sym => influencer.id,
-      date_begin: moment_params[:date_begin],
+      date_begin: normalized_date_begin,
       date_end: normalized_date_end
     )
   end

@@ -37,7 +37,7 @@ class MomentRepository < Hanami::Repository
     INFLUENCER_TYPES.map do |influencer_type|
       conditional = Sequel.lit(
         "date_begin <= ? AND (date_end >= ? OR date_end IS NULL) AND #{influencer_type}_id IS NOT NULL",
-        params[:date], params[:date]
+        postgres_bc_date_transform(params[:date]), postgres_bc_date_transform(params[:date])
       )
 
       query = aggregate(:locations, influencer_type).where(conditional)
@@ -56,5 +56,12 @@ class MomentRepository < Hanami::Repository
   def earliest_moment_of_an_influencer(influencer)
     q = moments.where("#{influencer.type}_id": influencer.id).order(:date_begin).limit(1)
     q.map_to(Moment).call.collection.first
+  end
+
+  private
+
+  def postgres_bc_date_transform(date_value)
+    return date_value unless date_value[0] == '-'
+    "#{date_value[1..-1]} BC"
   end
 end
