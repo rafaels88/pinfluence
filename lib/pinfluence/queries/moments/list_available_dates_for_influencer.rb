@@ -19,7 +19,7 @@ module Moments
     private
 
     def dates
-      dates_begin + [moments.last.date_end]
+      dates_begin + [moments.last.date_end || Date.today]
     end
 
     def dates_begin
