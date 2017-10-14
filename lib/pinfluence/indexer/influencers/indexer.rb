@@ -20,6 +20,10 @@ module Influencers
       index.delete_objects(influencers.map(&:id))
     end
 
+    def clear!
+      index.clear_index
+    end
+
     private
 
     def index

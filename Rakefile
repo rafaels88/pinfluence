@@ -11,16 +11,22 @@ end
 task default: :test
 task spec: :test
 
-task index_all_people: :environment do
+task index_all_influencers: :environment do
   Hanami.logger.debug 'Fetching all people from database...'
   people = PersonRepository.new.all
+  indexer = Influencers::Indexer.new(influencers: people, index_object: Influencers::PersonIndexObject)
+  Hanami.logger.debug 'Clearing index...'
+  indexer.clear!
   Hanami.logger.debug 'Indexing...'
-  Influencers::Indexer.new(influencers: people, index_object: Influencers::PersonIndexObject).save
+  indexer.save
 
   Hanami.logger.debug 'Fetching all events from database...'
   events = EventRepository.new.all
+  indexer = Influencers::Indexer.new(influencers: events, index_object: Influencers::EventIndexObject)
+  Hanami.logger.debug 'Clearing index...'
+  indexer.clear!
   Hanami.logger.debug 'Indexing...'
-  Influencers::Indexer.new(influencers: events, index_object: Influencers::EventIndexObject).save
+  indexer.save
   Hanami.logger.debug 'Done!'
 end
 
@@ -38,4 +44,13 @@ task update_all_moments: :environment do
       locations: []
     )
   end
+end
+
+task :seed_db, [:dump_path] => :environment do |_t, args|
+  dump_path = args[:dump_path]
+  puts 'Droppping local db...'
+  system "dropdb #{ENV['DATABASE_NAME']}"
+  puts 'Restoring db...'
+  system "psql #{ENV['DATABASE_NAME']} < #{dump_path}"
+  puts 'Done!'
 end
