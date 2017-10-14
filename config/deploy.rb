@@ -72,10 +72,10 @@ namespace :deploy do
 end
 
 namespace :index do
-  task :all_people do
+  task :all_influencers do
     on roles(:app), in: :sequence, wait: 5 do
       execute "cd #{current_path} && HANAMI_ENV=#{ENV['DEPLOY_ENV']} #{fetch(:rbenv_prefix)} " \
-        'bundle exec rake index_all_people'
+        'bundle exec rake index_all_influencers'
     end
   end
 end
@@ -85,6 +85,29 @@ namespace :db do
     on roles(:app), in: :sequence, wait: 5 do
       execute "cd #{current_path} && HANAMI_ENV=#{ENV['DEPLOY_ENV']} #{fetch(:rbenv_prefix)} " \
         'bundle exec rake update_all_moments'
+    end
+  end
+
+  task :seed_from_production do
+    on roles(:app), in: :sequence, wait: 5 do
+      remote_dir_db = '/home/deploy/db-backups/pinfluence'
+
+      puts 'Downloading last production dump...'
+      last_dump_backup = capture "ls -tr #{remote_dir_db} | tail -1"
+      # download! "#{remote_dir_db}/#{last_dump_backup}", '/tmp/'
+      puts "Done! Check in /tmp/#{last_dump_backup}"
+
+      puts 'Recreating database...'
+      system 'be hanami db drop create'
+
+      sleep 3
+
+      puts 'Restoring db...'
+      system "psql #{ENV['DATABASE_NAME']} < /tmp/#{last_dump_backup}"
+
+      puts 'Done!'
+
+      system 'bundle exec rake index_all_influencers'
     end
   end
 end

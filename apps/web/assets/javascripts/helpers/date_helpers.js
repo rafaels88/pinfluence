@@ -33,8 +33,8 @@ function differenceInYearsBetween(today, pastDate){
     pastDateNums = splitDate(pastDate),
     difference;
 
-  today = moment([todayNums[0], todayNums[1], todayNums[2]]);
-  pastDate = moment([pastDateNums[0], pastDateNums[1], pastDateNums[2]]);
+  today = moment([todayNums[0], parseInt(todayNums[1], 10) - 1, todayNums[2]]);
+  pastDate = moment([pastDateNums[0], parseInt(pastDateNums[1], 10) - 1, pastDateNums[2]]);
   difference = moment.range(pastDate, today).diff('years');
 
   if(pastDate.year() < 0 && today.year() > 0) { difference--; }

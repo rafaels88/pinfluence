@@ -1,5 +1,9 @@
 $().ready(function(){
-  var initialDateStr = changeDateYear(new Date(), -100);
+  var initialDate = new Date();
+  initialDate.setDate(1);
+  initialDate.setMonth(0);
+
+  var initialDateStr = changeDateYear(initialDate, -100);
 
   function resetSearch(){
     requestDates(function(dates){
@@ -60,5 +64,6 @@ $().ready(function(){
       }
     });
   }
+
   init();
 });
