@@ -16,11 +16,11 @@ RSpec.describe 'API available_dates', type: :request do
     create :moment, date_begin: Date.new(2002, 1, 2), date_end: Date.new(2002, 5, 3), person_id: influencer.id
     create :moment, date_begin: Date.new(2002, 5, 4), date_end: Date.new(2005, 10, 4), person_id: influencer.id
     create :moment, date_begin: Date.new(2015, 5, 20), date_end: Date.new(2015, 5, 21)
-
-    post endpoint, query: query
   end
 
   context 'when no params are given' do
+    before { post endpoint, query: query }
+
     let(:query) { '{ available_dates { date formatted } }' }
 
     it 'returns date field as YYYY-MM-DD format' do
@@ -36,6 +36,8 @@ RSpec.describe 'API available_dates', type: :request do
   end
 
   context 'when influencer_id and influencer_type are given' do
+    before { post endpoint, query: query }
+
     let(:query) do
       "{ available_dates(influencer_id: #{influencer.id}, influencer_type: \"#{influencer.type}\") { date formatted } }"
     end
@@ -58,6 +60,18 @@ RSpec.describe 'API available_dates', type: :request do
       expect(returned_dates).to include '2001-01-01'
       expect(returned_dates).to include '2003-01-01'
       expect(returned_dates).to include '2004-01-01'
+    end
+
+    context 'when one existent moment for the given person has no data_end' do
+      before do
+        create :moment, date_begin: Date.new(2005, 8, 20), date_end: nil, person_id: influencer.id
+        post endpoint, query: query
+      end
+
+      it 'returns last date as the current date' do
+        dates = subject[:available_dates].map { |d| d[:date] }
+        expect(dates.last).to eq Date.today.strftime('%Y-%m-%d')
+      end
     end
   end
 end
