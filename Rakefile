@@ -45,12 +45,3 @@ task update_all_moments: :environment do
     )
   end
 end
-
-task :seed_db, [:dump_path] => :environment do |_t, args|
-  dump_path = args[:dump_path]
-  puts 'Droppping local db...'
-  system "dropdb #{ENV['DATABASE_NAME']}"
-  puts 'Restoring db...'
-  system "psql #{ENV['DATABASE_NAME']} < #{dump_path}"
-  puts 'Done!'
-end
