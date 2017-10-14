@@ -14,7 +14,7 @@ describe MomentRepository do
   let!(:location02) { create :location, moment_id: moment02.id }
 
   describe '#search_by_date' do
-    let(:search_date) { Date.new(1009, 1, 1) }
+    let(:search_date) { '1009-01-01' }
     subject { described_class.new.search_by_date(date: search_date) }
 
     it 'returns a list of found moments' do
@@ -28,7 +28,7 @@ describe MomentRepository do
     end
 
     context 'when no moment is found' do
-      let(:search_date) { Date.new(1011, 1, 1) }
+      let(:search_date) { '1011-01-01' }
 
       it { is_expected.to be_empty }
     end

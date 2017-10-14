@@ -6,9 +6,11 @@ describe CreateMoment do
   describe '#call' do
     let(:date_begin) { Date.new(1000, 10, 30) }
     let(:date_end) { Date.new(1100, 5, 1) }
+    let(:date_begin_param) { '1000-10-30' }
+    let(:date_end_param) { '1100-05-01' }
     let(:latlng) { '100,-100' }
     let(:address) { 'Rio de Janeiro, Brazil' }
-    let(:moment_params) { { date_begin: date_begin, date_end: date_end } }
+    let(:moment_params) { { date_begin: date_begin_param, date_end: date_end_param } }
     let(:locations_params) { [{ address: address, id: nil }] }
     let(:location_info) { double 'LocationInfo', latlng: latlng }
     let(:location_service) { double 'LocationService', by_address: location_info }
@@ -148,7 +150,7 @@ describe CreateMoment do
       end
 
       context 'when end_date is nil' do
-        let(:date_end) { nil }
+        let(:date_end_param) { nil }
 
         it 'creates new moment' do
           created_moment = moment_repository.search_by_influencer(influencer).first
@@ -162,7 +164,7 @@ describe CreateMoment do
       end
 
       context 'when end_date is blank' do
-        let(:date_end) { '' }
+        let(:date_end_param) { '' }
 
         it 'creates new moment' do
           created_moment = moment_repository.search_by_influencer(influencer).first
@@ -208,7 +210,7 @@ describe CreateMoment do
       end
 
       context 'when end_date is nil' do
-        let(:date_end) { nil }
+        let(:date_end_param) { nil }
 
         it 'creates new moment' do
           created_moment = moment_repository.search_by_influencer(influencer).first
@@ -222,7 +224,7 @@ describe CreateMoment do
       end
 
       context 'when end_date is blank' do
-        let(:date_end) { '' }
+        let(:date_end_param) { '' }
 
         it 'creates new moment' do
           created_moment = moment_repository.search_by_influencer(influencer).first

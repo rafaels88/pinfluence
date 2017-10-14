@@ -6,9 +6,11 @@ describe UpdateMoment do
   describe '#call' do
     let(:new_date_begin) { Date.new(500, 1, 1) }
     let(:new_date_end) { Date.new(600, 1, 1) }
+    let(:new_date_begin_param) { '500-01-01' }
+    let(:new_date_end_param) { '600-01-01' }
     let(:latlng) { '100,-100' }
     let(:address) { 'Updated address' }
-    let(:moment_params) { { date_begin: new_date_begin, date_end: new_date_end, id: moment.id } }
+    let(:moment_params) { { date_begin: new_date_begin_param, date_end: new_date_end_param, id: moment.id } }
     let(:locations_params) { [{ address: address, id: location.id }] }
     let(:location_info) { double 'LocationInfo', latlng: latlng }
     let(:location_service) { double 'LocationService', by_address: location_info }
@@ -165,7 +167,7 @@ describe UpdateMoment do
     end
 
     context 'when end date is nil' do
-      let(:new_date_end) { nil }
+      let(:new_date_end_param) { nil }
 
       it 'updates given moment' do
         expect(found_moment.date_begin).to eq new_date_begin
@@ -176,7 +178,7 @@ describe UpdateMoment do
     end
 
     context 'when end date is blank' do
-      let(:new_date_end) { '' }
+      let(:new_date_end_param) { '' }
 
       it 'updates given moment' do
         expect(found_moment.date_begin).to eq new_date_begin
