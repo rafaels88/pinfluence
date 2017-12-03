@@ -8,7 +8,7 @@ set :repo_url, 'git@github.com:rafaels88/pinfluence.git'
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
 set :linked_files, [ENV['DEPLOY_LINKED_FILE_01']]
-set :linked_dirs, [ENV['DEPLOY_LINKED_DIR_01']]
+set :linked_dirs, [ENV['DEPLOY_LINKED_DIR_01'], ENV['DEPLOY_LINKED_DIR_02'], ENV['DEPLOY_LINKED_DIR_03']]
 
 set :rbenv_type, :user # or :system, depends on your rbenv setup
 set :rbenv_ruby, ENV['DEPLOY_RBENV_RUBY']
@@ -22,7 +22,7 @@ set :deploy_to, ENV['DEPLOY_PROJECT_PATH']
 
 set :ssh_options,
     forward_agent: true,
-    port: 3622
+    port: ENV['DEPLOY_SSH_PORT']
 
 set :bundle_without, %i[darwin development test]
 set :bundle_flags, '--deployment'
@@ -53,6 +53,13 @@ set :bundle_flags, '--deployment'
 # set :keep_releases, 5
 
 namespace :deploy do
+  task :install_bundler do
+    on roles(:app), in: :sequence, wait: 5 do
+      execute "RBENV_ROOT=$HOME/.rbenv RBENV_VERSION=#{ENV['DEPLOY_RBENV_RUBY']} " \
+        '$HOME/.rbenv/bin/rbenv exec gem install bundler --no-document'
+    end
+  end
+
   task :precompile do
     on roles(:app), in: :sequence, wait: 5 do
       execute "cd #{current_path} && HANAMI_ENV=#{ENV['DEPLOY_ENV']} #{fetch(:rbenv_prefix)} " \
@@ -67,6 +74,7 @@ namespace :deploy do
     end
   end
 
+  before :updating, :install_bundler
   after :publishing, :db_migrate
   after :publishing, :precompile
 end
