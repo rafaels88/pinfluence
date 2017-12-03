@@ -20,4 +20,10 @@ sudo apt-get install nginx
 # Install Postgresql
 sudo apt-get install postgresql
 
-rbenv install 2.3.1
+rbenv install 2.4.1
+
+# Capibara-webki gem dependencies
+sudo apt-get install qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
+
+# pg gem dependency
+sudo apt-get install libpq-dev
