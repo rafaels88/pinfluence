@@ -11,13 +11,12 @@ using mainly Ruby and Hanami, and other technologies which could fit well, like 
 You can use it as a reference for building your own project, and of course, you are welcome
 to contribute on this one as well.
 
-## Used stack and technologies
+## Requirements
 
 - Ruby (>= 2.4.1)
-- Hanami (1.0)
-- GraphQL
-- Rspec (>= 3.5)
 - Postgresql (>= 9.3)
+- QT (== 5.5) [Installation instructions](https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit) 
+- Bundler
 
 ## Quick start
 
@@ -86,6 +85,12 @@ $ bundle exec rspec
 ```
 
 A `Guardfile` is also available if you want to `bundle exec guard`.
+
+## Deployment
+
+```bash
+$ cap production deploy
+```
 
 ## Contributing
 
